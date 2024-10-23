@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Melek Global Education</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script defer>
         // Toggle sidebar visibility
         function toggleSidebar() {
@@ -17,7 +20,9 @@
         function loadPage(page) {
             localStorage.setItem('activePage', page);
             const content = document.getElementById('main-content');
-            content.innerHTML = `<h2 class="text-2xl font-bold">${page}</h2><p>This is the ${page} content.</p>`;
+            content.innerHTML = `
+                <h2 class="text-2xl font-bold mb-4">${page}</h2>
+                <p class="text-gray-600">This is the ${page} content. You can add more details here as needed.</p>`;
         }
 
         // On page load, check localStorage and load the appropriate page
@@ -28,47 +33,61 @@
     </script>
 </head>
 
-<body class="h-screen overflow-hidden flex bg-gray-100">
+<body class="h-screen overflow-hidden flex bg-gray-50">
 
     <!-- Sidebar -->
     <div id="sidebar"
-        class="bg-blue-900 text-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
+        class="bg-gray-800 text-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
+
+        <!-- Close Button for Small Screens -->
+        <div class="md:hidden flex justify-end pr-4">
+            <button class="text-gray-400 hover:text-white focus:outline-none" onclick="toggleSidebar()">
+                <i class="fas fa-times h-6 w-6"></i>
+            </button>
+        </div>
 
         <!-- Profile Section -->
         <div class="flex flex-col items-center mb-6">
             <img src="profile.jpg" alt="Profile" class="w-24 h-24 rounded-full object-cover mb-2">
             <h2 class="text-lg font-semibold">John Doe</h2>
-            <p class="text-sm text-gray-300">john.doe@example.com</p>
+            <p class="text-sm text-gray-400">john.doe@example.com</p>
         </div>
 
         <!-- Navigation -->
         <nav class="space-y-2">
             <a href="#" onclick="loadPage('Dashboard')"
-                class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-800">Dashboard</a>
+                class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+                <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
+            </a>
             <a href="#" onclick="loadPage('Applications')"
-                class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-800">Applications</a>
+                class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+                <i class="fas fa-folder-open mr-3"></i> Applications
+            </a>
             <a href="#" onclick="loadPage('Payments')"
-                class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-800">Payments</a>
+                class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+                <i class="fas fa-money-check-alt mr-3"></i> Payments
+            </a>
             <a href="#" onclick="loadPage('Profile')"
-                class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-800">Profile</a>
+                class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+                <i class="fas fa-user mr-3"></i> Profile
+            </a>
             <a href="#" onclick="loadPage('Updates')"
-                class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-800">Updates</a>
+                class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+                <i class="fas fa-bell mr-3"></i> Updates
+            </a>
         </nav>
     </div>
 
-    <!-- Main Content -->
+    <!-- Main Content Area -->
     <div class="flex-1 flex flex-col">
         <!-- Header -->
         <header class="bg-white shadow w-full flex items-center justify-between p-4">
             <!-- Hamburger Icon and Title -->
             <div class="flex items-center">
-                <button class="md:hidden text-blue-900 focus:outline-none" onclick="toggleSidebar()">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
+                <button class="md:hidden text-gray-800 focus:outline-none" onclick="toggleSidebar()">
+                    <i class="fas fa-bars h-6 w-6"></i>
                 </button>
-                <h1 class="text-xl text-blue-900 ml-4">Melek Global Education</h1>
+                <h1 class="text-xl text-gray-900 ml-4">Melek Global Education</h1>
             </div>
 
             <!-- Welcome and Logout Button -->
@@ -79,10 +98,11 @@
         </header>
 
         <!-- Main Content -->
-        <main id="main-content" class="flex-1 overflow-y-auto p-6 bg-gray-50">
+        <main id="main-content" class="flex-1 overflow-y-auto p-6 bg-white shadow-lg rounded-lg">
             <!-- Dynamic content will be loaded here -->
         </main>
     </div>
+
 </body>
 
 </html>
