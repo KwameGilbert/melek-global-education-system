@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Melek Global Education</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer>
+        // Toggle sidebar visibility
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        }
+
+        // Load content based on sidebar click
+        function loadPage(page) {
+            localStorage.setItem('activePage', page);
+            const content = document.getElementById('main-content');
+            content.innerHTML = `<h2 class="text-2xl font-bold">${page}</h2><p>This is the ${page} content.</p>`;
+        }
+
+        // On page load, check localStorage and load the appropriate page
+        window.onload = function () {
+            const activePage = localStorage.getItem('activePage') || 'Dashboard';
+            loadPage(activePage);
+        }
+    </script>
+</head>
+
+<body class="h-screen overflow-hidden flex bg-gray-100">
+
+    <!-- Sidebar -->
+    <div id="sidebar"
+        class="bg-blue-900 text-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
+
+        <!-- Profile Section -->
+        <div class="flex flex-col items-center mb-6">
+            <img src="profile.jpg" alt="Profile" class="w-24 h-24 rounded-full object-cover mb-2">
+            <h2 class="text-lg font-semibold">John Doe</h2>
+            <p class="text-sm text-gray-300">john.doe@example.com</p>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="space-y-2">
+            <a href="#" onclick="loadPage('Dashboard')"
+                class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-800">Dashboard</a>
+            <a href="#" onclick="loadPage('Applications')"
+                class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-800">Applications</a>
+            <a href="#" onclick="loadPage('Payments')"
+                class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-800">Payments</a>
+            <a href="#" onclick="loadPage('Profile')"
+                class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-800">Profile</a>
+            <a href="#" onclick="loadPage('Updates')"
+                class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-800">Updates</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+        <!-- Header -->
+        <header class="bg-white shadow w-full flex items-center justify-between p-4">
+            <!-- Hamburger Icon and Title -->
+            <div class="flex items-center">
+                <button class="md:hidden text-blue-900 focus:outline-none" onclick="toggleSidebar()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <h1 class="text-xl text-blue-900 ml-4">Melek Global Education</h1>
+            </div>
+
+            <!-- Welcome and Logout Button -->
+            <div class="flex items-center">
+                <span class="text-gray-700 mr-4">Welcome, John Doe</span>
+                <button class="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600">Logout</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main id="main-content" class="flex-1 overflow-y-auto p-6 bg-gray-50">
+            <!-- Dynamic content will be loaded here -->
+        </main>
+    </div>
+</body>
+
+</html>

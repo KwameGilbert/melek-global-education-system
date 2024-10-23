@@ -6,6 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Password Reset - Student Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            background-image: url('../images/reset-mobile.jpg');
+            /* Mobile image */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            /* Full height */
+            margin: 0;
+            /* Remove default margin */
+        }
+        
+        @media (min-width: 768px) {
+            
+            /* Adjust the width as needed */
+            body {
+                background-image: url('../images/reset-desktop.svg');
+                /* Desktop image */
+                background-size: cover;
+                background-position: center;
+                height: 100vh;
+                /* Full height */
+                margin: 0;
+            }
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
