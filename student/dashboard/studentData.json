@@ -1,0 +1,19 @@
+{
+    "studentName": "John Doe",
+    "applications": [
+        {
+            "id": 1,
+            "school": "University of Toronto",
+            "program": "Bachelor of Computer Science",
+            "status": "In Progress",
+            "startDate": "September 2024"
+        },
+        {
+            "id": 2,
+            "school": "Harvard University",
+            "program": "Masters in Data Science",
+            "status": "Submitted",
+            "startDate": "January 2025"
+        }
+    ]
+}

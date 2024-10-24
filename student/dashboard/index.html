@@ -9,28 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <script defer>
-        // Toggle sidebar visibility
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('-translate-x-full');
-        }
-
-        // Load content based on sidebar click
-        function loadPage(page) {
-            localStorage.setItem('activePage', page);
-            const content = document.getElementById('main-content');
-            content.innerHTML = `
-                <h2 class="text-2xl font-bold mb-4">${page}</h2>
-                <p class="text-gray-600">This is the ${page} content. You can add more details here as needed.</p>`;
-        }
-
-        // On page load, check localStorage and load the appropriate page
-        window.onload = function () {
-            const activePage = localStorage.getItem('activePage') || 'Dashboard';
-            loadPage(activePage);
-        }
-    </script>
+    
 </head>
 
 <body class="h-screen overflow-hidden flex bg-gray-50">
@@ -48,32 +27,28 @@
 
         <!-- Profile Section -->
         <div class="flex flex-col items-center mb-6">
-            <img src="profile.jpg" alt="Profile" class="w-24 h-24 rounded-full object-cover mb-2">
-            <h2 class="text-lg font-semibold">John Doe</h2>
-            <p class="text-sm text-gray-400">john.doe@example.com</p>
+            <img src="https://avatar.iran.liara.run/public" alt="Profile"
+                class="w-24 h-24 rounded-full object-cover mb-2">
+            <h2 class="text-lg font-semibold" id="studentName">John Doe</h2>
+            <p class="text-sm text-gray-400" id="studentEmail">john.doe@example.com</p>
         </div>
 
         <!-- Navigation -->
         <nav class="space-y-2">
-            <a href="#" onclick="loadPage('Dashboard')"
-                class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+            <a href="#" data-page="dashboard.html" class="flex items-center py-2.5 px-4 hover:bg-gray-700">
                 <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
             </a>
-            <a href="#" onclick="loadPage('Applications')"
-                class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+            <a href="#" data-page="applications.html" class="flex items-center py-2.5 px-4 hover:bg-gray-700">
                 <i class="fas fa-folder-open mr-3"></i> Applications
             </a>
-            <a href="#" onclick="loadPage('Payments')"
-                class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+            <a href="#" data-page="payments.html" class="flex items-center py-2.5 px-4 hover:bg-gray-700">
                 <i class="fas fa-money-check-alt mr-3"></i> Payments
             </a>
-            <a href="#" onclick="loadPage('Profile')"
-                class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+            <a href="#" data-page="profile.html" class="flex items-center py-2.5 px-4 hover:bg-gray-700">
                 <i class="fas fa-user mr-3"></i> Profile
             </a>
-            <a href="#" onclick="loadPage('Updates')"
-                class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
-                <i class="fas fa-bell mr-3"></i> Updates
+            <a href="#" data-page="updates.html" class="flex items-center py-2.5 px-4 hover:bg-gray-700">
+                <i class="fas fa-bell mr-3"></i> Notices
             </a>
         </nav>
     </div>
@@ -102,6 +77,22 @@
             <!-- Dynamic content will be loaded here -->
         </main>
     </div>
+
+
+
+    <script defer src="./index.js"></script>
+    
+    <script defer>
+        // Toggle sidebar visibility
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        }
+
+
+        
+
+    </script>
 
 </body>
 
