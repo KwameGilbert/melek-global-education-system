@@ -57,24 +57,31 @@ function loadDashboard() {
 
 function loadApplications() {
     console.log('Applications page loaded!');
-    // JavaScript to handle section navigation
+    // JavaScript to handle form navigation and API fetch calls
+
     let currentStep = 1;
     const totalSteps = 5;
 
+    // Show/hide sections based on the current step
+    function showStep(step) {
+        document.querySelectorAll('.section').forEach((section, index) => {
+            section.classList.toggle('hidden', index + 1 !== step);
+        });
+    }
+
+    // Event listeners for Next and Previous buttons
     document.getElementById('next-btn').addEventListener('click', () => {
         if (currentStep < totalSteps) {
-            document.getElementById(`section-${currentStep}`).classList.add('hidden');
             currentStep++;
-            document.getElementById(`section-${currentStep}`).classList.remove('hidden');
+            showStep(currentStep);
             updateNavigation();
         }
     });
 
     document.getElementById('prev-btn').addEventListener('click', () => {
         if (currentStep > 1) {
-            document.getElementById(`section-${currentStep}`).classList.add('hidden');
             currentStep--;
-            document.getElementById(`section-${currentStep}`).classList.remove('hidden');
+            showStep(currentStep);
             updateNavigation();
         }
     });
@@ -82,18 +89,27 @@ function loadApplications() {
     function updateNavigation() {
         document.getElementById('prev-btn').disabled = currentStep === 1;
         document.getElementById('next-btn').textContent = currentStep === totalSteps ? 'Submit' : 'Next';
+    }
 
-        const steps = document.querySelectorAll('.step-btn');
-        steps.forEach((stepBtn, index) => {
-            if (index + 1 === currentStep) {
-                stepBtn.classList.remove('bg-gray-300');
-                stepBtn.classList.add('bg-blue-500', 'text-white');
-            } else {
-                stepBtn.classList.add('bg-gray-300');
-                stepBtn.classList.remove('bg-blue-500', 'text-white');
-            }
+    // Initial load
+    showStep(currentStep);
+    updateNavigation();
+
+    // Example API call to populate nationality dropdown
+    async function fetchCountries() {
+        const response = await fetch('https://restcountries.com/v3.1/all');
+        const countries = await response.json();
+        const nationalityDropdown = document.getElementById('nationality');
+        countries.forEach(country => {
+            const option = document.createElement('option');
+            option.value = country.name.common;
+            option.textContent = country.name.common;
+            nationalityDropdown.appendChild(option);
         });
     }
+
+    // Call the API to fetch and populate dropdowns on load
+    fetchCountries();
 }
 
 
