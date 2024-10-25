@@ -1,159 +1,168 @@
+<div class="container mx-auto py-10 px-4 md:px-0">
+    <h2 class="text-2xl font-bold mb-6 text-center">Application Form</h2>
 
-      
-
-    <div class="container mx-auto py-10">
-        <h2 class="text-2xl font-bold mb-6 text-center">Application Form</h2>
-
-        <!-- Navigation Steps -->
-        <div id="form-navigation" class="flex justify-around mb-8">
-            <button class="step-btn bg-blue-500 text-white py-2 px-4 rounded" data-step="1">Personal Info</button>
-            <button class="step-btn bg-gray-300 py-2 px-4 rounded" data-step="2">Contact Info</button>
-            <button class="step-btn bg-gray-300 py-2 px-4 rounded" data-step="3">Passport & Visa</button>
-            <button class="step-btn bg-gray-300 py-2 px-4 rounded" data-step="4">Education & Work</button>
-            <button class="step-btn bg-gray-300 py-2 px-4 rounded" data-step="5">Documents</button>
-        </div>
-
-        <!-- Application Form Sections -->
-        <form id="application-form" class="bg-white p-8 rounded shadow-lg">
-
-            <!-- Section 1: Personal Info -->
-            <div id="section-1" class="section">
-                <h3 class="text-xl font-bold mb-4">Personal Information</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block font-bold">Family Name *</label>
-                        <input type="text" class="form-input w-full" id="family-name" required>
-                    </div>
-                    <div>
-                        <label class="block font-bold">Given Name *</label>
-                        <input type="text" class="form-input w-full" id="given-name" required>
-                    </div>
-                    <div>
-                        <label class="block font-bold">Gender *</label>
-                        <select class="form-input w-full" id="gender" required>
-                            <option>Male</option>
-                            <option>Female</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block font-bold">Date of Birth *</label>
-                        <input type="date" class="form-input w-full" id="dob" required>
-                    </div>
-                    <div>
-                        <label class="block font-bold">Nationality *</label>
-                        <input type="text" class="form-input w-full" id="nationality" required>
-                    </div>
-                    <div>
-                        <label class="block font-bold">Marital Status *</label>
-                        <select class="form-input w-full" id="marital-status" required>
-                            <option>Single</option>
-                            <option>Married</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block font-bold">Upload Passport Size Photo *</label>
-                        <input type="file" class="form-input w-full" id="passport-photo" required>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Section 2: Contact Info -->
-            <div id="section-2" class="section hidden">
-                <h3 class="text-xl font-bold mb-4">Contact Information</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block font-bold">Correspondence Address *</label>
-                        <input type="text" class="form-input w-full" id="correspondence-address" required>
-                    </div>
-                    <div>
-                        <label class="block font-bold">Home Address *</label>
-                        <input type="text" class="form-input w-full" id="home-address" required>
-                    </div>
-                    <div>
-                        <label class="block font-bold">City/Province *</label>
-                        <input type="text" class="form-input w-full" id="city" required>
-                    </div>
-                    <div>
-                        <label class="block font-bold">Phone or Mobile *</label>
-                        <input type="tel" class="form-input w-full" id="phone" required>
-                    </div>
-                    <div>
-                        <label class="block font-bold">Email Address *</label>
-                        <input type="email" class="form-input w-full" id="email" required>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Section 3: Passport & Visa -->
-            <div id="section-3" class="section hidden">
-                <h3 class="text-xl font-bold mb-4">Passport and Visa Information</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block font-bold">Passport No. *</label>
-                        <input type="text" class="form-input w-full" id="passport-no" required>
-                    </div>
-                    <div>
-                        <label class="block font-bold">Passport Start Date *</label>
-                        <input type="date" class="form-input w-full" id="passport-start-date" required>
-                    </div>
-                    <div>
-                        <label class="block font-bold">Passport Expiry Date *</label>
-                        <input type="date" class="form-input w-full" id="passport-expiry-date" required>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Section 4: Education & Work -->
-            <div id="section-4" class="section hidden">
-                <h3 class="text-xl font-bold mb-4">Education Background & Work History</h3>
-                <div class="grid grid-cols-1 gap-4">
-                    <div>
-                        <label class="block font-bold">Highest Degree *</label>
-                        <input type="text" class="form-input w-full" id="highest-degree" required>
-                    </div>
-                    <div>
-                        <label class="block font-bold">Highest Graduation School *</label>
-                        <input type="text" class="form-input w-full" id="graduation-school" required>
-                    </div>
-                    <div>
-                        <label class="block font-bold">Work History (Job, Company)</label>
-                        <textarea class="form-input w-full" id="work-history" required></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Section 5: Upload Documents -->
-            <div id="section-5" class="section hidden">
-                <h3 class="text-xl font-bold mb-4">Upload Documents</h3>
-                <div class="grid grid-cols-1 gap-4">
-                    <div>
-                        <label class="block font-bold">Valid Passport *</label>
-                        <input type="file" class="form-input w-full" id="upload-passport" required>
-                    </div>
-                    <div>
-                        <label class="block font-bold">Highest Academic Diploma *</label>
-                        <input type="file" class="form-input w-full" id="upload-diploma" required>
-                    </div>
-                    <div>
-                        <label class="block font-bold">Recommendation Letter</label>
-                        <input type="file" class="form-input w-full" id="upload-recommendation">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Navigation Buttons -->
-            <div class="mt-8 flex justify-between">
-                <button type="button" id="prev-btn"
-                    class="bg-gray-300 text-black py-2 px-4 rounded disabled:opacity-50" disabled>Previous</button>
-                <button type="button" id="next-btn" class="bg-blue-500 text-white py-2 px-4 rounded">Next</button>
-            </div>
-
-        </form>
+    <!-- Navigation Steps -->
+    <div id="form-navigation" class="flex justify-between mb-8 overflow-x-auto">
+        <button class="step-btn bg-blue-500 text-white py-2 px-4 rounded text-xs" data-step="1">Personal Info</button>
+        <button class="step-btn bg-gray-300 py-2 px-4 rounded text-xs" data-step="2">Contact Info</button>
+        <button class="step-btn bg-gray-300 py-2 px-4 rounded text-xs" data-step="3">Passport & Visa</button>
+        <button class="step-btn bg-gray-300 py-2 px-4 rounded text-xs" data-step="4">Education & Work</button>
+        <button class="step-btn bg-gray-300 py-2 px-4 rounded text-xs" data-step="5">Documents</button>
     </div>
 
-    <script>
-     
-    </script>
-</body>
+    <!-- Application Form Sections -->
+    <form id="application-form" class="bg-white p-8 rounded shadow-lg">
 
-</html>
+        <!-- Section 1: Personal Info -->
+        <div id="section-1" class="section">
+            <h3 class="text-xl font-bold mb-4">Personal Information</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block font-bold">Family Name *</label>
+                    <input type="text" class="form-input w-full" id="family-name" required>
+                </div>
+                <div>
+                    <label class="block font-bold">Given Name *</label>
+                    <input type="text" class="form-input w-full" id="given-name" required>
+                </div>
+                <div>
+                    <label class="block font-bold">Gender *</label>
+                    <select class="form-input w-full" id="gender" required>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold">Upload Passport Size Photo *</label>
+                    <input type="file" class="form-input w-full" id="passport-photo" required>
+                </div>
+                <div>
+                    <label class="block font-bold">Nationality *</label>
+                    <select class="form-input w-full" id="nationality" required>
+                        <!-- Placeholder for API-populated countries -->
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold">Marital Status *</label>
+                    <select class="form-input w-full" id="marital-status" required>
+                        <option>Single</option>
+                        <option>Married</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold">Date of Birth *</label>
+                    <input type="date" class="form-input w-full" id="dob" required>
+                </div>
+                <div>
+                    <label class="block font-bold">Religion *</label>
+                    <input type="text" class="form-input w-full" id="religion" required>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Contact Info -->
+        <div id="section-2" class="section hidden">
+            <h3 class="text-xl font-bold mb-4">Contact Information</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block font-bold">Correspondence Address *</label>
+                    <input type="text" class="form-input w-full" id="correspondence-address" required>
+                </div>
+                <div>
+                    <label class="block font-bold">Home Address *</label>
+                    <input type="text" class="form-input w-full" id="home-address" required>
+                </div>
+                <div>
+                    <label class="block font-bold">City/Province *</label>
+                    <input type="text" class="form-input w-full" id="city" required>
+                </div>
+                <div>
+                    <label class="block font-bold">Zip Code *</label>
+                    <input type="text" class="form-input w-full" id="zip-code" required>
+                </div>
+                <div>
+                    <label class="block font-bold">Phone or Mobile *</label>
+                    <input type="tel" class="form-input w-full" id="phone" required>
+                </div>
+                <div>
+                    <label class="block font-bold">Email Address *</label>
+                    <input type="email" class="form-input w-full" id="email" required>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Passport & Visa -->
+        <div id="section-3" class="section hidden">
+            <h3 class="text-xl font-bold mb-4">Passport and Visa Information</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block font-bold">Passport No. *</label>
+                    <input type="text" class="form-input w-full" id="passport-no" required>
+                </div>
+                <div>
+                    <label class="block font-bold">Passport Start Date *</label>
+                    <input type="date" class="form-input w-full" id="passport-start-date" required>
+                </div>
+                <div>
+                    <label class="block font-bold">Passport Expiry Date *</label>
+                    <input type="date" class="form-input w-full" id="passport-expiry-date" required>
+                </div>
+                <div>
+                    <label class="block font-bold">Visa Type *</label>
+                    <select class="form-input w-full" id="visa-type" required>
+                        <option>Tourist</option>
+                        <option>Student</option>
+                        <option>Work</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Education & Work -->
+        <div id="section-4" class="section hidden">
+            <h3 class="text-xl font-bold mb-4">Education Background & Work History</h3>
+            <div class="grid grid-cols-1 gap-4">
+                <div>
+                    <label class="block font-bold">Highest Degree *</label>
+                    <input type="text" class="form-input w-full" id="highest-degree" required>
+                </div>
+                <div>
+                    <label class="block font-bold">Graduation School *</label>
+                    <input type="text" class="form-input w-full" id="graduation-school" required>
+                </div>
+                <div>
+                    <label class="block font-bold">Work History *</label>
+                    <textarea class="form-input w-full" id="work-history" rows="4" required></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Upload Documents -->
+        <div id="section-5" class="section hidden">
+            <h3 class="text-xl font-bold mb-4">Upload Documents</h3>
+            <div class="grid grid-cols-1 gap-4">
+                <div>
+                    <label class="block font-bold">Valid Passport *</label>
+                    <input type="file" class="form-input w-full" id="upload-passport" required>
+                </div>
+                <div>
+                    <label class="block font-bold">Highest Academic Diploma *</label>
+                    <input type="file" class="form-input w-full" id="upload-diploma" required>
+                </div>
+                <div>
+                    <label class="block font-bold">Recommendation Letter</label>
+                    <input type="file" class="form-input w-full" id="upload-recommendation">
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="mt-8 flex justify-between">
+            <button type="button" id="prev-btn" class="bg-gray-300 text-black py-2 px-4 rounded disabled:opacity-50"
+                disabled>Previous</button>
+            <button type="button" id="next-btn" class="bg-blue-500 text-white py-2 px-4 rounded">Next</button>
+        </div>
+
+    </form>
+</div>

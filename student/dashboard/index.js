@@ -57,49 +57,43 @@ function loadDashboard() {
 
 function loadApplications() {
     console.log('Applications page loaded!');
+    // JavaScript to handle section navigation
+    let currentStep = 1;
+    const totalSteps = 5;
 
-    // Fetch the application data from a JSON file or API
-    fetch('./api/application.json')
-        .then(response => response.json())
-        .then(data => {
-            const applicationStatus = document.getElementById('application-status');
-            const applyNowSection = document.getElementById('apply-now-section');
-            const existingApplicationsSection = document.getElementById('existing-applications-section');
-            const applicationsList = document.getElementById('applications-list');
+    document.getElementById('next-btn').addEventListener('click', () => {
+        if (currentStep < totalSteps) {
+            document.getElementById(`section-${currentStep}`).classList.add('hidden');
+            currentStep++;
+            document.getElementById(`section-${currentStep}`).classList.remove('hidden');
+            updateNavigation();
+        }
+    });
 
-            // If no applications, show "Apply Now" button
-            if (data.applications.length === 0) {
-                applicationStatus.innerText = "No Applications";
-                applyNowSection.classList.remove('hidden');
-                existingApplicationsSection.classList.add('hidden');
+    document.getElementById('prev-btn').addEventListener('click', () => {
+        if (currentStep > 1) {
+            document.getElementById(`section-${currentStep}`).classList.add('hidden');
+            currentStep--;
+            document.getElementById(`section-${currentStep}`).classList.remove('hidden');
+            updateNavigation();
+        }
+    });
+
+    function updateNavigation() {
+        document.getElementById('prev-btn').disabled = currentStep === 1;
+        document.getElementById('next-btn').textContent = currentStep === totalSteps ? 'Submit' : 'Next';
+
+        const steps = document.querySelectorAll('.step-btn');
+        steps.forEach((stepBtn, index) => {
+            if (index + 1 === currentStep) {
+                stepBtn.classList.remove('bg-gray-300');
+                stepBtn.classList.add('bg-blue-500', 'text-white');
             } else {
-                // If applications exist, hide "Apply Now" button and show the applications
-                applyNowSection.classList.add('hidden');
-                existingApplicationsSection.classList.remove('hidden');
-
-                applicationStatus.innerText = `${data.applications.length} Application(s)`;
-
-                // Populate the applications list
-                applicationsList.innerHTML = ''; // Clear any existing content
-                data.applications.forEach(application => {
-                    const appItem = document.createElement('div');
-                    appItem.classList.add('p-4', 'bg-white', 'rounded', 'shadow');
-
-                    const appDetails = `
-                                <p><strong>Program:</strong> ${application.program}</p>
-                                <p><strong>Status:</strong> ${application.status}</p>
-                                <p><strong>Submitted on:</strong> ${application.submissionDate}</p>
-                                <p><strong>Current Stage:</strong> ${application.currentStage}</p>
-                            `;
-
-                    appItem.innerHTML = appDetails;
-                    applicationsList.appendChild(appItem);
-                });
+                stepBtn.classList.add('bg-gray-300');
+                stepBtn.classList.remove('bg-blue-500', 'text-white');
             }
-        })
-        .catch(error => {
-            console.error('Error fetching application data:', error);
         });
+    }
 }
 
 
