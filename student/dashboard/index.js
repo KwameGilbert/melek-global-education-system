@@ -25,6 +25,9 @@ function loadDashboard() {
             // Populate notices with date and time
             const noticesList = document.getElementById('notices-list');
            
+            if (data.notices) {
+                noticesList.innerText = '';
+            }
             data.notices.forEach(notice => {
                 const noticeItem = document.createElement('div');
                 noticeItem.classList.add('p-2', 'mb-2', 'bg-white', 'rounded', 'shadow');
@@ -52,11 +55,53 @@ function loadDashboard() {
 }
 
 
-
 function loadApplications() {
     console.log('Applications page loaded!');
-    // Add code to handle applications data here
+
+    // Fetch the application data from a JSON file or API
+    fetch('./api/application.json')
+        .then(response => response.json())
+        .then(data => {
+            const applicationStatus = document.getElementById('application-status');
+            const applyNowSection = document.getElementById('apply-now-section');
+            const existingApplicationsSection = document.getElementById('existing-applications-section');
+            const applicationsList = document.getElementById('applications-list');
+
+            // If no applications, show "Apply Now" button
+            if (data.applications.length === 0) {
+                applicationStatus.innerText = "No Applications";
+                applyNowSection.classList.remove('hidden');
+                existingApplicationsSection.classList.add('hidden');
+            } else {
+                // If applications exist, hide "Apply Now" button and show the applications
+                applyNowSection.classList.add('hidden');
+                existingApplicationsSection.classList.remove('hidden');
+
+                applicationStatus.innerText = `${data.applications.length} Application(s)`;
+
+                // Populate the applications list
+                applicationsList.innerHTML = ''; // Clear any existing content
+                data.applications.forEach(application => {
+                    const appItem = document.createElement('div');
+                    appItem.classList.add('p-4', 'bg-white', 'rounded', 'shadow');
+
+                    const appDetails = `
+                                <p><strong>Program:</strong> ${application.program}</p>
+                                <p><strong>Status:</strong> ${application.status}</p>
+                                <p><strong>Submitted on:</strong> ${application.submissionDate}</p>
+                                <p><strong>Current Stage:</strong> ${application.currentStage}</p>
+                            `;
+
+                    appItem.innerHTML = appDetails;
+                    applicationsList.appendChild(appItem);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching application data:', error);
+        });
 }
+
 
 function loadPayments() {
     console.log('Payments page loaded!');
@@ -86,10 +131,9 @@ function loadPage(page) {
             // Call the respective function based on the loaded page
             switch (page) {
                 case 'dashboard.html':
-                    console.log(page)
                     loadDashboard();
                     break;
-                case 'applications.html':
+                case 'application.html':
                     loadApplications();
                     break;
                 case 'payments.html':
