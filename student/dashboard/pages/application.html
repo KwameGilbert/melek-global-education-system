@@ -1,168 +1,889 @@
-<div class= "container mx-auto py-10 px-4 md:px-0">
-    <h2 class="text-2xl font-bold mb-6 text-center">Application Form</h2>
+<style>
+    /* Additional styling */
+    .form-section {
+        margin-top: 20px;
+        border-bottom: 2px solid #e5e7eb;
+        padding-bottom: 10px;
+    }
+</style>
 
-    <!-- Navigation Steps -->
-    <div id="form-navigation" class="flex justify-between mb-8 overflow-x-auto">
-        <button class="step-btn bg-blue-500 text-white py-2 px-4 rounded text-xs" data-step="1">Personal Info</button>
-        <button class="step-btn bg-gray-300 py-2 px-4 rounded text-xs" data-step="2">Contact Info</button>
-        <button class="step-btn bg-gray-300 py-2 px-4 rounded text-xs" data-step="3">Passport & Visa</button>
-        <button class="step-btn bg-gray-300 py-2 px-4 rounded text-xs" data-step="4">Education & Work</button>
-        <button class="step-btn bg-gray-300 py-2 px-4 rounded text-xs" data-step="5">Documents</button>
-    </div>
+<!-- Save and Submit Buttons -->
+<div class="sticky top-0 bg-white z-10 flex justify-end space-x-2 py-2 w-full">
+    <button id="save-btn" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+        Save
+    </button>
+    <button id="submit-btn" class="bg-gray-300 text-white py-2 px-4 rounded cursor-not-allowed" disabled>
+        Submit
+    </button>
+</div>
+<!-- Form Heading -->
+<div class="container mx-auto">
+    <h2 class="text-2xl font-bold text-center">Application Form</h2>
 
-    <!-- Application Form Sections -->
-    <form id="application-form" class="bg-white p-8 rounded shadow-lg">
-
-        <!-- Section 1: Personal Info -->
-        <div id="section-1" class="section">
-            <h3 class="text-xl font-bold mb-4">Personal Information</h3>
+    <!-- Application Form -->
+    <form id="application-form" class="bg-white py-4 rounded">
+        <!-- Personal Information -->
+        <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md">
+            <h3 class="text-xl font-bold mb-4 text-gray-700">Personal Information</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Family Name -->
                 <div>
-                    <label class="block font-bold">Family Name *</label>
-                    <input type="text" class="form-input w-full" id="family-name" required>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Family Name *</label>
+                    <input type="text" id="family-name"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
                 </div>
+                <!-- Given Name -->
                 <div>
-                    <label class="block font-bold">Given Name *</label>
-                    <input type="text" class="form-input w-full" id="given-name" required>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Given Name *</label>
+                    <input type="text" id="given-name"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
                 </div>
+                <!-- Gender -->
                 <div>
-                    <label class="block font-bold">Gender *</label>
-                    <select class="form-input w-full" id="gender" required>
-                        <option>Male</option>
-                        <option>Female</option>
-                        <option>Other</option>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Gender *</label>
+                    <select id="gender"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required>
+                        <option value="">Select</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
                     </select>
                 </div>
+                <!-- Passport Size Photo -->
                 <div>
-                    <label class="block font-bold">Upload Passport Size Photo *</label>
-                    <input type="file" class="form-input w-full" id="passport-photo" required>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Upload Passport Size Photo *</label>
+                    <input type="file" id="passport-photo" accept="image/*"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
                 </div>
+                <!-- Nationality -->
                 <div>
-                    <label class="block font-bold">Nationality *</label>
-                    <select class="form-input w-full" id="nationality" required>
-                        <!-- Placeholder for API-populated countries -->
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Nationality *</label>
+                    <input type="text" id="nationality"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Marital Status -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Marital Status *</label>
+                    <select id="marital-status"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required>
+                        <option value="">Select</option>
+                        <option value="single">Single</option>
+                        <option value="married">Married</option>
+                        <option value="divorced">Divorced</option>
+                        <option value="widowed">Widowed</option>
                     </select>
                 </div>
+                <!-- Date of Birth -->
                 <div>
-                    <label class="block font-bold">Marital Status *</label>
-                    <select class="form-input w-full" id="marital-status" required>
-                        <option>Single</option>
-                        <option>Married</option>
-                    </select>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Date of Birth *</label>
+                    <input type="date" id="dob"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
                 </div>
+                <!-- Religion -->
                 <div>
-                    <label class="block font-bold">Date of Birth *</label>
-                    <input type="date" class="form-input w-full" id="dob" required>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Religion *</label>
+                    <input type="text" id="religion"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                 </div>
+                <!-- Country of Birth -->
                 <div>
-                    <label class="block font-bold">Religion *</label>
-                    <input type="text" class="form-input w-full" id="religion" required>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Country of Birth *</label>
+                    <input type="text" id="country-birth"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Occupation -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
+                    <input type="text" id="occupation"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Place of Birth -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Place of Birth *</label>
+                    <input type="text" id="place-birth"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Employer or Institution Affiliated -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Employer or Institution Affiliated to
+                        *</label>
+                    <input type="text" id="employer"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                </div>
+                <!-- Whether in China -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Whether in China now? *</label>
+                    <div class="flex space-x-4">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="in-china" value="yes"
+                                class="form-radio text-blue-400 focus:border-blue-400" required />
+                            <span class="ml-2">Yes</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="in-china" value="no"
+                                class="form-radio text-blue-400 focus:border-blue-400" required />
+                            <span class="ml-2">No</span>
+                        </label>
+                    </div>
+                </div>
+                <!-- Native Language -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Native Language *</label>
+                    <input type="text" id="native-language"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
                 </div>
             </div>
         </div>
 
-        <!-- Section 2: Contact Info -->
-        <div id="section-2" class="section hidden">
-            <h3 class="text-xl font-bold mb-4">Contact Information</h3>
+        <!-- Correspondence Address -->
+        <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
+            <h3 class="text-xl font-bold mb-4 text-gray-700">
+                Correspondence Address
+            </h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Detailed Address -->
                 <div>
-                    <label class="block font-bold">Correspondence Address *</label>
-                    <input type="text" class="form-input w-full" id="correspondence-address" required>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Detailed Address *</label>
+                    <input type="text" id="correspondence-detailed-address"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
                 </div>
+                <!-- City/Province -->
                 <div>
-                    <label class="block font-bold">Home Address *</label>
-                    <input type="text" class="form-input w-full" id="home-address" required>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">City/Province *</label>
+                    <input type="text" id="correspondence-city-province"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
                 </div>
+                <!-- Zipcode -->
                 <div>
-                    <label class="block font-bold">City/Province *</label>
-                    <input type="text" class="form-input w-full" id="city" required>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Zipcode *</label>
+                    <input type="text" id="correspondence-zipcode"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
                 </div>
+                <!-- Phone or Mobile -->
                 <div>
-                    <label class="block font-bold">Zip Code *</label>
-                    <input type="text" class="form-input w-full" id="zip-code" required>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Phone or Mobile *</label>
+                    <input type="tel" id="correspondence-phone"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
                 </div>
+                <!-- Email Address -->
                 <div>
-                    <label class="block font-bold">Phone or Mobile *</label>
-                    <input type="tel" class="form-input w-full" id="phone" required>
-                </div>
-                <div>
-                    <label class="block font-bold">Email Address *</label>
-                    <input type="email" class="form-input w-full" id="email" required>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Email Address *</label>
+                    <input type="email" id="correspondence-email"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
                 </div>
             </div>
         </div>
 
-        <!-- Section 3: Passport & Visa -->
-        <div id="section-3" class="section hidden">
-            <h3 class="text-xl font-bold mb-4">Passport and Visa Information</h3>
+        <!-- Current Address -->
+        <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
+            <h3 class="text-xl font-bold mb-4 text-gray-700">Current Address</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Detailed Address -->
                 <div>
-                    <label class="block font-bold">Passport No. *</label>
-                    <input type="text" class="form-input w-full" id="passport-no" required>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Detailed Address *</label>
+                    <input type="text" id="current-detailed-address"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
                 </div>
+                <!-- City/Province -->
                 <div>
-                    <label class="block font-bold">Passport Start Date *</label>
-                    <input type="date" class="form-input w-full" id="passport-start-date" required>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">City/Province *</label>
+                    <input type="text" id="current-city-province"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
                 </div>
+                <!-- Zipcode -->
                 <div>
-                    <label class="block font-bold">Passport Expiry Date *</label>
-                    <input type="date" class="form-input w-full" id="passport-expiry-date" required>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Zipcode *</label>
+                    <input type="text" id="current-zipcode"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
                 </div>
+                <!-- Phone or Mobile -->
                 <div>
-                    <label class="block font-bold">Visa Type *</label>
-                    <select class="form-input w-full" id="visa-type" required>
-                        <option>Tourist</option>
-                        <option>Student</option>
-                        <option>Work</option>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Phone or Mobile *</label>
+                    <input type="tel" id="current-phone"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Email Address -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Email Address *</label>
+                    <input type="email" id="current-email"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+            </div>
+        </div>
+
+        <!-- Passport and Visa Information -->
+        <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
+            <h3 class="text-xl font-bold mb-4 text-gray-700">
+                Passport and Visa Information
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Passport No. -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Passport No.</label>
+                    <input type="text" id="passport-no"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Passport Start Date -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Passport Start Date</label>
+                    <input type="date" id="passport-start-date"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Passport Expiry Date -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Passport Expiry Date</label>
+                    <input type="date" id="passport-expiry-date"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Old Passport No. -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Old Passport No.</label>
+                    <input type="text" id="old-passport-no"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                </div>
+                <!-- Expiration of Old Passport -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Expiration of Old Passport</label>
+                    <input type="date" id="old-passport-expiry-date"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Experience in China -->
+        <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
+            <h3 class="text-xl font-bold mb-4 text-gray-700">
+                Learning Experience in China
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Studied in China -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Have you studied in China or not?</label>
+                    <div class="flex items-center space-x-4">
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="studied-in-china" value="Yes" class="form-radio text-blue-500"
+                                required />
+                            <span>Yes</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="studied-in-china" value="No" class="form-radio text-blue-500" />
+                            <span>No</span>
+                        </label>
+                    </div>
+                </div>
+                <!-- Visa Type -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Visa Type *</label>
+                    <input type="text" id="visa-type"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Visa Expiry Date -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Visa Expiry Date *</label>
+                    <input type="date" id="visa-expiry-date"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Institution in China -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Institution in China that you are studying
+                        now</label>
+                    <input type="text" id="institution-china"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Sponsor's Information -->
+        <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
+            <h3 class="text-xl font-bold mb-4 text-gray-700">
+                Financial Sponsor's Information
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Sponsor Name -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Name *</label>
+                    <input type="text" id="sponsor-name"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Sponsor Relationship -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Relationship *</label>
+                    <input type="text" id="sponsor-relationship"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Sponsor Work Place -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Work Place *</label>
+                    <input type="text" id="sponsor-workplace"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Sponsor Occupation -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
+                    <input type="text" id="sponsor-occupation"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Sponsor Email -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Email *</label>
+                    <input type="email" id="sponsor-email"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Sponsor Phone/Mobile -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile *</label>
+                    <input type="tel" id="sponsor-phone"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+            </div>
+        </div>
+
+        <!-- Guarantor's Information -->
+        <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
+            <h3 class="text-xl font-bold mb-4 text-gray-700">
+                Guarantor's Information
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Guarantor Name -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Name *</label>
+                    <input type="text" id="guarantor-name"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Guarantor Relationship -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Relationship *</label>
+                    <input type="text" id="guarantor-relationship"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Guarantor Work Place -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Work Place *</label>
+                    <input type="text" id="guarantor-workplace"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Guarantor Occupation -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
+                    <input type="text" id="guarantor-occupation"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Guarantor Email -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Email *</label>
+                    <input type="email" id="guarantor-email"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Guarantor Phone/Mobile -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile *</label>
+                    <input type="tel" id="guarantor-phone"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency Contact -->
+        <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
+            <h3 class="text-xl font-bold mb-4 text-gray-700">Emergency Contact</h3>
+            <p class="text-gray-600 mb-4">
+                Please make sure the contact information is real and correct in case of
+                emergency.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Emergency Contact Name -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Name *</label>
+                    <input type="text" id="emergency-contact-name"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Emergency Contact Relationship -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Relationship *</label>
+                    <input type="text" id="emergency-contact-relationship"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Emergency Contact Work Place -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Work Place *</label>
+                    <input type="text" id="emergency-contact-workplace"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Emergency Contact Occupation -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
+                    <input type="text" id="emergency-contact-occupation"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Emergency Contact Email -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Email *</label>
+                    <input type="email" id="emergency-contact-email"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Emergency Contact Phone/Mobile -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile *</label>
+                    <input type="tel" id="emergency-contact-phone"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+            </div>
+        </div>
+
+        <!-- Major's Information -->
+        <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
+            <h3 class="text-xl font-bold mb-4 text-gray-700">Major's Information</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Degree -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
+                    <input type="text" id="degree"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Program -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Program *</label>
+                    <input type="text" id="program"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Teaching Language -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Teaching Language *</label>
+                    <input type="text" id="teaching-language"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Entry Year -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Entry Year *</label>
+                    <input type="text" id="entry-year"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Study Duration -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Study Duration *</label>
+                    <input type="text" id="study-duration"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+            </div>
+        </div>
+
+        <!-- Language Proficiency -->
+        <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
+            <h3 class="text-xl font-bold mb-4 text-gray-700">Language Proficiency</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- English Proficiency -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">English Proficiency *</label>
+                    <input type="text" id="english-proficiency"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- English Proficiency Certificate -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">English Proficiency Certificate *</label>
+                    <input type="file" id="english-proficiency-certificate"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                </div>
+                <!-- Chinese Proficiency -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Chinese Proficiency *</label>
+                    <input type="text" id="chinese-proficiency"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- HSK Level -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">HSK Level *</label>
+                    <input type="text" id="hsk-level"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- HSK Scores -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">HSK Scores</label>
+                    <input type="text" id="hsk-scores"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                </div>
+                <!-- HSKK Scores -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">HSKK Scores</label>
+                    <input type="text" id="hskk-scores"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                </div>
+                <!-- Time of Chinese language learning -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Time of Chinese language learning
+                        *</label>
+                    <input type="text" id="chinese-learning-time"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <!-- Whether the Chinese teacher own a Chinese Nationality -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Chinese Teacher's Nationality *</label>
+                    <select id="teacher-nationality"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
+                        <option value="">Select</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
                     </select>
                 </div>
+                <!-- Name of institution for Chinese learning -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Name of institution for Chinese learning
+                        *</label>
+                    <input type="text" id="institution-name"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
             </div>
         </div>
 
-        <!-- Section 4: Education & Work -->
-        <div id="section-4" class="section hidden">
-            <h3 class="text-xl font-bold mb-4">Education Background & Work History</h3>
+        <!-- Education Background Section -->
+        <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
+            <h3 class="text-xl font-bold mb-4 text-gray-700">Education Background</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Highest Degree *</label>
+                    <input type="text" id="highest-degree"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Highest Degree Graduation School *</label>
+                    <input type="text" id="graduation-school"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Certificate Type of Highest Degree Level
+                        *</label>
+                    <input type="text" id="certificate-type"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Mark Range if Full Mark is 100 *</label>
+                    <input type="number" id="mark-range"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Any Failure in Highest Degree Marks if
+                        Full Mark is 100 *</label>
+                    <input type="text" id="degree-failure"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        required />
+                </div>
+            </div>
+        </div>
+
+        <!-- Study Experience Section -->
+        <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
+            <h3 class="text-xl font-bold mb-4 text-gray-700">
+                Study Experience (Start from High School Till Now)
+            </h3>
+            <div id="study-experience-container" class="space-y-4">
+                <div class="study-entry grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
+                        <input type="text"
+                            class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                            required />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
+                        <input type="text"
+                            class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                            required />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Year of Attendance (From - To)
+                            *</label>
+                        <input type="text"
+                            class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                            required />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Contact Person</label>
+                        <input type="text"
+                            class="contact-person w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                    </div>
+                </div>
+            </div>
+            <button id="add-study-entry" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">
+                Add More
+            </button>
+        </div>
+
+        <!-- Work History Section -->
+        <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
+            <h3 class="text-xl font-bold mb-4 text-gray-700">Work History</h3>
+            <div id="work-history-container" class="space-y-4">
+                <div class="work-entry grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Starting Time</label>
+                        <input type="date"
+                            class="work-start w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Ending Time</label>
+                        <input type="date"
+                            class="work-end w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Occupation</label>
+                        <input type="text"
+                            class="occupation w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Company</label>
+                        <input type="text"
+                            class="company w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile</label>
+                        <input type="tel"
+                            class="phone w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Email</label>
+                        <input type="email"
+                            class="email w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                    </div>
+                </div>
+            </div>
+            <button id="add-work-entry" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">
+                Add More
+            </button>
+        </div>
+
+        <!-- Upload Documents Section -->
+        <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
+            <h3 class="text-xl font-bold mb-4 text-gray-700">Upload Documents</h3>
+            <p class="text-gray-600 mb-4">
+                The uploaded file type needs to be
+                <strong>.jpg, .jpeg, .png, .bmp, .doc, .docx, .pdf, .xls, .xlsx</strong>. Maximum file size is 5MB.
+            </p>
+
             <div class="grid grid-cols-1 gap-4">
+                <!-- Valid passport with visa page -->
                 <div>
-                    <label class="block font-bold">Highest Degree *</label>
-                    <input type="text" class="form-input w-full" id="highest-degree" required>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Valid Passport with Visa Page *</label>
+                    <input type="file"
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" required />
                 </div>
+
+                <!-- Highest academic Diploma/Certificate -->
                 <div>
-                    <label class="block font-bold">Graduation School *</label>
-                    <input type="text" class="form-input w-full" id="graduation-school" required>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Highest Academic Diploma/Certificate
+                        *</label>
+                    <input type="file"
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" required />
                 </div>
+
+                <!-- Highest academic transcripts -->
                 <div>
-                    <label class="block font-bold">Work History *</label>
-                    <textarea class="form-input w-full" id="work-history" rows="4" required></textarea>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Highest Academic Transcripts *</label>
+                    <input type="file"
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" required />
+                </div>
+
+                <!-- Non-criminal record -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Non-criminal Record/Certificate of
+                        Non-criminal Record *</label>
+                    <input type="file"
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" required />
+                </div>
+
+                <!-- Bank Statement -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Bank Statement</label>
+                    <input type="file"
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                </div>
+
+                <!-- Application Fee Receipt -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Application Fee Receipt</label>
+                    <input type="file"
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <p class="text-sm text-gray-500">
+                        Please note this application fee is non-refundable.
+                    </p>
+                </div>
+
+                <!-- Recommendation Letters -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Recommendation Letter(s)</label>
+                    <input type="file"
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <p class="text-sm text-gray-500">
+                        Provide 2 recommendation letters (for Masters & PhD only).
+                    </p>
+                </div>
+
+                <!-- Publications, Articles, Thesis -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Publications, Articles, Thesis,
+                        etc.</label>
+                    <input type="file"
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <p class="text-sm text-gray-500">(For Masters & PhD only)</p>
+                </div>
+
+                <!-- Foreigner Physical Examination Form -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Foreigner Physical Examination Form
+                        *</label>
+                    <input type="file"
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" required />
+                </div>
+
+                <!-- Guardian's Letter of Guarantee -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Guardian's Letter of Guarantee</label>
+                    <input type="file"
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <p class="text-sm text-gray-500">
+                        Applicants under 18 should submit this document.
+                    </p>
+                </div>
+
+                <!-- English Language Proficiency -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">English Language Proficiency</label>
+                    <input type="file"
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <p class="text-sm text-gray-500">
+                        Students from English-speaking countries are exempted.
+                    </p>
+                </div>
+
+                <!-- Chinese Language Certificate (HSK Certificate) -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Chinese Language Certificate (HSK
+                        Certificate)</label>
+                    <input type="file"
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                </div>
+
+                <!-- Parent's Authorization Letter -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Parent's Authorization Letter</label>
+                    <input type="file"
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <p class="text-sm text-gray-500">
+                        Applicants under 18 should submit this document.
+                    </p>
+                </div>
+
+                <!-- Study Plan or Research Proposal -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Study Plan or Research Proposal</label>
+                    <input type="file"
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <p class="text-sm text-gray-500">For Masters & PhD only</p>
+                </div>
+
+                <!-- Curriculum Vitae -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Curriculum Vitae</label>
+                    <input type="file"
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                </div>
+
+                <!-- Additional Documents -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Additional Documents</label>
+                    <input type="file"
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
             </div>
-        </div>
 
-        <!-- Section 5: Upload Documents -->
-        <div id="section-5" class="section hidden">
-            <h3 class="text-xl font-bold mb-4">Upload Documents</h3>
-            <div class="grid grid-cols-1 gap-4">
-                <div>
-                    <label class="block font-bold">Valid Passport *</label>
-                    <input type="file" class="form-input w-full" id="upload-passport" required>
-                </div>
-                <div>
-                    <label class="block font-bold">Highest Academic Diploma *</label>
-                    <input type="file" class="form-input w-full" id="upload-diploma" required>
-                </div>
-                <div>
-                    <label class="block font-bold">Recommendation Letter</label>
-                    <input type="file" class="form-input w-full" id="upload-recommendation">
-                </div>
+            <!-- Admission Notice Collection Method -->
+            <div class="mt-6">
+                <label class="block text-sm font-bold text-gray-700 mb-2">How to Collect the Admission Notice *</label>
+                <select class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                    required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="home">The same as home address</option>
+                    <option value="current">
+                        The same as the current postal address
+                    </option>
+                    <option value="pickup">Pick Up By Myself</option>
+                </select>
+                <p class="text-sm text-gray-500 mt-2">
+                    Please make sure the postal address you provided is valid for at least
+                    3 months to receive admission documents successfully.
+                </p>
             </div>
         </div>
-
-        <!-- Navigation Buttons -->
-        <div class="mt-8 flex justify-between">
-            <button type="button" id="prev-btn" class="bg-gray-300 text-black py-2 px-4 rounded disabled:opacity-50"
-                disabled>Previous</button>
-            <button type="button" id="next-btn" class="bg-blue-500 text-white py-2 px-4 rounded">Next</button>
-        </div>
-
     </form>
 </div>
