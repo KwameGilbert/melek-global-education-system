@@ -160,6 +160,17 @@ function loadApplications() {
 function loadPayments() {
     console.log('Payments page loaded!');
     // Add code to handle payments here
+      function showPaymentForm() {
+            const paymentMethod = document.getElementById("payment-method").value;
+            const forms = document.querySelectorAll(".payment-form");
+
+            forms.forEach(form => form.classList.add("hidden"));
+            if (paymentMethod) {
+                document.getElementById(`${paymentMethod}-form`).classList.remove("hidden");
+            }
+        }
+
+    document.getElementById("payment-method").addEventListener("change", showPaymentForm);
 }
 
 function loadProfile() {

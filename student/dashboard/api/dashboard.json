@@ -1,6 +1,6 @@
 {
-    "applicationStatus": "In Review",
-    "paymentStatus": "Pending",
+    "applicationStatus": "Processing",
+    "paymentStatus": "Complete",
     "notices": [
         {
             "message": "Application deadline for Spring 2024 intake is approaching soon.",

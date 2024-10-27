@@ -9,7 +9,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../style/tailwind.min.css">
     <!-- FontAwesome Icons -->
-    <!-- FontAwesome Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="../fontawesome/css/all.min.css" rel="stylesheet">
 
@@ -60,9 +59,9 @@
     </div>
 
     <!-- Main Content Area -->
-    <div class="flex-1 flex flex-col">
+    <div class="flex-1 flex flex-col md:relative md:z-10 bg-white overflow-y-auto">
         <!-- Header -->
-        <header class="bg-white shadow w-full flex items-center justify-between p-4">
+        <header class="shadow w-full flex items-center justify-between p-4">
             <!-- Hamburger Icon and Title -->
             <div class="flex items-center">
                 <button class="md:hidden text-gray-800 focus:outline-none" onclick="toggleSidebar()">
@@ -93,6 +92,20 @@
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('-translate-x-full');
+            document.body.classList.toggle('overflow-hidden'); // Prevent scrolling when sidebar is open
+
+            if (!sidebar.classList.contains('-translate-x-full')) {
+            document.addEventListener('click', handleOutsideClick);
+            } else {
+            document.removeEventListener('click', handleOutsideClick);
+            }
+        }
+
+        function handleOutsideClick(event) {
+            const sidebar = document.getElementById('sidebar');
+            if (!sidebar.contains(event.target) && !event.target.closest('.fa-bars')) {
+            toggleSidebar();
+            }
         }
 
         // On page load, check localStorage and load the appropriate page
