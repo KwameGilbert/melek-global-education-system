@@ -12,9 +12,7 @@
                 <option value="">Select Payment Method</option>
                 <option value="mobile-money">Mobile Money</option>
                 <option value="paypal">PayPal</option>
-                <option value="stripe">Stripe</option>
-                <option value="bank">Bank Transfer</option>
-                <option value="venmo">Venmo</option>
+                <option value="stripe">Stripe - Visa/ Mastercard</option>
             </select>
         </div>
 
@@ -51,27 +49,6 @@
                 class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400 mb-4"
                 placeholder="CVV" required>
             <button class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded">Pay Now</button>
-        </div>
-
-        <!-- Bank Transfer Form -->
-        <div id="bank-form" class="payment-form hidden">
-            <h3 class="text-lg font-semibold text-gray-700 mb-2">Bank Transfer</h3>
-            <p class="text-gray-600 mb-4">Transfer to the following bank account details:</p>
-            <div class="bg-gray-100 p-4 rounded mb-4">
-                <p><strong>Bank Name:</strong> Example Bank</p>
-                <p><strong>Account Name:</strong> Application Name</p>
-                <p><strong>Account Number:</strong> 123-456-7890</p>
-                <p><strong>Swift Code:</strong> EXAMP001</p>
-            </div>
-            <button class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded">Confirm
-                Payment</button>
-        </div>
-
-        <!-- Venmo Form -->
-        <div id="venmo-form" class="payment-form hidden">
-            <h3 class="text-lg font-semibold text-gray-700 mb-2">Pay with Venmo</h3>
-            <button class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded">Proceed with
-                Venmo</button>
         </div>
     </div>
 
