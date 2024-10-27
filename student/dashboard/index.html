@@ -11,17 +11,17 @@
     <!-- FontAwesome Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="../fontawesome/css/all.min.css" rel="stylesheet">
-
     <style>
-          .hidden {
+        .hidden {
             display: none;
         }
     </style>
 </head>
 
 <body class="h-screen overflow-hidden flex bg-gray-50">
-<!-- Sidebar -->
-<div id="sidebar" class="bg-gray-800 text-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-500 ease-in-out overflow-y-auto z-50">
+    <!-- Sidebar -->
+    <div id="sidebar"
+        class="bg-gray-800 text-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-500 ease-in-out overflow-y-auto z-50">
 
         <!-- Close Button for Small Screens -->
         <div class="md:hidden flex justify-end pr-4">
@@ -52,7 +52,7 @@
             <a href="#" data-page="profile.html" class="flex items-center py-2.5 px-4 hover:bg-gray-700">
                 <i class="fas fa-user mr-3"></i> Profile
             </a>
-            <a href="#" data-page="updates.html" class="flex items-center py-2.5 px-4 hover:bg-gray-700">
+            <a href="#" data-page="notices.html" class="flex items-center py-2.5 px-4 hover:bg-gray-700">
                 <i class="fas fa-bell mr-3"></i> Notices
             </a>
         </nav>
@@ -83,10 +83,7 @@
         </main>
     </div>
 
-
-
     <script src="./index.js"></script>
-
     <script>
         // Toggle sidebar visibility
         function toggleSidebar() {
@@ -95,21 +92,21 @@
             document.body.classList.toggle('overflow-hidden'); // Prevent scrolling when sidebar is open
 
             if (!sidebar.classList.contains('-translate-x-full')) {
-            document.addEventListener('click', handleOutsideClick);
+                document.addEventListener('click', handleOutsideClick);
             } else {
-            document.removeEventListener('click', handleOutsideClick);
+                document.removeEventListener('click', handleOutsideClick);
             }
         }
 
         function handleOutsideClick(event) {
             const sidebar = document.getElementById('sidebar');
             if (!sidebar.contains(event.target) && !event.target.closest('.fa-bars')) {
-            toggleSidebar();
+                toggleSidebar();
             }
         }
 
         // On page load, check localStorage and load the appropriate page
-        
+
         window.onload = function () {
             const activePage = localStorage.getItem('activePage') || 'dashboard.html'; // Default to 'dashboard.html'
             loadPage(activePage);
@@ -117,7 +114,5 @@
 
 
     </script>
-
 </body>
-
 </html>

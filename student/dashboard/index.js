@@ -9,7 +9,6 @@ document.querySelectorAll('a[data-page]').forEach(link => {
     });
 });
 
-
 // Function to load the dashboard data
 function loadDashboard() {
     console.log('Dashboard loaded!');
@@ -53,7 +52,6 @@ function loadDashboard() {
             console.error('Error fetching dashboard data:', error);
         });
 }
-
 
 function loadApplications() {
     console.log('Applications page loaded!');
@@ -156,7 +154,6 @@ function loadApplications() {
             });
 }
 
-
 function loadPayments() {
     console.log('Payments page loaded!');
     // Add code to handle payments here
@@ -178,11 +175,69 @@ function loadProfile() {
     // Add code to handle profile data here
 }
 
-function loadUpdates() {
+function loadNoticesPage() {
     console.log('Updates page loaded!');
     // Add code to handle updates here
-}
+    // Fetch notices from JSON
+    async function loadNotices() {
+        try {
+            const response = await fetch('./api/notices.json');
+            const notices = await response.json();
+            displayNotices(notices);
+        } catch (error) {
+            console.error("Failed to load notices:", error);
+        }
+    }
 
+    // Display notices with a preview format
+    function displayNotices(notices) {
+        const noticesList = document.getElementById('notices-list');
+        noticesList.innerHTML = '';
+
+        notices.forEach(notice => {
+            const noticeItem = document.createElement('div');
+            noticeItem.className = 'p-4 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer';
+
+            noticeItem.innerHTML = `
+            <div class="flex justify-between items-center">
+                <h2 class="font-medium text-lg text-gray-800 truncate">${notice.title}</h2>
+                <span class="text-sm text-gray-500">${notice.date}</span>
+            </div>
+            <p class="text-gray-600 mt-1 truncate">${notice.message.substring(0, 50)}...</p>
+        `;
+
+            // Show modal with notice details on click
+            noticeItem.onclick = () => showNoticeModal(notice);
+
+            noticesList.appendChild(noticeItem);
+        });
+    }
+
+    // Show full notice details in modal
+    function showNoticeModal(notice) {
+        document.getElementById('modal-title').textContent = notice.title;
+        document.getElementById('modal-message').textContent = notice.message;
+        document.getElementById('modal-date').textContent = `Date: ${notice.date} | Time: ${notice.time}`;
+
+        const modal = document.getElementById('notice-modal');
+        modal.classList.remove('hidden');
+    }
+
+    // Close modal
+    function closeModal() {
+        document.getElementById('notice-modal').classList.add('hidden');
+    }
+
+    // Event listeners
+    document.getElementById('close-modal').onclick = closeModal;
+    document.getElementById('notice-modal').onclick = event => {
+        if (event.target === event.currentTarget) closeModal();
+    };
+
+    // Load notices on page load
+    loadNotices();
+
+}
 
 // Load the selected page and inject the content into the main-content area
 function loadPage(page) {
@@ -207,8 +262,8 @@ function loadPage(page) {
                 case 'profile.html':
                     loadProfile();
                     break;
-                case 'updates.html':
-                    loadUpdates();
+                case 'notices.html':
+                    loadNoticesPage();
                     break;
                 default:
                     console.error('No matching function for the page:', page);
@@ -216,5 +271,3 @@ function loadPage(page) {
         })
         .catch(error => console.error('Error loading page:', error));
 }
-
-
