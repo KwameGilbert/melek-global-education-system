@@ -1,16 +1,7 @@
 {
-    "applications": [
-        {
-            "program": "Master of Business Administration",
-            "status": "Accepted",
-            "submissionDate": "2024-10-05",
-            "currentStage": "Document Verification"
-        },
-        {
-            "program": "Bachelor of Science in Computer Science",
-            "status": "Accepted",
-            "submissionDate": "2024-09-15",
-            "currentStage": "Final Review"
-        }
-    ]
+    "applicationStatus": "Processing",
+    "paymentStatus": "Complete",
+    "paymentAmount": "$100",
+    "profileComplete": true
+
 }

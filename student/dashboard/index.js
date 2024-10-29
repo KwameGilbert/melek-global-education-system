@@ -12,22 +12,40 @@ document.querySelectorAll('a[data-page]').forEach(link => {
 // Function to load the dashboard data
 function loadDashboard() {
     console.log('Dashboard loaded!');
+    const view_all_notices = document.getElementById('view-all-notices');
 
-    // Fetch the data from the JSON file
-    fetch('./api/dashboard.json')
+        view_all_notices.addEventListener('click', function (event) {
+            event.preventDefault();
+            const page = view_all_notices.getAttribute('data-page');
+            localStorage.setItem('activePage', page);
+            loadPage(page);
+        });
+
+    
+    fetch('./api/application.json')
         .then(response => response.json())
         .then(data => {
             // Populate application and payment status
             document.getElementById('application-status').innerText = data.applicationStatus;
             document.getElementById('payment-status').innerText = data.paymentStatus;
+        })
+        .catch(error => {
+            console.error('Error fetching dashboard data:', error);
+        });
 
+    fetch('./api/notices.json')
+        .then(response => response.json())
+        .then(data => {
             // Populate notices with date and time
             const noticesList = document.getElementById('notices-list');
-           
-            if (data.notices) {
-                noticesList.innerText = '';
+            noticesList.innerText = '';
+
+            if (data.length === 0) {
+                noticesList.innerText = 'No notices available';
+                return;
             }
-            data.notices.forEach(notice => {
+
+            data.forEach(notice => {
                 const noticeItem = document.createElement('div');
                 noticeItem.classList.add('p-2', 'mb-2', 'bg-white', 'rounded', 'shadow');
 
@@ -47,10 +65,8 @@ function loadDashboard() {
                 // Append the notice item to the list
                 noticesList.appendChild(noticeItem);
             });
-        })
-        .catch(error => {
-            console.error('Error fetching dashboard data:', error);
-        });
+        }
+    );
 }
 
 function loadApplications() {
@@ -87,71 +103,119 @@ function loadApplications() {
         }
     });
 
+    //JavaScript to Add More Entries  
+    document.getElementById('add-study-entry').addEventListener('click', () => {
+        const studyContainer = document.getElementById('study-experience-container');
+        const newEntry = document.createElement('div');
+        newEntry.className = 'study-entry grid grid-cols-1 md:grid-cols-2 gap-4 mt-4';
+        newEntry.innerHTML = `
+            <h2 class="text-xl font-bold text-gray-700">Next School</h2>
+            <br>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
+                <input type="text" class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required>
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
+                <input type="text" class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required>
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Year of Attendance (From - To) *</label>
+                <input type="text" class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required>
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Contact Person</label>
+                <input type="text" class="contact-person w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
+            </div>
+        `;
+        studyContainer.appendChild(newEntry);
+    });
 
-     
-        // <!-- JavaScript to Add More Entries -->
-    
-            document.getElementById('add-study-entry').addEventListener('click', () => {
-                const studyContainer = document.getElementById('study-experience-container');
-                const newEntry = document.createElement('div');
-                newEntry.className = 'study-entry grid grid-cols-1 md:grid-cols-2 gap-4 mt-4';
-                newEntry.innerHTML = `
-                    <h2 class="text-xl font-bold text-gray-700">Next School</h2>
-                    <br>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
-                        <input type="text" class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
-                        <input type="text" class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Year of Attendance (From - To) *</label>
-                        <input type="text" class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Contact Person</label>
-                        <input type="text" class="contact-person w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
-                    </div>
-                `;
-                studyContainer.appendChild(newEntry);
-            });
+    document.getElementById('add-work-entry').addEventListener('click', () => {
+        const workContainer = document.getElementById('work-history-container');
+        const newEntry = document.createElement('div');
+        newEntry.className = 'work-entry grid grid-cols-1 md:grid-cols-2 gap-4 mt-4';
+        newEntry.innerHTML = `
+                <h2 class="text-xl font-bold text-gray-700">Next Work Experience</h2>
+            <br>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Starting Time</label>
+                <input type="date" class="work-start w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Ending Time</label>
+                <input type="date" class="work-end w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Occupation</label>
+                <input type="text" class="occupation w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Company</label>
+                <input type="text" class="company w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile</label>
+                <input type="tel" class="phone w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Email</label>
+                <input type="email" class="email w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
+            </div>
+        `;
+        workContainer.appendChild(newEntry);
+    });
 
-            document.getElementById('add-work-entry').addEventListener('click', () => {
-                const workContainer = document.getElementById('work-history-container');
-                const newEntry = document.createElement('div');
-                newEntry.className = 'work-entry grid grid-cols-1 md:grid-cols-2 gap-4 mt-4';
-                newEntry.innerHTML = `
-                     <h2 class="text-xl font-bold text-gray-700">Next Work Experience</h2>
-                    <br>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Starting Time</label>
-                        <input type="date" class="work-start w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Ending Time</label>
-                        <input type="date" class="work-end w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Occupation</label>
-                        <input type="text" class="occupation w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Company</label>
-                        <input type="text" class="company w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile</label>
-                        <input type="tel" class="phone w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Email</label>
-                        <input type="email" class="email w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
-                    </div>
-                `;
-                workContainer.appendChild(newEntry);
+    async function populateFormOptions() {
+        // Fetch countries and nationalities from Rest Countries API
+        try {
+            const responseCountries = await fetch('./api/countries_list.json');
+            const countriesData = await responseCountries.json();
+
+            const nationalityInput = document.getElementById("nationality");
+            const countryOfBirthInput = document.getElementById("country-birth");
+
+            countriesData.forEach(country => {
+                // Add options for nationality and country of birth
+                let nationalityOption = document.createElement("option");
+                nationalityOption.value = country;
+                nationalityOption.text = country;
+                nationalityInput.add(nationalityOption);
+
+                let countryOption = document.createElement("option");
+                countryOption.value = country;
+                countryOption.text = country;
+                countryOfBirthInput.add(countryOption);
+
+                let countryOfCorrespondenceOption = document.createElement("option");
+                countryOfCorrespondenceOption.value = country;
+                countryOfCorrespondenceOption.text = country;
+                document.getElementById("country-correspondence").add(countryOfCorrespondenceOption);
+
+                let countryOfResidenceOption = document.createElement("option");
+                countryOfResidenceOption.value = country;
+                countryOfResidenceOption.text = country;
+                document.getElementById("country-residence").add(countryOfResidenceOption);
             });
+        } catch (error) {
+            console.error('Error fetching countries and nationalities:', error);
+        }
+
+    }
+
+    // Populate religion options with a custom list
+    const religions = ["Christianity", "Islam", "Hinduism", "Buddhism", "Sikhism", "Judaism", "Atheism", "Other"];
+    const religionInput = document.getElementById("religion");
+
+    religions.forEach(religion => {
+        let religionOption = document.createElement("option");
+        religionOption.value = religion;
+        religionOption.text = religion;
+        religionInput.add(religionOption);
+    });
+
+populateFormOptions();
+
 }
 
 function loadPayments() {
@@ -183,6 +247,7 @@ function loadNoticesPage() {
         try {
             const response = await fetch('./api/notices.json');
             const notices = await response.json();
+            // Display notices
             displayNotices(notices);
         } catch (error) {
             console.error("Failed to load notices:", error);
@@ -193,6 +258,11 @@ function loadNoticesPage() {
     function displayNotices(notices) {
         const noticesList = document.getElementById('notices-list');
         noticesList.innerHTML = '';
+
+        if (notices.length === 0) {
+            noticesList.innerHTML = '<p class="text-gray-500 text-lg">No notices available</p>';
+            return;
+        }
 
         notices.forEach(notice => {
             const noticeItem = document.createElement('div');
