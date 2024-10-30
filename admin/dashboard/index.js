@@ -73,51 +73,66 @@ function loadAdminDashboard() {
 function loadApplicants(){
     console.log('Applicants loaded successfully');
 
-    // Demo JSON data
-    const data = [
-        { "name": "John Doe", "applicantId": "A1234", "school": "University A", "program": "Engineering", "dateApplied": "2023-07-18", "status": "Pending" },
-        { "name": "Jane Smith", "applicantId": "A5678", "school": "University B", "program": "Business", "dateApplied": "2023-08-22", "status": "Accepted" },
-        { "name": "Alice Johnson", "applicantId": "A9012", "school": "University C", "program": "Arts", "dateApplied": "2023-07-10", "status": "Rejected" },
-        { "name": "Bob Brown", "applicantId": "A3456", "school": "University D", "program": "Science", "dateApplied": "2023-08-15", "status": "Pending" }
-    ];
+    let applicantData = [];
 
-    // Populate Table
-    const tableBody = document.getElementById("applicantTableBody");
-    function populateTable(applicants) {
-        tableBody.innerHTML = "";
-        applicants.forEach(applicant => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td class="p-3 border">${applicant.name}</td>
-                <td class="p-3 border">${applicant.applicantId}</td>
-                <td class="p-3 border">${applicant.school}</td>
-                <td class="p-3 border">${applicant.program}</td>
-                <td class="p-3 border">${applicant.dateApplied}</td>
-                <td class="p-3 border">${applicant.status}</td>
-                <td class="p-3 border text-center"><button class="text-blue-500 hover:text-blue-700">View</button></td>
-            `;
-            tableBody.appendChild(row);
-        });
-    }
-    populateTable(data);
-
-    // Update Filter Values
-    function updateFilterValues() {
-        const filterBy = document.getElementById("filterBy").value;
-        const filterValue = document.getElementById("filterValue");
-        filterValue.innerHTML = `<option value="">Select value</option>`;
-
-        // Get unique values for the selected filter
-        if (filterBy) {
-            const uniqueValues = [...new Set(data.map(applicant => applicant[filterBy]))];
-            uniqueValues.forEach(value => {
-                const option = document.createElement("option");
-                option.value = value;
-                option.textContent = value;
-                filterValue.appendChild(option);
-            });
+    async function fetchApplicants() {
+        try {
+            const response = await fetch('applicants.json');
+            applicantData = await response.json();
+            populateTable(applicantData);
+            populateFilterOptions();
+        } catch (error) {
+            console.error("Failed to load applicants data:", error);
         }
     }
+
+    function populateTable(data) {
+        const table = document.getElementById('applicantsTable');
+        table.innerHTML = data.map(applicant => `
+            <tr>
+                <td class="p-4 border-b">${applicant.name}</td>
+                <td class="p-4 border-b">${applicant.applicantId}</td>
+                <td class="p-4 border-b">${applicant.school}</td>
+                <td class="p-4 border-b">${applicant.program}</td>
+                <td class="p-4 border-b">${applicant.dateApplied}</td>
+                <td class="p-4 border-b">${applicant.status}</td>
+                <td class="p-4 border-b"><button class="text-blue-500">View</button></td>
+            </tr>
+        `).join('');
+    }
+
+    function populateFilterOptions() {
+        const filterColumn = document.getElementById('filterColumn');
+        const filterValue = document.getElementById('filterValue');
+
+        filterColumn.addEventListener('change', () => {
+            const column = filterColumn.value;
+            const values = [...new Set(applicantData.map(a => a[column]))];
+            filterValue.innerHTML = '<option value="">Select Value</option>' +
+                values.map(value => `<option value="${value}">${value}</option>`).join('');
+        });
+
+        filterValue.addEventListener('change', filterTable);
+    }
+
+    function filterTable() {
+        const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+        const filterColumn = document.getElementById('filterColumn').value;
+        const filterValue = document.getElementById('filterValue').value;
+
+        const filteredData = applicantData.filter(applicant => {
+            const matchesSearch = applicant.name.toLowerCase().includes(searchQuery) ||
+                applicant.applicantId.toLowerCase().includes(searchQuery);
+            const matchesFilter = !filterColumn || !filterValue || applicant[filterColumn] === filterValue;
+            return matchesSearch && matchesFilter;
+        });
+
+        populateTable(filteredData);
+    }
+
+    document.getElementById('searchInput').addEventListener('input', filterTable);
+
+    fetchApplicants();
 
     // Search Functionality
     document.getElementById("search").addEventListener("input", function () {
@@ -140,20 +155,12 @@ function loadApplicants(){
     }
 
     document.querySelectorAll('th[data-column]').forEach(link => {
-        link.addEventListener('click', function (event) {
+        link.addEventListener('click', function () {
             const column = this.getAttribute('data-column');
             sortTable(column);
         })
     })
 
-    
-    // Filter Functionality
-    document.getElementById("applyFilter").addEventListener("click", function () {
-        const filterBy = document.getElementById("filterBy").value;
-        const filterValue = document.getElementById("filterValue").value;
-        const filteredData = filterBy && filterValue ? data.filter(applicant => applicant[filterBy] === filterValue) : data;
-        populateTable(filteredData);
-    });
 };
 
 // Load the selected page and inject the content into the main-content area
