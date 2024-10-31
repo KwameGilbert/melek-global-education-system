@@ -95,6 +95,7 @@ function loadApplicants() {
             `;
             tableBody.appendChild(row);
         });
+     
     }
     populateTable(data);
 
@@ -134,15 +135,20 @@ function loadApplicants() {
         });
         sortOrder = !sortOrder;
         populateTable(sortedData);
-    }
+    };
 
     document.querySelectorAll('th[data-column]').forEach(link => {
         link.addEventListener('click', function (event) {
             const column = this.getAttribute('data-column');
             sortTable(column);
         })
-    })
+    });
 
+    // Add a listener to add the filter values upon selection of the filter category
+    document.getElementById("filterBy").addEventListener("change", function () {
+
+        updateFilterValues();
+    });
 
     // Filter Functionality
     document.getElementById("applyFilter").addEventListener("click", function () {
