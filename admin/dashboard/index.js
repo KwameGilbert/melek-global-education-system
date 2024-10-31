@@ -13,11 +13,10 @@ document.querySelectorAll('a[data-page]').forEach(link => {
 function loadAdminDashboard() {
     console.log('Admin Dashboard Loaded');
 
-    function generateChart() {
         // Initialize Chart.js with dummy data
         const ctx = document.getElementById('applicationsChart').getContext('2d');
         const applicationsChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'pie',
             data: {
                 labels: ['Applicants', 'Admitted', 'Processing', 'Rejected', 'Pending Payment', 'Pending Processing'],
                 datasets: [{
@@ -65,12 +64,10 @@ function loadAdminDashboard() {
                 }
             }
         });
-    }
-
-    generateChart();
+  
 };
 
-function loadApplicants(){
+function loadApplicants() {
     console.log('Applicants loaded successfully');
 
     // Demo JSON data
@@ -146,7 +143,7 @@ function loadApplicants(){
         })
     })
 
-    
+
     // Filter Functionality
     document.getElementById("applyFilter").addEventListener("click", function () {
         const filterBy = document.getElementById("filterBy").value;
