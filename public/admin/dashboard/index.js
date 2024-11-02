@@ -218,6 +218,7 @@ document.querySelectorAll(".view-applicant").forEach((element) => {
   });
 });
   
+// function to be run when the view of an applicant is clicked
   function viewApplicant(applicantId) {
     fetch(`./pages/view-applicant.html?id=${applicantId}`)
       .then((response) => response.text())
@@ -229,12 +230,13 @@ document.querySelectorAll(".view-applicant").forEach((element) => {
       .catch((error) => {
         console.error('Error fetching applicant data:', error);
       });
-  }
-
-  
-
+  }   
 }
 
+// function to show update modal for student application
+function toggleUpdateModal(show) {
+  document.getElementById('updateModal').classList.toggle('hidden', !show);
+} 
 
 // Load the selected page and inject the content into the main-content area
 function loadPage(page) {
