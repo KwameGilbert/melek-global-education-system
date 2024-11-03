@@ -1,13 +1,15 @@
 
-<div class="flex flex-col md:flex-row max-w-5xl mx-0 top-0">
+<div class="flex flex-col md:flex-row max-w-full mx-0 top-0">
     
       <!-- Sidebar -->
-        <div class="w-full overflow-y-hidden h-full top-0 md:min-h-screen md:w-1/4 bg-white shadow-lg p-6 md:sticky md:top-0">
+        <div class="w-full overflow-y-hidden h-full md:min-h-screen md:w-1/4 bg-white shadow-lg p-6 md:sticky md:top-0">
             <h2 class="text-lg font-semibold mb-2 text-gray-800">Application Menu</h2>
             <div class="space-y-4">
                 <!-- Payment Status -->
                 <div class="bg-green-100 text-green-800 p-2 rounded">
                     <strong>Applicant ID:</strong> A1324 
+                    <br>
+                    <strong>Applicant Status:</strong> Pending Processing 
                     <br>
                     <strong>Payment Status:</strong> Paid
                 </div>
@@ -19,12 +21,12 @@
                 <a href="#" class="bg-gray-500 text-white w-full inline-block text-center py-2 px-4 rounded">Download Form</a>
                 
                 <!-- Add Update Button -->
-                <button onclick="toggleUpdateModal(true)" class="bg-green-500 text-white w-full py-2 px-4 rounded">Add Update</button>
+                <button onclick="toggleApplicantUpdateModal(true)" class="bg-green-500 text-white w-full py-2 px-4 rounded">Add Update</button>
             </div>
         </div>
 
     <!-- Container -->
-    <div class="flex-1 bg-gray-100 p-4 pt-6">
+    <div class="flex-1 bg-gray-100 p-4 pt-6 w-full">
         <!-- Passport Photo -->
         <div class="flex justify-center mb-6">
             <img src="https://via.placeholder.com/150" alt="Passport Photo"
@@ -140,37 +142,39 @@
 
 <div>
     <!-- Add Update Modal -->
-    <div id="updateModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-            <h2 class="text-xl font-semibold mb-4">Add Update</h2>
-            <form>
-                <div class="mb-4">
-                    <label class="block text-gray-700">Title</label>
-                    <input type="text" class="w-full border-gray-300 rounded p-2" placeholder="Enter title">
-                </div>
-                <div class="mb-4">
-                    <label class="block text-gray-700">Time and Date</label>
-                    <input type="datetime-local" class="w-full border-gray-300 rounded p-2">
-                </div>
-                <div class="mb-4">
-                    <label class="block text-gray-700">Message</label>
-                    <textarea class="w-full border-gray-300 rounded p-2" rows="4" placeholder="Enter message"></textarea>
-                </div>
-                <div class="mb-4">
-                    <label class="block text-gray-700">Attach File</label>
-                    <input type="file" class="w-full border-gray-300 rounded p-2">
-                </div>
-                <div class="flex justify-end space-x-2">
-                    <button type="button" onclick="toggleUpdateModal(false)"
-                        class="px-4 py-2 rounded bg-gray-400 text-white">Cancel</button>
-                    <button type="submit" class="px-4 py-2 rounded bg-blue-500 text-white">Save</button>
-                </div>
-            </form>
-        </div>
+<div id="updateModal"
+    class="hidden fixed inset-0 md:ml-64 mx-auto bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4 md:mx-0">
+        <h2 class="text-xl font-semibold mb-4">Add Update</h2>
+        <form>
+            <div class="mb-4">
+                <label class="block text-gray-700">Title</label>
+                <input type="text" class="w-full border border-gray-300 rounded p-2" placeholder="Enter title">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Time and Date</label>
+                <input type="datetime-local" class="w-full border border-gray-300 rounded p-2">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Message</label>
+                <textarea class="w-full border border-gray-300 rounded p-2" rows="4" placeholder="Enter message"></textarea>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Attach File</label>
+                <input type="file" class="w-full border border-gray-300 rounded p-2">
+            </div>
+            <div class="flex justify-end space-x-2">
+                <button type="button" onclick="toggleApplicantUpdateModal(false)"
+                    class="px-4 py-2 rounded bg-gray-400 text-white">Cancel</button>
+                <button type="submit" class="px-4 py-2 rounded bg-blue-500 text-white">Save</button>
+            </div>
+        </form>
     </div>
+</div>
+
     
     <script>
-        function toggleUpdateModal(show) {
+        function toggleApplicantUpdateModal(show) {
             document.getElementById('updateModal').classList.toggle('hidden', !show);
         }
     </script>

@@ -75,59 +75,59 @@ function loadAdminDashboard() {
 }
 
 function loadApplicants() {
-    console.log("Applicants loaded successfully");
+  console.log("Applicants loaded successfully");
 
-    // Demo JSON data
-    const data = [
-      {
-        name: "John Doe",
-        applicantId: "A1234",
-        school: "University A",
-        program: "Engineering",
-        dateApplied: "2023-07-18",
-        status: "Pending",
-      },
-      {
-        name: "Jane Smith",
-        applicantId: "A5678",
-        school: "University B",
-        program: "Business",
-        dateApplied: "2023-08-22",
-        status: "Accepted",
-      },
-      {
-        name: "Alice Johnson",
-        applicantId: "A9012",
-        school: "University C",
-        program: "Arts",
-        dateApplied: "2023-07-10",
-        status: "Rejected",
-      },
-      {
-        name: "Bob Brown",
-        applicantId: "A3456",
-        school: "University D",
-        program: "Science",
-        dateApplied: "2023-08-15",
-        status: "Pending",
-      },
-      {
-        name: "Gilbert Kukah",
-        applicantId: "A1254",
-        school: "University A",
-        program: "Science",
-        dateApplied: "2023-08-15",
-        status: "Pending",
-      },
-    ];
+  // Demo JSON data
+  const data = [
+    {
+      name: "John Doe",
+      applicantId: "A1234",
+      school: "University A",
+      program: "Engineering",
+      dateApplied: "2023-07-18",
+      status: "Pending",
+    },
+    {
+      name: "Jane Smith",
+      applicantId: "A5678",
+      school: "University B",
+      program: "Business",
+      dateApplied: "2023-08-22",
+      status: "Accepted",
+    },
+    {
+      name: "Alice Johnson",
+      applicantId: "A9012",
+      school: "University C",
+      program: "Arts",
+      dateApplied: "2023-07-10",
+      status: "Rejected",
+    },
+    {
+      name: "Bob Brown",
+      applicantId: "A3456",
+      school: "University D",
+      program: "Science",
+      dateApplied: "2023-08-15",
+      status: "Pending",
+    },
+    {
+      name: "Gilbert Kukah",
+      applicantId: "A1254",
+      school: "University A",
+      program: "Science",
+      dateApplied: "2023-08-15",
+      status: "Pending",
+    },
+  ];
 
-    // Populate Table
-    const tableBody = document.getElementById("applicantTableBody");
-    function populateTable(applicants) {
-      tableBody.innerHTML = "";
-      applicants.forEach((applicant) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
+  // Populate Table
+  const tableBody = document.getElementById("applicantTableBody");
+  function populateTable(applicants) {
+    tableBody.innerHTML = "";
+    applicants.forEach((applicant) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
                   <td class="p-3 border">${applicant.name}</td>
                   <td class="p-3 border">${applicant.applicantId}</td>
                   <td class="p-3 border">${applicant.school}</td>
@@ -139,104 +139,107 @@ function loadApplicants() {
                   
               </td>
               `;
-        tableBody.appendChild(row);
+      tableBody.appendChild(row);
+    });
+
+    
+  }
+  populateTable(data);
+
+  // Update Filter Values
+  function updateFilterValues() {
+    const filterBy = document.getElementById("filterBy").value;
+    const filterValue = document.getElementById("filterValue");
+    filterValue.innerHTML = `<option value="">Select value</option>`;
+
+    // Get unique values for the selected filter
+    if (filterBy) {
+      const uniqueValues = [
+        ...new Set(data.map((applicant) => applicant[filterBy])),
+      ];
+      uniqueValues.forEach((value) => {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = value;
+        filterValue.appendChild(option);
       });
     }
-    populateTable(data);
+  }
 
-    // Update Filter Values
-    function updateFilterValues() {
-      const filterBy = document.getElementById("filterBy").value;
-      const filterValue = document.getElementById("filterValue");
-      filterValue.innerHTML = `<option value="">Select value</option>`;
-
-      // Get unique values for the selected filter
-      if (filterBy) {
-        const uniqueValues = [
-          ...new Set(data.map((applicant) => applicant[filterBy])),
-        ];
-        uniqueValues.forEach((value) => {
-          const option = document.createElement("option");
-          option.value = value;
-          option.textContent = value;
-          filterValue.appendChild(option);
-        });
-      }
-    }
-
-    // Search Functionality
-    document.getElementById("search").addEventListener("input", function () {
-      const searchValue = this.value.toLowerCase();
-      const filteredData = data.filter(
-        (applicant) =>
-          applicant.name.toLowerCase().includes(searchValue) ||
-          applicant.applicantId.toLowerCase().includes(searchValue)
-      );
-      populateTable(filteredData);
-    });
-
-    // Sort Table
-    let sortOrder = true;
-    function sortTable(column) {
-      const sortedData = [...data].sort((a, b) => {
-        if (a[column] < b[column]) return sortOrder ? -1 : 1;
-        if (a[column] > b[column]) return sortOrder ? 1 : -1;
-        return 0;
-      });
-      sortOrder = !sortOrder;
-      populateTable(sortedData);
-    }
-
-    document.querySelectorAll("th[data-column]").forEach((link) => {
-      link.addEventListener("click", function (event) {
-        const column = this.getAttribute("data-column");
-        sortTable(column);
-      });
-    });
-
-    // Add a listener to add the filter values upon selection of the filter category
-    document.getElementById("filterBy").addEventListener("change", function () {
-      updateFilterValues();
-    });
-
-    // Filter Functionality
-    document.getElementById("applyFilter").addEventListener("click", function () {
-      const filterBy = document.getElementById("filterBy").value;
-      const filterValue = document.getElementById("filterValue").value;
-      const filteredData =
-        filterBy && filterValue
-          ? data.filter((applicant) => applicant[filterBy] === filterValue)
-          : data;
-      populateTable(filteredData);
-    });
-
-    //listener for view applicant page
-document.querySelectorAll(".view-applicant").forEach((element) => {
-  element.addEventListener("click", function () {
-    const applicantId = this.getAttribute("data-applicantId");
-    viewApplicant(applicantId);
+  // Search Functionality
+  document.getElementById("search").addEventListener("input", function () {
+    const searchValue = this.value.toLowerCase();
+    const filteredData = data.filter(
+      (applicant) =>
+        applicant.name.toLowerCase().includes(searchValue) ||
+        applicant.applicantId.toLowerCase().includes(searchValue)
+    );
+    populateTable(filteredData);
   });
-});
-  
+
+  // Sort Table
+  let sortOrder = true;
+  function sortTable(column) {
+    const sortedData = [...data].sort((a, b) => {
+      if (a[column] < b[column]) return sortOrder ? -1 : 1;
+      if (a[column] > b[column]) return sortOrder ? 1 : -1;
+      return 0;
+    });
+    sortOrder = !sortOrder;
+    populateTable(sortedData);
+  }
+
+  document.querySelectorAll("th[data-column]").forEach((link) => {
+    link.addEventListener("click", function (event) {
+      const column = this.getAttribute("data-column");
+      sortTable(column);
+    });
+  });
+
+  // Add a listener to add the filter values upon selection of the filter category
+  document.getElementById("filterBy").addEventListener("change", function () {
+    updateFilterValues();
+  });
+
+  // Filter Functionality
+  document.getElementById("applyFilter").addEventListener("click", function () {
+    const filterBy = document.getElementById("filterBy").value;
+    const filterValue = document.getElementById("filterValue").value;
+    const filteredData =
+      filterBy && filterValue
+        ? data.filter((applicant) => applicant[filterBy] === filterValue)
+        : data;
+    populateTable(filteredData);
+  });
+
+  //listener for view applicant page
+  document.querySelectorAll(".view-applicant").forEach((element) => {
+    element.addEventListener("click", function () {
+      const applicantId = this.getAttribute("data-applicantId");
+      viewApplicant(applicantId);
+    });
+  });
+
+}
+
 // function to be run when the view of an applicant is clicked
-  function viewApplicant(applicantId) {
-    fetch(`./pages/view-applicant.html?id=${applicantId}`)
-      .then((response) => response.text())
-      .then((applicantInfo) => {
-        const mainContent = document.getElementById("main-content");
-        mainContent.innerHTML = applicantInfo;
-        console.log(`Loaded applicant with ID: ${applicantId}`);
-      })
-      .catch((error) => {
-        console.error('Error fetching applicant data:', error);
-      });
-  }   
+function viewApplicant(applicantId) {
+  fetch(`./pages/view-applicant.html?id=${applicantId}`)
+    .then((response) => response.text())
+    .then((applicantInfo) => {
+      const mainContent = document.getElementById("main-content");
+      mainContent.innerHTML = applicantInfo;
+      console.log(`Loaded applicant with ID: ${applicantId}`);
+    })
+    .catch((error) => {
+      console.error('Error fetching applicant data:', error);
+    });
 }
 
 // function to show update modal for student application
-function toggleUpdateModal(show) {
+function toggleApplicantUpdateModal(show) {
   document.getElementById('updateModal').classList.toggle('hidden', !show);
-} 
+}
 
 // Load the selected page and inject the content into the main-content area
 function loadPage(page) {
@@ -254,7 +257,7 @@ function loadPage(page) {
           break;
         case "applicants.html":
           loadApplicants();
-              break;
+          break;
         case "payments.html":
           loadPayments();
           break;
@@ -268,9 +271,9 @@ function loadPage(page) {
           console.error("No matching function for the page:", page);
       }
     })
-        .catch((error) => console.error("Error loading page:", error));
-    
-    if (page != 'view-applicant.html') {
-        localStorage.setItem('activePage', page);
-    }
+    .catch((error) => console.error("Error loading page:", error));
+
+  if (page != 'view-applicant.html') {
+    localStorage.setItem('activePage', page);
+  }
 }
