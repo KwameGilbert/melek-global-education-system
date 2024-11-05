@@ -74,6 +74,8 @@ function loadAdminDashboard() {
   });
 }
 
+
+// Start Applicant Category //
 function loadApplicants() {
   console.log("Applicants loaded successfully");
 
@@ -119,6 +121,70 @@ function loadApplicants() {
       dateApplied: "2023-08-15",
       status: "Pending",
     },
+    {
+      name: "John Doe",
+      applicantId: "A1234",
+      school: "University A",
+      program: "Engineering",
+      dateApplied: "2023-07-18",
+      status: "Pending",
+    },
+    {
+      name: "Jane Smith",
+      applicantId: "A5678",
+      school: "University B",
+      program: "Business",
+      dateApplied: "2023-08-22",
+      status: "Accepted",
+    },
+    {
+      name: "Alice Johnson",
+      applicantId: "A9012",
+      school: "University C",
+      program: "Arts",
+      dateApplied: "2023-07-10",
+      status: "Rejected",
+    },
+    {
+      name: "Bob Brown",
+      applicantId: "A3456",
+      school: "University D",
+      program: "Science",
+      dateApplied: "2023-08-15",
+      status: "Pending",
+    },
+    {
+      name: "Gilbert Kukah",
+      applicantId: "A1254",
+      school: "University A",
+      program: "Science",
+      dateApplied: "2023-08-15",
+      status: "Pending",
+    },
+    {
+      name: "Alice Johnson",
+      applicantId: "A9012",
+      school: "University C",
+      program: "Arts",
+      dateApplied: "2023-07-10",
+      status: "Rejected",
+    },
+    {
+      name: "Bob Brown",
+      applicantId: "A3456",
+      school: "University D",
+      program: "Science",
+      dateApplied: "2023-08-15",
+      status: "Pending",
+    },
+    {
+      name: "Gilbert Kukah",
+      applicantId: "A1254",
+      school: "University A",
+      program: "Science",
+      dateApplied: "2023-08-15",
+      status: "Pending",
+    }
   ];
 
   // Populate Table
@@ -135,13 +201,19 @@ function loadApplicants() {
                   <td class="p-3 border">${applicant.dateApplied}</td>
                   <td class="p-3 border">${applicant.status}</td>
                     <td class="p-4 border-b">
-                  <button class="text-blue-500 view-applicant" data-applicantId=${applicant.applicantId}>View</button>
-                  
+                  <button class="text-blue-500 view-applicant" data-applicantId="${applicant.applicantId}">View</button>
               </td>
               `;
       tableBody.appendChild(row);
     });
 
+    //listener for view applicant page
+    document.querySelectorAll(".view-applicant").forEach((element) => {
+      element.addEventListener("click", function () {
+        const applicantId = this.getAttribute("data-applicantId");
+        viewApplicant(applicantId);
+      });
+    });
     
   }
   populateTable(data);
@@ -212,19 +284,12 @@ function loadApplicants() {
     populateTable(filteredData);
   });
 
-  //listener for view applicant page
-  document.querySelectorAll(".view-applicant").forEach((element) => {
-    element.addEventListener("click", function () {
-      const applicantId = this.getAttribute("data-applicantId");
-      viewApplicant(applicantId);
-    });
-  });
-
+ 
 }
 
 // function to be run when the view of an applicant is clicked
 function viewApplicant(applicantId) {
-  fetch(`./pages/view-applicant.html?id=${applicantId}`)
+  fetch(`./pages/view-applicant.php?id=${applicantId}`)
     .then((response) => response.text())
     .then((applicantInfo) => {
       const mainContent = document.getElementById("main-content");
@@ -236,12 +301,14 @@ function viewApplicant(applicantId) {
     });
 }
 
-// function to show update modal for student application
-function toggleApplicantUpdateModal(show) {
-  document.getElementById('updateModal').classList.toggle('hidden', !show);
-}
+
+// End Applicant Category //
+
+
+
 
 // Load the selected page and inject the content into the main-content area
+
 function loadPage(page) {
   fetch(`./pages/${page}`)
     .then((response) => response.text())
