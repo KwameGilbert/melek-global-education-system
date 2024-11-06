@@ -321,7 +321,7 @@ function loadPage(page) {
           loadApplicants();
           break;
         case "schools.html":
-          initializeSchoolsPage();
+          initializeSchoolsPage(); 
           break;
         case "profile.html":
           loadProfile();
