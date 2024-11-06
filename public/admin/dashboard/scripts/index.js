@@ -299,9 +299,8 @@ function viewApplicant(applicantId) {
       console.error('Error fetching applicant data:', error);
     });
 }
-
-
 // End Applicant Category //
+
 
 // Load the selected page and inject the content into the main-content area
 function loadPage(page) {

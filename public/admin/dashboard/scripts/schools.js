@@ -1,324 +1,286 @@
-// State management
-const appState = {
+// Global state to store data
+let globalData = {
     countries: [],
     schools: [],
-    programs: [],
+    programs: []
 };
 
-// Utility functions
-const generateId = () => crypto.randomUUID();
-
-const createElement = (item, type) => {
-    const li = document.createElement('li');
-    li.className = 'py-4 flex items-center justify-between gap-4';
-
-    const mainContent = document.createElement('div');
-    mainContent.className = 'flex-1 min-w-0';
-
-    const details = document.createElement('div');
-    details.className = 'flex flex-col sm:flex-row sm:items-center gap-2';
-
-    switch (type) {
-        case 'country':
-            details.innerHTML = `
-                <span class="text-sm font-medium text-gray-900">${item.name}</span>
-                <span class="text-sm text-gray-500">${item.schools?.length || 0} schools</span>
-            `;
-            break;
-        case 'school':
-            details.innerHTML = `
-                <span class="text-sm font-medium text-gray-900">${item.name}</span>
-                <span class="text-sm text-gray-500">${item.city}</span>
-                <span class="text-sm text-gray-500">${item.programs?.length || 0} programs</span>
-            `;
-            break;
-        case 'program':
-            details.innerHTML = `
-                <span class="text-sm font-medium text-gray-900">${item.name}</span>
-                <span class="text-sm text-gray-500">${item.schoolName}</span>
-            `;
-            break;
-    }
-
-    mainContent.appendChild(details);
-    li.appendChild(mainContent);
-
-    // Action buttons
-    const actions = document.createElement('div');
-    actions.className = 'flex items-center gap-2';
-
-    const editBtn = document.createElement('button');
-    editBtn.className = 'inline-flex items-center px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500';
-    editBtn.textContent = 'Edit';
-    editBtn.onclick = () => handleEdit(item.id, type);
-
-    const deleteBtn = document.createElement('button');
-    deleteBtn.className = 'inline-flex items-center px-3 py-1 border border-transparent rounded-md text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500';
-    deleteBtn.textContent = 'Delete';
-    deleteBtn.onclick = () => handleDelete(item.id, type);
-
-    actions.appendChild(editBtn);
-    actions.appendChild(deleteBtn);
-    li.appendChild(actions);
-
-    return li;
-};
-
-// Validation functions
-const validateInput = (input, type) => {
-    const errors = [];
-    if (!input.trim()) {
-        errors.push(`${type} name cannot be empty`);
-    }
-    if (input.length < 2) {
-        errors.push(`${type} name must be at least 2 characters long`);
-    }
-    return errors;
-};
-
-// Toast notification
-const showNotification = (message, type = 'success') => {
-    const toast = document.createElement('div');
-    toast.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg ${type === 'success' ? 'bg-green-500' : 'bg-red-500'
-        } text-white`;
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 3000);
-};
-
-// Event Handlers
-const handleEdit = async (id, type) => {
-    try {
-        let item;
-        switch (type) {
-            case 'country':
-                item = appState.countries.find(c => c.id === id);
-                break;
-            case 'school':
-                item = appState.schools.find(s => s.id === id);
-                break;
-            case 'program':
-                item = appState.programs.find(p => p.id === id);
-                break;
-        }
-
-        const newName = prompt(`Edit ${type} name:`, item.name);
-        if (newName && newName.trim()) {
-            const errors = validateInput(newName, type);
-            if (errors.length) {
-                throw new Error(errors.join('\n'));
+// Fetch all data from server
+function fetchAllData() {
+    fetch('./api/allSchools.json')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                globalData = data;
+                renderAllLists();
+                populateDropdowns();
             }
+        })
+        .catch(error => console.error('Error fetching data:', error));
+}
 
-            item.name = newName.trim();
-            updateUI();
-            showNotification(`${type} updated successfully`);
-        }
-    } catch (error) {
-        showNotification(error.message, 'error');
-    }
-};
+// Render functions for each list
+function renderCountryList() {
+    const list = document.getElementById('countryList');
+    list.innerHTML = globalData.countries.map(country => `
+    <li class="py-4 flex justify-between items-center">
+      <span id="country-${country.id}">${country.name}</span>
+      <div class="space-x-2">
+        <button onclick="editCountry(${country.id})" class="text-blue-600 hover:text-blue-800">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button onclick="deleteCountry(${country.id})" class="text-red-600 hover:text-red-800">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </li>
+  `).join('');
+}
 
-const handleDelete = async (id, type) => {
-    try {
-        if (!confirm(`Are you sure you want to delete this ${type}?`)) {
-            return;
-        }
+function renderSchoolList() {
+    const list = document.getElementById('schoolList');
+    list.innerHTML = globalData.schools.map(school => {
+        const country = globalData.countries.find(c => c.id === school.country_id);
+        return `
+      <li class="py-4 flex justify-between items-center">
+        <div>
+          <span id="school-${school.id}">${school.name}</span>
+          <span class="text-sm text-gray-500"> - ${school.city}, ${country?.name || 'Unknown'}</span>
+        </div>
+        <div class="space-x-2">
+          <button onclick="editSchool(${school.id})" class="text-blue-600 hover:text-blue-800">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button onclick="deleteSchool(${school.id})" class="text-red-600 hover:text-red-800">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </li>
+    `;
+    }).join('');
+}
 
-        switch (type) {
-            case 'country':
-                appState.countries = appState.countries.filter(c => c.id !== id);
-                appState.schools = appState.schools.filter(s => s.countryId !== id);
-                break;
-            case 'school':
-                appState.schools = appState.schools.filter(s => s.id !== id);
-                appState.programs = appState.programs.filter(p => p.schoolId !== id);
-                break;
-            case 'program':
-                appState.programs = appState.programs.filter(p => p.id !== id);
-                break;
-        }
+function renderProgramList() {
+    const list = document.getElementById('programList');
+    list.innerHTML = globalData.programs.map(program => {
+        const school = globalData.schools.find(s => s.id === program.school_id);
+        return `
+      <li class="py-4 flex justify-between items-center">
+        <div>
+          <span id="program-${program.id}">${program.name}</span>
+          <span class="text-sm text-gray-500"> - ${school?.name || 'Unknown'}</span>
+        </div>
+        <div class="space-x-2">
+          <button onclick="editProgram(${program.id})" class="text-blue-600 hover:text-blue-800">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button onclick="deleteProgram(${program.id})" class="text-red-600 hover:text-red-800">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </li>
+    `;
+    }).join('');
+}
 
-        updateUI();
-        showNotification(`${type} deleted successfully`);
-    } catch (error) {
-        showNotification(error.message, 'error');
-    }
-};
+function renderAllLists() {
+    renderCountryList();
+    renderSchoolList();
+    renderProgramList();
+}
+
+// Populate dropdowns
+function populateDropdowns() {
+    // Populate country dropdown
+    const countrySelect = document.getElementById('selectCountry');
+    countrySelect.innerHTML = '<option value="">Select Country</option>' +
+        globalData.countries.map(country =>
+            `<option value="${country.id}">${country.name}</option>`
+        ).join('');
+
+    // Populate school dropdown
+    const schoolSelect = document.getElementById('selectSchool');
+    schoolSelect.innerHTML = '<option value="">Select School</option>' +
+        globalData.schools.map(school =>
+            `<option value="${school.id}">${school.name}</option>`
+        ).join('');
+}
 
 // Add functions
-const addCountry = async () => {
-    try {
-        const input = document.getElementById('countryName');
-        const name = input.value.trim();
+function addCountry() {
+    const nameInput = document.getElementById('countryName');
+    const name = nameInput.value.trim();
+    if (!name) return;
 
-        const errors = validateInput(name, 'Country');
-        if (errors.length) {
-            throw new Error(errors.join('\n'));
-        }
+    fetch('addCountry.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                fetchAllData();
+                nameInput.value = '';
+            }
+        })
+        .catch(error => console.error('Error adding country:', error));
+}
 
-        const country = {
-            id: generateId(),
-            name,
-            schools: []
-        };
-
-        appState.countries.push(country);
-        input.value = '';
-        updateUI();
-        showNotification('Country added successfully');
-    } catch (error) {
-        showNotification(error.message, 'error');
-    }
-};
-
-const addSchool = async () => {
-    try {
-        const countrySelect = document.getElementById('selectCountry');
-        const nameInput = document.getElementById('schoolName');
-        const cityInput = document.getElementById('schoolCity');
-
-        const countryId = countrySelect.value;
-        const name = nameInput.value.trim();
-        const city = cityInput.value.trim();
-
-        if (!countryId) {
-            throw new Error('Please select a country');
-        }
-
-        const errors = validateInput(name, 'School');
-        errors.push(...validateInput(city, 'City'));
-        if (errors.length) {
-            throw new Error(errors.join('\n'));
-        }
-
-        const school = {
-            id: generateId(),
-            countryId,
-            name,
-            city,
-            programs: []
-        };
-
-        appState.schools.push(school);
-        nameInput.value = '';
-        cityInput.value = '';
-        updateUI();
-        showNotification('School added successfully');
-    } catch (error) {
-        showNotification(error.message, 'error');
-    }
-};
-
-const addProgram = async () => {
-    try {
-        const schoolSelect = document.getElementById('selectSchool');
-        const nameInput = document.getElementById('programName');
-
-        const schoolId = schoolSelect.value;
-        const name = nameInput.value.trim();
-
-        if (!schoolId) {
-            throw new Error('Please select a school');
-        }
-
-        const errors = validateInput(name, 'Program');
-        if (errors.length) {
-            throw new Error(errors.join('\n'));
-        }
-
-        const school = appState.schools.find(s => s.id === schoolId);
-
-        const program = {
-            id: generateId(),
-            schoolId,
-            schoolName: school.name,
-            name
-        };
-
-        appState.programs.push(program);
-        nameInput.value = '';
-        updateUI();
-        showNotification('Program added successfully');
-    } catch (error) {
-        showNotification(error.message, 'error');
-    }
-};
-
-// UI Update functions
-const updateUI = () => {
-    updateCountryList();
-    updateSchoolList();
-    updateProgramList();
-    updateSelects();
-};
-
-const updateCountryList = () => {
-    const list = document.getElementById('countryList');
-    list.innerHTML = '';
-    appState.countries.forEach(country => {
-        list.appendChild(createElement(country, 'country'));
-    });
-};
-
-const updateSchoolList = () => {
-    const list = document.getElementById('schoolList');
-    list.innerHTML = '';
-    appState.schools.forEach(school => {
-        list.appendChild(createElement(school, 'school'));
-    });
-};
-
-const updateProgramList = () => {
-    const list = document.getElementById('programList');
-    list.innerHTML = '';
-    appState.programs.forEach(program => {
-        list.appendChild(createElement(program, 'program'));
-    });
-};
-
-const updateSelects = () => {
-    // Update country select
+function addSchool() {
+    const nameInput = document.getElementById('schoolName');
+    const cityInput = document.getElementById('schoolCity');
     const countrySelect = document.getElementById('selectCountry');
-    countrySelect.innerHTML = '<option value="">Select Country</option>';
-    appState.countries.forEach(country => {
-        const option = document.createElement('option');
-        option.value = country.id;
-        option.textContent = country.name;
-        countrySelect.appendChild(option);
-    });
 
-    // Update school select
+    const name = nameInput.value.trim();
+    const city = cityInput.value.trim();
+    const country_id = countrySelect.value;
+
+    if (!name || !city || !country_id) return;
+
+    fetch('addSchool.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, city, country_id })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                fetchAllData();
+                nameInput.value = '';
+                cityInput.value = '';
+                countrySelect.value = '';
+            }
+        })
+        .catch(error => console.error('Error adding school:', error));
+}
+
+function addProgram() {
+    const nameInput = document.getElementById('programName');
     const schoolSelect = document.getElementById('selectSchool');
-    schoolSelect.innerHTML = '<option value="">Select School</option>';
-    appState.schools.forEach(school => {
-        const option = document.createElement('option');
-        option.value = school.id;
-        option.textContent = `${school.name} (${school.city})`;
-        schoolSelect.appendChild(option);
-    });
-};
 
-// Initialize the application
+    const name = nameInput.value.trim();
+    const school_id = schoolSelect.value;
 
+    if (!name || !school_id) return;
+
+    fetch('addProgram.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, school_id })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                fetchAllData();
+                nameInput.value = '';
+                schoolSelect.value = '';
+            }
+        })
+        .catch(error => console.error('Error adding program:', error));
+}
+
+// Edit functions
+function editCountry(id) {
+    const country = globalData.countries.find(c => c.id === id);
+    const newName = prompt('Enter new country name:', country.name);
+    if (!newName || newName === country.name) return;
+
+    fetch('updateCountry.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, name: newName })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) fetchAllData();
+        })
+        .catch(error => console.error('Error updating country:', error));
+}
+
+function editSchool(id) {
+    const school = globalData.schools.find(s => s.id === id);
+    const newName = prompt('Enter new school name:', school.name);
+    const newCity = prompt('Enter new city:', school.city);
+
+    if (!newName || !newCity || (newName === school.name && newCity === school.city)) return;
+
+    fetch('updateSchool.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, name: newName, city: newCity })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) fetchAllData();
+        })
+        .catch(error => console.error('Error updating school:', error));
+}
+
+function editProgram(id) {
+    const program = globalData.programs.find(p => p.id === id);
+    const newName = prompt('Enter new program name:', program.name);
+    if (!newName || newName === program.name) return;
+
+    fetch('updateProgram.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, name: newName })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) fetchAllData();
+        })
+        .catch(error => console.error('Error updating program:', error));
+}
+
+// Delete functions
+function deleteCountry(id) {
+    if (!confirm('Are you sure you want to delete this country?')) return;
+
+    fetch('deleteCountry.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) fetchAllData();
+        })
+        .catch(error => console.error('Error deleting country:', error));
+}
+
+function deleteSchool(id) {
+    if (!confirm('Are you sure you want to delete this school?')) return;
+
+    fetch('deleteSchool.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) fetchAllData();
+        })
+        .catch(error => console.error('Error deleting school:', error));
+}
+
+function deleteProgram(id) {
+    if (!confirm('Are you sure you want to delete this program?')) return;
+
+    fetch('deleteProgram.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) fetchAllData();
+        })
+        .catch(error => console.error('Error deleting program:', error));
+}
 
 function initializeSchoolsPage() {
-    document.addEventListener('DOMContentLoaded', () => {
-        updateUI();
-
-        // Add event listeners for form submissions
-        document.getElementById('countryForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            addCountry();
-        });
-
-        document.getElementById('schoolForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            addSchool();
-        });
-
-        document.getElementById('programForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            addProgram();
-        });
-    });
+    // Initial data load
+    fetchAllData();
 }
