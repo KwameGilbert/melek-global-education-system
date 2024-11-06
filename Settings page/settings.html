@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings | Administrators</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="font-roboto bg-gray-100">
+  <header class="bg-gray-700 text-white flex items-center h-12 shadow-md sticky top-0 z-10">
+      <div
+        class="profile-tab px-8 py-2 cursor-pointer transition duration-150 font-semibold text-lg hover:bg-white hover:text-gray-700">
+        <i class="fas fa-user-circle pr-1"></i> Profile
+      </div>
+      <div
+        class="security-tab px-8 py-2 cursor-pointer transition duration-150 font-semibold text-lg hover:bg-white hover:text-gray-700">
+        <i class="fas fa-shield-alt pr-1"></i> Security
+      </div>
+      <div
+        class="payment-tab px-8 py-2 cursor-pointer transition duration-150 font-semibold text-lg hover:bg-white hover:text-gray-700">
+        <i class="fas fa-cash-register pr-1"></i> Payment
+      </div>
+
+  </header>
+
+  <main class="pt-20 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20">
+    <!-- Profile Page Section -->
+    <div class="profile-page" id="js-profile-page">
+      <h2 class="text-2xl font-bold text-gray-700 mb-4">My Profile</h2>
+
+      <div class="bg-white rounded-lg p-4 mb-4 flex flex-col md:flex-row items-center">
+        <div class="profile-photo-container flex flex-col items-center">
+          <div class="profile-photo border-2 border-indigo-900 w-24 h-24 rounded-full mb-4 shadow-md overflow-hidden">
+            <img src="" alt="Profile Photo" class="w-full h-full object-cover">
+          </div>
+          <input type="file" class="choose-file border-none cursor-pointer">
+        </div>
+
+        <div class="profile-details flex-1 md:ml-8 text-center md:text-left">
+          <h3 class="text-green-700 font-semibold text-xl">John Doe</h3>
+          <p class="text-gray-700 font-semibold text-sm">Admin</p>
+          <p class="text-gray-500">Accra, Ghana</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg p-4 mb-4 relative">
+        <h3 class="text-green-700 font-semibold text-base inline-block">Personal Information</h3>
+        <div class="edit-save-btn-container flex absolute right-4 top-1">
+          <button
+            class="edit-button bg-yellow-500 text-white font-semibold text-sm px-3 py-1 rounded-md flex items-center shadow-md transition-opacity hover:opacity-85">
+            <i class="fas fa-edit scale-125 mr-1"></i> Edit
+          </button>
+          <button
+            class="save-button bg-gray-700 text-white font-semibold text-sm px-3 py-1 rounded-md flex items-center shadow-md ml-4 transition-opacity hover:opacity-85">
+            <i class="fas fa-save scale-150 mr-1"></i> Save
+          </button>
+        </div>
+
+        <hr class="my-4">
+
+        <form action="" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="text-indigo-900 font-semibold">First Name</label>
+            <input type="text" placeholder="John" value="John"
+              class="border-2 rounded-md text-gray-700 text-sm py-1 px-2 w-full my-2 focus:outline-none focus:border-green-700"
+              readonly>
+          </div>
+          <div>
+            <label class="text-indigo-900 font-semibold">Last Name</label>
+            <input type="text" placeholder="Doe" value="Doe"
+              class="border-2 rounded-md text-gray-700 text-sm py-1 px-2 w-full my-2 focus:outline-none focus:border-green-700"
+              readonly>
+          </div>
+          <div>
+            <label class="text-indigo-900 font-semibold">Email Address</label>
+            <input type="text" placeholder="johndoe@example.com" value="johndoe1@example.com"
+              class="border-2 rounded-md text-gray-700 text-sm py-1 px-2 w-full my-2 focus:outline-none focus:border-green-700"
+              readonly>
+          </div>
+          <div>
+            <label class="text-indigo-900 font-semibold">Phone Number</label>
+            <input type="tel" placeholder="Phone Number" value=""
+              class="border-2 rounded-md text-gray-700 text-sm py-1 px-2 w-full my-2 focus:outline-none focus:border-green-700"
+              readonly>
+          </div>
+          <div>
+            <label class="text-indigo-900 font-semibold">Address</label>
+            <input type="text" id="address"
+              class="border-2 rounded-md text-gray-700 text-sm py-1 px-2 w-full my-2 focus:outline-none focus:border-green-700"
+              value="Accra, Ghana" readonly>
+          </div>
+          <div>
+            <label class="text-indigo-900 font-semibold">User ID</label>
+            <input type="text" placeholder="AD0155" value="AD0155"
+              class="border-2 rounded-md text-gray-700 text-sm py-1 px-2 w-full my-2 focus:outline-none focus:border-green-700"
+              readonly>
+          </div>
+          <div>
+            <label class="text-indigo-900 font-semibold">User Role</label>
+            <select
+              class="border-2 rounded-md text-gray-700 text-sm py-1 px-2 w-full my-2 cursor-pointer focus:outline-none focus:border-green-700">
+              <option value="admin">Admin</option>
+              <option value="super admin">Super Admin</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-indigo-900 font-semibold">Gender</label>
+            <select
+              class="border-2 rounded-md text-gray-700 text-sm py-1 px-2 w-full my-2 cursor-pointer focus:outline-none focus:border-green-700">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Security Page Section -->
+    <div class="security-page flex flex-col my-4 hidden" id="js-security-page">
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">Security</h2>
+
+      <div class="bg-white rounded-lg flex relative mb-4 p-4">
+        <ul class="list-none text-gray-700 font-semibold text-lg">
+          <li>OTP Request</li>
+        </ul>
+        <input type="checkbox" class="toggler absolute right-5 top-5 cursor-pointer hidden">
+        <label
+          class="check-btn bg-gray-300 rounded-full cursor-pointer px-6 py-3 absolute right-2 top-2 transition-all duration-200 ease-in-out">
+          <span
+            class="block w-4 h-4 bg-white rounded-full transform transition-transform duration-200 ease-in-out"></span>
+        </label>
+      </div>
+
+      <div class="bg-white rounded-lg p-8 mb-4 text-center">
+        <h3 class="text-green-700 font-bold text-2xl mb-2">CHANGE PASSWORD</h3>
+        <h4 class="text-lg mb-4">Kindly complete these to change your password</h4>
+
+        <form action="">
+          <input type="password"
+            class="border-2 border-gray-400 rounded-md text-gray-700 text-sm mb-4 p-2 w-full sm:w-2/5 focus:outline-none focus:border-green-700 focus:shadow-inner"
+            placeholder="Current Password">
+          <input type="password"
+            class="border-2 border-gray-400 rounded-md text-gray-700 text-sm mb-4 p-2 w-full sm:w-2/5 focus:outline-none focus:border-green-700 focus:shadow-inner"
+            placeholder="New Password">
+          <input type="password"
+            class="border-2 border-gray-400 rounded-md text-gray-700 text-sm mb-4 p-2 w-full sm:w-2/5 focus:outline-none focus:border-green-700 focus:shadow-inner"
+            placeholder="Confirm Password">
+          <input type="submit" value="Change Password"
+            class="bg-gray-700 text-white font-semibold px-8 py-2 mt-2 rounded-md w-full sm:w-2/5 hover:opacity-90 cursor-pointer transition duration-150 ease-in-out">
+        </form>
+      </div>
+    </div>
+
+    <!-- Payment Page Section -->
+    <div class="payment-page flex flex-col my-4 hidden" id="js-payment-page">
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">Payment</h2>
+
+      <div class="bg-white rounded-lg mb-4 p-4 text-center">
+        <h3 class="text-green-700 font-bold text-2xl mb-2">PAYMENT METHOD</h3>
+        <p class="text-lg text-gray-600 mb-4">Click on the edit button below to make changes.</p>
+
+        <form action="">
+          <label class="flex items-center text-gray-700 font-semibold text-lg mb-2">
+            Mobile Money
+            <div class="logo-container flex justify-center ml-4 min-w-[175.6px] w-[37%]">
+              <img src="Images/mtn-momo-logo.png" alt="mtn-momo" class="w-[31.5%] rounded-md">
+              <img src="Images/airtel-togo-money-logo.png" alt="at-cash" class="w-[31.5%] rounded-md mx-1">
+              <img src="Images/telecel-cash-logo.webp" alt="telecel-cash" class="w-[31.5%] rounded-md">
+            </div>
+          </label>
+          <input type="text"
+            class="border-2 border-gray-400 rounded-md text-gray-700 text-sm mb-4 p-2 w-full sm:w-1/2 focus:outline-none focus:border-green-700 focus:shadow-inner"
+            placeholder="input mobile money link" readonly>
+
+          <label class="flex items-center text-gray-700 font-semibold text-lg mb-2">
+            Paypal
+            <img src="Images/paypal-logo.jpg" alt="paypal-logo" class="ml-8 w-[31.5%] rounded-md">
+          </label>
+          <input type="text"
+            class="border-2 border-gray-400 rounded-md text-gray-700 text-sm mb-4 p-2 w-full sm:w-1/2 focus:outline-none focus:border-green-700 focus:shadow-inner"
+            placeholder="input paypal link" readonly>
+
+          <label class="flex items-center text-gray-700 font-semibold text-lg mb-2">
+            Debit / Mastercard
+            <div class="logo-container flex justify-center ml-4 min-w-[175.6px] w-[37%]">
+              <img src="Images/debit-card-logo.jpg" alt="visa card" class="w-[31.5%] rounded-md">
+              <img src="Images/mastercard-logo.png" alt="mastercard-logo" class="w-[31.5%] rounded-md mx-1">
+            </div>
+          </label>
+          <input type="text"
+            class="border-2 border-gray-400 rounded-md text-gray-700 text-sm mb-4 p-2 w-full sm:w-1/2 focus:outline-none focus:border-green-700 focus:shadow-inner"
+            placeholder="input debit / mastercard link" readonly>
+        </form>
+
+        <div class="edit-save-btn-container flex justify-center items-center mt-4">
+          <button id="payment-edit-button"
+            class="edit-button bg-yellow-500 text-white font-semibold px-4 py-2 text-base rounded-md shadow-md flex items-center justify-center transition duration-150 ease-in-out hover:opacity-85 cursor-pointer">
+            <i class="fas fa-edit mr-2"></i> Edit
+          </button>
+          <button id="payment-save-button"
+            class="save-button bg-gray-700 text-white font-semibold px-4 py-2 text-base rounded-md shadow-md flex items-center justify-center ml-4 transition duration-150 ease-in-out hover:opacity-85 cursor-pointer">
+            <i class="fas fa-save mr-2"></i> Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="Scripts/index.js"></script>
+</body>
+
+</html>
