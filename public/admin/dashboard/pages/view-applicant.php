@@ -12,6 +12,7 @@
 
         <h2 class="text-lg font-semibold mb-2 text-gray-800"> Application Menu </h2>
         <div class="space-y-4">
+            
             <!-- Payment Status -->
             <div class="bg-green-100 text-green-800 p-2 rounded">
                 <strong>Applicant ID:</strong> A1324

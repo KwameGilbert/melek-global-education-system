@@ -74,7 +74,6 @@ function loadAdminDashboard() {
   });
 }
 
-
 // Start Applicant Category //
 function loadApplicants() {
   console.log("Applicants loaded successfully");
@@ -304,11 +303,7 @@ function viewApplicant(applicantId) {
 
 // End Applicant Category //
 
-
-
-
 // Load the selected page and inject the content into the main-content area
-
 function loadPage(page) {
   fetch(`./pages/${page}`)
     .then((response) => response.text())
@@ -325,8 +320,8 @@ function loadPage(page) {
         case "applicants.html":
           loadApplicants();
           break;
-        case "payments.html":
-          loadPayments();
+        case "schools.html":
+          initializeSchoolsPage();
           break;
         case "profile.html":
           loadProfile();
