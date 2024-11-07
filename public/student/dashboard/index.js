@@ -26,6 +26,7 @@ function loadDashboard() {
         .then(response => response.json())
         .then(data => {
             // Populate application and payment status
+            document.getElementById('applicant-id').innerText = data.applicantID;
             document.getElementById('application-status').innerText = data.applicationStatus;
             document.getElementById('payment-status').innerText = data.paymentStatus;
         })
