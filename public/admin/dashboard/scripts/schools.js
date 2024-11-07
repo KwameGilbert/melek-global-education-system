@@ -67,7 +67,7 @@ function renderProgramList() {
         return `
       <li class="py-4 flex justify-between items-center">
         <div>
-          <span id="program-${program.id}">${program.name}</span>
+          <span id="program-${program.id}">${program.degree}.${program.name}</span>
           <span class="text-sm text-gray-500"> - ${school?.name || 'Unknown'}</span>
         </div>
         <div class="space-x-2">
@@ -157,12 +157,14 @@ function addSchool() {
 
 function addProgram() {
     const nameInput = document.getElementById('programName');
+    const degree = document.getElementById('degreeType');
     const schoolSelect = document.getElementById('selectSchool');
 
     const name = nameInput.value.trim();
+    const degreeType = degree.value;
     const school_id = schoolSelect.value;
 
-    if (!name || !school_id) return;
+    if (!name || !degreeType || !school_id) return;
 
     fetch('addProgram.php', {
         method: 'POST',
