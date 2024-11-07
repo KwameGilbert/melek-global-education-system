@@ -210,17 +210,18 @@
                         </label>
                         <input type="text" id="debit-mastercard-input-field"
                             class="border-2 border-gray-400 rounded-md text-gray-700 text-sm mb-4 p-2 w-full sm:w-1/2 focus:outline-none focus:border-green-700 focus:shadow-inner"
-                            placeholder="Input debit / mastercard link" readonly />
+                            placeholder="Input debit/mastercard link" readonly />
                     </div>
                 </form>
 
                 <div class="edit-save-btn-container flex justify-center items-center mt-4">
                     <button id="payment-edit-button"
-                        class="edit-button bg-yellow-500 text-white font-semibold px-4 py-2 text-base rounded-md shadow-md flex items-center justify-center transition duration-150 ease-in-out hover:opacity-85 cursor-pointer">
+                        class="edit-button bg-yellow-500 text-white font-semibold px-4 py-2 text-base rounded-md shadow-md flex items-center justify-center transition duration-150 ease-in-out hover:opacity-85 cursor-pointer"
+                        onclick="toggleEditMode('payment', true)">
                         <i class="fas fa-edit mr-2"></i> Edit
                     </button>
                     <button id="payment-save-button"
-                        class="save-button bg-gray-700 text-white font-semibold px-4 py-2 text-base rounded-md shadow-md flex items-center justify-center ml-4 transition duration-150 ease-in-out hover:opacity-85 cursor-pointer">
+                        class="save-button bg-gray-700 text-white font-semibold px-4 py-2 text-base rounded-md shadow-md flex items-center justify-center ml-4 transition duration-150 ease-in-out hover:opacity-85 cursor-pointer"                 onclick="toggleEditMode('payment', false)">
                         <i class="fas fa-save mr-2"></i> Save
                     </button>
                 </div>

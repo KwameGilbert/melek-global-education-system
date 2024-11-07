@@ -67,7 +67,7 @@ function renderProgramList() {
         return `
       <li class="py-4 flex justify-between items-center">
         <div>
-          <span id="program-${program.id}">${program.degree}.${program.name}</span>
+          <span id="program-${program.id}">${program.degree} ${program.name}</span>
           <span class="text-sm text-gray-500"> - ${school?.name || 'Unknown'}</span>
         </div>
         <div class="space-x-2">
@@ -169,13 +169,14 @@ function addProgram() {
     fetch('addProgram.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, school_id })
+        body: JSON.stringify({ name, degreeType, school_id })
     })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
                 fetchAllData();
                 nameInput.value = '';
+                degree.value = '';
                 schoolSelect.value = '';
             }
         })

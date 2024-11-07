@@ -22,7 +22,7 @@ function toggleEditMode(page, isEditing) {
         el.readOnly = !isEditing;
         el.disabled = !isEditing;
     });
-}
+};
 
 // Save Changes
 function saveChanges(page) {
