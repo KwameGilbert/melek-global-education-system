@@ -1,0 +1,42 @@
+[
+    {
+        "name": "John Doe",
+        "applicantId": "A1234",
+        "school": "University A",
+        "program": "Engineering",
+        "dateApplied": "2023-07-18",
+        "status": "Pending"
+    },
+    {
+        "name": "Jane Smith",
+        "applicantId": "A5678",
+        "school": "University B",
+        "program": "Business",
+        "dateApplied": "2023-08-22",
+        "status": "Accepted"
+    },
+    {
+        "name": "Alice Johnson",
+        "applicantId": "A9012",
+        "school": "University C",
+        "program": "Arts",
+        "dateApplied": "2023-07-10",
+        "status": "Rejected"
+    },
+    {
+        "name": "Bob Brown",
+        "applicantId": "A3456",
+        "school": "University D",
+        "program": "Science",
+        "dateApplied": "2023-08-15",
+        "status": "Pending"
+    },
+    {
+        "name": "Gilbert Kukah",
+        "applicantId": "A1254",
+        "school": "University A",
+        "program": "Science",
+        "dateApplied": "2023-08-15",
+        "status": "Pending"
+    }
+]

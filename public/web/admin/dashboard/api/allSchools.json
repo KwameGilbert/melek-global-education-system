@@ -1,0 +1,81 @@
+{
+  "success": true,
+  "countries": [
+    {
+      "id": 1,
+      "name": "United States"
+    },
+    {
+      "id": 2,
+      "name": "United Kingdom"
+    },
+    {
+      "id": 3,
+      "name": "Canada"
+    }
+  ],
+  "schools": [
+    {
+      "id": 1,
+      "name": "Harvard University",
+      "city": "Cambridge",
+      "country_id": 1
+    },
+    {
+      "id": 2,
+      "name": "Oxford University",
+      "city": "Oxford",
+      "country_id": 2
+    },
+    {
+      "id": 3,
+      "name": "University of Toronto",
+      "city": "Toronto",
+      "country_id": 3
+    },
+    {
+      "id": 4,
+      "name": "Stanford University",
+      "city": "Stanford",
+      "country_id": 1
+    }
+  ],
+  "programs": [
+    {
+      "id": 1,
+      "name": "Computer Science",
+      "degree": "BSc.",
+      "school_id": 1
+    },
+    {
+      "id": 2,
+      "name": "Business Administration",
+      "degree": "BSc.",
+      "school_id": 1
+    },
+    {
+      "id": 3,
+      "name": "Physics",
+      "degree": "PHD.",
+      "school_id": 2
+    },
+    {
+      "id": 4,
+      "name": "Mathematics",
+      "degree": "MSc.",
+      "school_id": 2
+    },
+    {
+      "id": 5,
+      "name": "Engineering",
+      "degree": "Certificate",
+      "school_id": 3
+    },
+    {
+      "id": 6,
+      "name": "Data Science",
+      "degree": "BSc.",
+      "school_id": 4
+    }
+  ]
+}

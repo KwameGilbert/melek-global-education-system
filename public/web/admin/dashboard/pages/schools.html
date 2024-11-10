@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Education Management System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <h1 class="text-xl font-bold text-gray-900">Education Management System</h1>
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm text-gray-500">Admin Panel</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 gap-8">
+            <!-- Countries Section -->
+            <section class="bg-white rounded-lg shadow-sm p-6">
+                <div class="border-b border-gray-200 pb-4 mb-6">
+                    <h2 class="text-lg font-semibold text-gray-900">Countries</h2>
+                    <p class="mt-1 text-sm text-gray-500">Manage country listings in the system</p>
+                </div>
+
+                <form id="countryForm" class="space-y-4">
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <input type="text" id="countryName"
+                            class="flex-1 py-2 px-1 rounded-md border-2 border-blue-300 shadow-sm focus:border-blue-700 focus:outline-none focus:ring focus:ring-blue-500"
+                            placeholder="Enter country name">
+                        <button type="button" onclick="addCountry()"
+                            class="inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Add Country
+                        </button>
+                    </div>
+                </form>
+
+                <ul id="countryList" class="mt-6 divide-y divide-gray-200"></ul>
+            </section>
+
+            <!-- Schools Section -->
+            <section class="bg-white rounded-lg shadow-sm p-6">
+                <div class="border-b border-gray-200 pb-4 mb-6">
+                    <h2 class="text-lg font-semibold text-gray-900">Schools & Cities</h2>
+                    <p class="mt-1 text-sm text-gray-500">Add and manage educational institutions</p>
+                </div>
+
+                <form id="schoolForm" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <select id="selectCountry"
+                            class="rounded-md py-2 px-1 border-2 border-green-300 shadow-sm focus:border-green-700 focus:outline-none focus:ring focus:ring-green-500">
+                            <option value="">Select Country</option>
+                        </select>
+                        <input type="text" id="schoolName"
+                            class="rounded-md py-2 px-1 border-2 border-green-300 shadow-sm focus:border-green-700 focus:outline-none focus:ring focus:ring-green-500"
+                            placeholder="Enter school name">
+                        <input type="text" id="schoolCity"
+                            class="rounded-md py-2 px-1 border-2 border-green-300 shadow-sm focus:border-green-700 focus:outline-none focus:ring focus:ring-green-500"
+                            placeholder="Enter city name">
+                        <button type="button" onclick="addSchool()"
+                            class="inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                            Add School
+                        </button>
+                    </div>
+                </form>
+
+                <ul id="schoolList" class="mt-6 divide-y divide-gray-200"></ul>
+            </section>
+
+            <!-- Programs Section -->
+            <section class="bg-white rounded-lg shadow-sm p-6">
+                <div class="border-b border-gray-200 pb-4 mb-6">
+                    <h2 class="text-lg font-semibold text-gray-900">Programs</h2>
+                    <p class="mt-1 text-sm text-gray-500">Manage academic programs and degrees</p>
+                </div>
+
+                <form id="programForm" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <select id="selectSchool"
+                            class="rounded-md py-2 px-1 border-2 border-purple-300 shadow-sm focus:border-purple-700 focus:outline-none focus:ring focus:ring-purple-500">
+                            <option value="">Select School</option>
+                        </select>
+                        <select id="degreeType"
+                            class="rounded-md py-2 px-1 border-2 border-purple-300 shadow-sm focus:border-purple-700 focus:outline-none focus:ring focus:ring-purple-500">
+                            <option value="">Degree Type</option>
+                            <option value="BSc">BSc</option>
+                            <option value="MSc">MSc</option>
+                            <option value="PhD">PhD</option>
+                            <option value="Diploma">Diploma</option>
+                            <option value="Certificate">Certificate</option>
+                        </select>
+                        <input type="text" id="programName"
+                            class="rounded-md py-2 px-1 border-2 border-purple-300 shadow-sm focus:border-purple-700 focus:outline-none focus:ring focus:ring-purple-500"
+                            placeholder="Enter program/degree">
+                        <button type="button" onclick="addProgram()"
+                            class="inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                            Add Program
+                        </button>
+                    </div>
+                </form>
+
+                <ul id="programList" class="mt-6 divide-y divide-gray-200"></ul>
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model admin {
+  admin_id   Int       @id @default(autoincrement())
+  firstname  String    @db.VarChar(50)
+  lastname   String    @db.VarChar(50)
+  email      String    @db.VarChar(100)
+  phone      String    @db.VarChar(20)
+  address    String?   @db.VarChar(255)
+  gender     String?   @db.VarChar(10)
+  password   String    @db.VarChar(255)
+  otp        Int
+  role       String?   @db.VarChar(20)
+  picture    String?   @db.VarChar(255)
+  created_at DateTime? @default(now()) @db.Date
+  update_at  DateTime? @db.Date
+}
+
+model application {
+  application_id String   @id @db.VarChar(50)
+  student_id     Int
+  status         String   @default("Pending Processing") @db.VarChar(100)
+  created_at     DateTime @default(now()) @db.Date
+  updated_at     DateTime @db.Date
+  student        student  @relation(fields: [student_id], references: [student_id], onDelete: Cascade, map: "application_ibfk_1")
+
+  @@index([student_id], map: "student_id")
+}
+
+model application_details {
+  applicantion_id        String   @db.VarChar(50)
+  firstname              String   @db.VarChar(50)
+  lastname               String   @db.VarChar(50)
+  gender                 String   @db.VarChar(20)
+  nationality            Int
+  marital_status         String   @db.VarChar(20)
+  dob                    DateTime @db.Date
+  religion_id            Int
+  country_of_birth       Int
+  occupation             String   @db.VarChar(100)
+  place_of_birth         String   @map("place of birth") @db.VarChar(100)
+  affiliated_institution String   @db.VarChar(100)
+  in_china_now           String   @db.VarChar(10)
+  native_language        String   @db.VarChar(50)
+
+  @@index([applicantion_id], map: "applicantion_id")
+}
+
+model country {
+  country_id   Int      @id
+  country_name String   @db.VarChar(100)
+  created_at   DateTime @default(now()) @db.Date
+  updated_at   DateTime @db.Date
+  school       school[]
+}
+
+model notice {
+  notice_id       Int      @id @default(autoincrement())
+  notice_title    String   @db.VarChar(255)
+  notice_message  String   @db.Text
+  notice_datetime DateTime @db.DateTime(0)
+  student_id      Int
+  created_at      DateTime @default(now()) @db.Date
+  updated_at      DateTime @db.Date
+  student         student  @relation(fields: [student_id], references: [student_id], onDelete: Cascade, map: "notice_ibfk_1")
+
+  @@index([student_id], map: "notice_ibfk_1")
+}
+
+model payment {
+  payment_id     Int      @id @default(autoincrement())
+  payment_status String   @db.VarChar(50)
+  payment_amount Int
+  payment_method String   @db.VarChar(50)
+  student_id     Int
+  created_at     DateTime @db.Date
+  student        student  @relation(fields: [student_id], references: [student_id], onDelete: Cascade, map: "payment_ibfk_1")
+
+  @@index([student_id], map: "payment_ibfk_1")
+}
+
+model payment_links {
+  payment_method_id   Int      @id @default(autoincrement())
+  payment_method_name String   @db.VarChar(50)
+  payment_method_link String   @db.VarChar(255)
+  created             DateTime @default(now()) @db.Date
+}
+
+model program {
+  program_id       Int    @id @default(autoincrement())
+  program_name     String @db.VarChar(255)
+  program_degree   String @db.VarChar(255)
+  program_duration String @db.VarChar(100)
+  school_id        Int
+  school           school @relation(fields: [school_id], references: [school_id], onDelete: Cascade, map: "program_ibfk_1")
+
+  @@index([school_id], map: "school_id")
+}
+
+model school {
+  school_id   Int       @id @default(autoincrement())
+  school_name String    @db.VarChar(255)
+  school_city String    @db.VarChar(255)
+  country_id  Int
+  program     program[]
+  country     country   @relation(fields: [country_id], references: [country_id], onDelete: Cascade, map: "school_country")
+
+  @@index([country_id], map: "school's country id")
+}
+
+model student {
+  student_id  Int           @id @default(autoincrement())
+  firstname   String?       @db.VarChar(50)
+  lastname    String?       @db.VarChar(50)
+  gender      String?       @db.VarChar(10)
+  nationality String?       @db.VarChar(50)
+  dob         DateTime?     @db.Date
+  contact     String?       @db.VarChar(20)
+  email       String?       @db.VarChar(100)
+  password    String        @db.VarChar(255)
+  created_at  DateTime?     @default(now()) @db.Date
+  update_at   DateTime?     @db.Date
+  application application[]
+  notice      notice[]
+  payment     payment[]
+}

@@ -1,0 +1,11 @@
+RewriteEngine On
+
+# Check if the request is for a file or directory that exists
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# If the URL contains "/api", route to index.php for backend
+RewriteRule ^api(.*)$ index.php [QSA,L]
+
+# Otherwise, if no file or directory match, serve index.html (frontend)
+RewriteRule ^ index.html [QSA,L]

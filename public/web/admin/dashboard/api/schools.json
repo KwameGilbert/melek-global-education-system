@@ -1,0 +1,34 @@
+[{
+  "success": true,
+  "school": [
+    {
+      "id": 1,
+      "name": "Harvard University",
+      "city": "Cambridge",
+      "country_id": 1,
+      "country_name": "United States"
+    },
+    {
+      "id": 2,
+      "name": "University of Toronto",
+      "city": "Toronto",
+      "country_id": 2,
+      "country_name": "Canada"
+    },
+    {
+      "id": 3,
+      "name": "Oxford University",
+      "city": "Oxford",
+      "country_id": 3,
+      "country_name": "United Kingdom"
+    },
+    {
+      "id": 4,
+      "name": "Peking University",
+      "city": "Beijing",
+      "country_id": 4,
+      "country_name": "China"
+    }
+  ]
+}
+]
