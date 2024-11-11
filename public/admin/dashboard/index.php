@@ -1,3 +1,18 @@
+<?php
+require __DIR__ . '/../../../config/database.php';
+
+// Start PHP session
+session_start();
+
+// Check if the user is logged in by verifying session variables
+if (isset($_SESSION['admin_id'])) {
+} else {
+    // Redirect to login if session is not set
+    header('Location: ../login/');
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,13 +24,9 @@
     <script src="../../../imports/chart/chart.js"></script>
     <link rel="stylesheet" href="../../../imports/tailwind/tailwind.min.css">
     <link href="../../../imports/fontawesome/css/all.min.css" rel="stylesheet">
-    <style>
-        /* Hide elements on small screens */
-        .hidden {
-            display: none;
-        }
-    </style>
+    <script src="../../../imports/sweetalert/sweetalert2@11.js"></script>
 </head>
+
 <body class="h-screen overflow-hidden flex bg-gray-50">
     <!-- Sidebar -->
     <div id="sidebar" class="bg-gray-800 text-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-500 ease-in-out overflow-y-auto z-50">
@@ -30,10 +41,10 @@
 
         <!-- Profile Section -->
         <div class="flex flex-col items-center mb-6">
-            <img src="https://avatar.iran.liara.run/public" alt="Profile"
+            <img src="./images/<?php echo $_SESSION['picture']; ?>" alt="Profile"
                 class="w-24 h-24 rounded-full object-cover mb-2">
-            <h2 class="text-lg font-semibold" id="adminName">Admin Name</h2>
-            <p class="text-sm text-gray-400" id="adminEmail">admin@example.com</p>
+            <h2 class="text-lg font-semibold" id="adminName"><?php echo $_SESSION['admin_name']; ?></h2>
+            <p class="text-sm text-gray-400" id="adminEmail"><?php echo $_SESSION['email']; ?></p>
         </div>
 
         <!-- Navigation -->
@@ -50,12 +61,13 @@
             <a href="#" data-page="settings.html" class="flex items-center py-2.5 px-4 hover:bg-gray-700">
                 <i class="fas fa-cogs mr-3"></i> Settings
             </a>
-            <a href="#" data-page="logout.html" onclick="logout()"
+            <a href="#" onclick="logout()"
                 class="flex items-center py-2.5 px-4 hover:bg-red-600">
                 <i class="fas fa-sign-out-alt mr-3"></i> Logout
             </a>
         </nav>
     </div>
+
 
     <!-- Main Content Area -->
     <div class="flex-1 flex flex-col md:relative md:z-10 bg-white overflow-y-auto h-full">
@@ -71,9 +83,10 @@
 
             <!-- Welcome and Logout Button -->
             <div class="flex items-center">
-                <span class="text-gray-700 mr-4">Welcome, Admin</span>
-                <button class="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600">Logout</button>
+                <span class="text-gray-700 mr-4">Welcome, <?php echo $_SESSION['admin_name']; ?></span>
+                <button class="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600" onclick="onclick()">Logout</button>
             </div>
+
         </header>
 
         <!-- Main Content -->
@@ -107,14 +120,8 @@
             }
         }
 
-        // Simulated logout function (you can replace this with real logic)
-        function logout() {
-            alert("Logging out...");
-            window.location.href = "login.html";
-        }
-
         // On page load, check localStorage and load the appropriate page
-        window.onload = function () {
+        window.onload = function() {
             const activePage = localStorage.getItem('activePage') || 'dashboard.html';
             loadPage(activePage);
         };
@@ -124,4 +131,5 @@
     <script src="./scripts/view-applicant.js"></script>
     <script src="./scripts/index.js"></script>
 </body>
+
 </html>

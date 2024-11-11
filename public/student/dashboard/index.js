@@ -217,6 +217,106 @@ function loadApplications() {
 
 populateFormOptions();
 
+
+   async function populateMajorInfo() {
+
+        const countrySelect = document.getElementById("country");
+        const schoolSelect = document.getElementById("school");
+        const degreeSelect = document.getElementById("degree");
+        const programSelect = document.getElementById("program");
+        const studyDurationInput = document.getElementById("study-duration");
+
+        let data = {};
+
+        // Fetch data from JSON file
+        fetch('../../../api/majorInfo/majorInfo.json')
+            .then(response => response.json())
+            .then(jsonData => {
+                data = jsonData;
+                populateCountries(data.countries);
+            })
+            .catch(error => console.error("Error fetching data:", error));
+
+        // Populate countries
+        function populateCountries(countries) {
+            countrySelect.innerHTML = '<option value="">Select Country</option>';
+            countries.forEach(country => {
+                const option = new Option(country.name, country.id);
+                countrySelect.add(option);
+            });
+        }
+
+        // Country selection changes
+        countrySelect.addEventListener("change", () => {
+            const selectedCountry = data.countries.find(c => c.id === countrySelect.value);
+            populateSchools(selectedCountry ? selectedCountry.schools : []);
+            resetSelections(["school", "degree", "program"]);
+        });
+
+        // Populate schools
+        function populateSchools(schools) {
+            schoolSelect.innerHTML = '<option value="">Select School</option>';
+            schools.forEach(school => {
+                const option = new Option(school.name, school.id);
+                schoolSelect.add(option);
+            });
+        }
+
+        // School selection changes
+        schoolSelect.addEventListener("change", () => {
+            const selectedCountry = data.countries.find(c => c.id === countrySelect.value);
+            const selectedSchool = selectedCountry.schools.find(s => s.id === schoolSelect.value);
+            populateDegrees(selectedSchool ? selectedSchool.degrees : []);
+            resetSelections(["degree", "program"]);
+        });
+
+        // Populate degrees
+        function populateDegrees(degrees) {
+            degreeSelect.innerHTML = '<option value="">Select Degree</option>';
+            degrees.forEach(degree => {
+                const option = new Option(degree.name, degree.id);
+                degreeSelect.add(option);
+            });
+        }
+
+        // Degree selection changes
+        degreeSelect.addEventListener("change", () => {
+            const selectedCountry = data.countries.find(c => c.id === countrySelect.value);
+            const selectedSchool = selectedCountry.schools.find(s => s.id === schoolSelect.value);
+            const selectedDegree = selectedSchool.degrees.find(d => d.id === degreeSelect.value);
+            populatePrograms(selectedDegree ? selectedDegree.programs : []);
+        });
+
+        // Populate programs and set study duration
+        function populatePrograms(programs) {
+            programSelect.innerHTML = '<option value="">Select Program</option>';
+            programs.forEach(program => {
+                const option = new Option(program.name, program.id);
+                programSelect.add(option);
+            });
+            studyDurationInput.value = "";
+        }
+
+        // Program selection changes
+        programSelect.addEventListener("change", () => {
+            const selectedCountry = data.countries.find(c => c.id === countrySelect.value);
+            const selectedSchool = selectedCountry.schools.find(s => s.id === schoolSelect.value);
+            const selectedDegree = selectedSchool.degrees.find(d => d.id === degreeSelect.value);
+            const selectedProgram = selectedDegree.programs.find(p => p.id === programSelect.value);
+            studyDurationInput.value = selectedProgram ? selectedProgram.duration : "";
+        });
+
+        // Reset dependent dropdowns
+        function resetSelections(elements) {
+            elements.forEach(id => {
+                document.getElementById(id).innerHTML = `<option value="">Select ${id.charAt(0).toUpperCase() + id.slice(1)}</option>`;
+            });
+        }
+
+
+    }
+
+    populateMajorInfo();
 }
 
 function loadPayments() {

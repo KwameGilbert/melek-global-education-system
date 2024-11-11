@@ -1,0 +1,19 @@
+{
+    "countries": [
+        { "id": "1", "country_name": "USA" },
+        { "id": "2", "country_name": "UK" }
+    ],
+    "schools": [
+        { "id": "101", "school_name": "Harvard University", "country_id": "1" },
+        { "id": "102", "school_name": "MIT", "country_id": "1" },
+        { "id": "201", "school_name": "University of Oxford", "country_id": "2" }
+    ],
+    "programs": [
+        { "id": "p1", "program_name": "Computer Science", "degree": "Bachelor of Science", "school_id": "101", "duration": "4 years" },
+        { "id": "p2", "program_name": "Physics", "degree": "Bachelor of Science", "school_id": "101", "duration": "4 years" },
+        { "id": "p3", "program_name": "Data Science", "degree": "Master of Science", "school_id": "101", "duration": "2 years" },
+        { "id": "p4", "program_name": "Engineering", "degree": "Master of Science", "school_id": "102", "duration": "2 years" },
+        { "id": "p5", "program_name": "Mechanical Engineering", "degree": "Bachelor of Science", "school_id": "102", "duration": "4 years" },
+        { "id": "p6", "program_name": "History", "degree": "Bachelor of Arts", "school_id": "201", "duration": "3 years" }
+    ]
+}
