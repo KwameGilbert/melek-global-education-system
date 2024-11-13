@@ -18,12 +18,12 @@
 </div>
 <!-- Form Heading -->
 <div class="container mx-auto">
-    
+
     <!-- Application Form -->
     <form id="application-form" class="bg-white py-4 rounded">
         <h2 class="text-2xl font-bold text-center">Application Form</h2>
         <!-- Personal Information -->
-       
+
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md">
             <h3 class="text-xl font-bold mb-4 text-gray-700">Personal Information</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -65,7 +65,7 @@
                     <label class="block text-sm font-bold text-gray-700 mb-1">Nationality *</label>
                     <select id="nationality" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required>
                         <option value="">Select</option>
-                       
+
                     </select>
                 </div>
                 <!-- Marital Status -->
@@ -93,20 +93,20 @@
                     <label class="block text-sm font-bold text-gray-700 mb-1">Religion *</label>
                     <select id="religion" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required>
                         <option value="">Select</option>
-                        
+
                     </select>
                 </div>
                 <!-- Country of Birth -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Country of Birth *</label>
-                     <select id="country-birth" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required>
-                      <option value="">Select</option>
+                    <select id="country-birth" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required>
+                        <option value="">Select</option>
                     </select>
                 </div>
                 <!-- Occupation -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
-                    <input type="text" id="occupation"                      class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required />
+                    <input type="text" id="occupation" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required />
                 </div>
                 <!-- Place of Birth -->
                 <div>
@@ -493,65 +493,95 @@
             </div>
         </div>
 
-<!-- Major's Information -->
-<div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
-    <h3 class="text-xl font-bold mb-4 text-gray-700">Major's Information</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Country -->
-        <div>
-            <label class="block text-sm font-bold text-gray-700 mb-1">Country *</label>
-            <select id="country"
-                class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required>
-                <option value="">Select a country</option>
-            </select>
+        <!-- Major's Information Form -->
+        <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
+            <h3 class="text-xl font-bold mb-4 text-gray-700">Major's Information</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Country -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Country *</label>
+                    <select id="country" onchange="fetchSchools()" class="w-full p-3 border border-gray-300 rounded-md"
+                        required>
+                        <option value="">Select a country</option>
+                        <?php include './pages/get_data.php';
+                        echo populateOptions('countries'); ?>
+                    </select>
+                </div>
+                <!-- School -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">School *</label>
+                    <select id="school" onchange="fetchDegrees()" class="w-full p-3 border border-gray-300 rounded-md" required>
+                        <option value="">Select a school</option>
+                    </select>
+                </div>
+                <!-- Degree -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
+                    <select id="degree" onchange="fetchPrograms()" class="w-full p-3 border border-gray-300 rounded-md"
+                        required>
+                        <option value="">Select a degree</option>
+                    </select>
+                </div>
+                <!-- Program -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Program *</label>
+                    <select id="program" onchange="showDuration()" class="w-full p-3 border border-gray-300 rounded-md"
+                        required>
+                        <option value="">Select a program</option>
+                    </select>
+                </div>
+                <!-- Study Duration -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Study Duration *</label>
+                    <input type="text" id="study-duration" class="w-full p-3 border border-gray-300 rounded-md" readonly />
+                </div>
+            </div>
         </div>
-        <!-- School -->
-        <div>
-            <label class="block text-sm font-bold text-gray-700 mb-1">School *</label>
-            <select id="school"
-                class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required>
-                <option value="">Select a school</option>
-            </select>
-        </div>
-        <!-- Degree -->
-        <div>
-            <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
-            <select id="degree"
-                class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required>
-                <option value="">Select a degree</option>
-            </select>
-        </div>
-        <!-- Program -->
-        <div>
-            <label class="block text-sm font-bold text-gray-700 mb-1">Program *</label>
-            <select id="program"
-                class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required>
-                <option value="">Select a program</option>
-            </select>
-        </div>
-        <!-- Teaching Language -->
-        <div>
-            <label class="block text-sm font-bold text-gray-700 mb-1">Teaching Language *</label>
-            <input type="text" id="teaching-language"
-                class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                required />
-        </div>
-        <!-- Entry Year -->
-        <div>
-            <label class="block text-sm font-bold text-gray-700 mb-1">Entry Year *</label>
-            <input type="text" id="entry-year"
-                class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                required />
-        </div>
-        <!-- Study Duration -->
-        <div>
-            <label class="block text-sm font-bold text-gray-700 mb-1">Study Duration *</label>
-            <input type="text" id="study-duration"
-                class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                required />
-        </div>
-    </div>
-</div>
+
+        <?php
+
+        function populateOptions($type)
+        {
+            $data = json_decode(file_get_contents('majorInfo.json'), true);
+            $options = '';
+
+            if ($type === 'countries') {
+                foreach ($data['countries'] as $country) {
+                    $options .= "<option value=\"{$country['id']}\">{$country['country_name']}</option>";
+                }
+            }
+            return $options;
+        }
+
+        if (isset($_GET['type']) && isset($_GET['id']) && isset($_GET['filter'])) {
+            $data = json_decode(file_get_contents('majorInfo.json'), true);
+            $result = [];
+
+            switch ($_GET['type']) {
+                case 'school':
+                    $result = array_filter($data['schools'], fn($school) => $school[$_GET['filter']] === $_GET['id']);
+                    break;
+                case 'degree':
+                    $schools = array_filter($data['programs'], fn($program) => $program[$_GET['filter']] === $_GET['id']);
+                    $result = array_unique(array_column($schools, 'degree'));
+                    break;
+                case 'program':
+                    $result = array_filter(
+                        $data['programs'],
+                        fn($program) =>
+                        $program['school_id'] === $_GET['id']['school_id'] && $program['degree'] === $_GET['id']['degree']
+                    );
+                    break;
+                case 'duration':
+                    $program = array_filter($data['programs'], fn($program) => $program['id'] === $_GET['id']);
+                    $result = $program ? ['duration' => array_shift($program)['duration']] : null;
+                    break;
+            }
+
+            echo json_encode(array_values($result));
+        }
+        ?>
+
 
 
         <!-- Language Proficiency -->
