@@ -276,6 +276,8 @@ function loadPage(page) {
         case "notices.html":
           loadNoticesPage();
           break;
+        case "setings.html":
+          break;
         default:
           console.error("No matching function for the page:", page);
       }

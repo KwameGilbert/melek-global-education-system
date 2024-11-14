@@ -43,12 +43,10 @@ class Database
             );
         } catch (PDOException $e) {
             error_log("Connection error: " . $e->getMessage());  // Log error instead of displaying it
-            die("Database connection failed.". $this->username . " User");  // Hide sensitive error details from the user
+            die("Database connection failed." . $this->username . " User");  // Hide sensitive error details from the user
         }
 
         return $this->conn;
     }
 }
 
-$db= new Database();
-$db->getConnection();

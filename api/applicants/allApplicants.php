@@ -13,7 +13,7 @@ $db = $database->getConnection();
 $query = "
     SELECT 
         CONCAT(s.firstname, ' ', s.lastname) AS name,
-        CONCAT('A', a.student_id) AS applicantId,
+        a.student_id AS applicantId,
         sc.school_name AS school,
         p.program_name AS program,
         a.date_applied AS dateApplied,
