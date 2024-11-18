@@ -22,8 +22,8 @@ if (isset($_GET['id'])) {
             LEFT JOIN application a ON ad.application_id = a.application_id 
             WHERE ad.application_id = :id';
     $studyQuery = 'SELECT * FROM study_experience WHERE application_id = :id';
-
-    
+    $workQuery = 'SELECT * FROM work_history WHERE application_id = :id';
+    $updateQuery = 'SELECT * FROM `update` WHERE application_id = :id';
 
     try {
         $stmt = $conn->prepare($sql);
@@ -34,7 +34,14 @@ if (isset($_GET['id'])) {
         $studyStmt->execute(['id' => $id]);
         $study_experience = $studyStmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $workStmt = $conn->prepare($workQuery);
+        $workStmt->execute(['id' => $id]);
+        $work_history = $workStmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $updateStmt = $conn->prepare($updateQuery);
+        $updateStmt->execute(['id' => $id]);
+        $updates = $updateStmt->fetchAll(PDO::FETCH_ASSOC);
+        
 
         if (!$applicant) {
             $response = [
@@ -245,37 +252,46 @@ if (isset($_GET['id'])) {
 
             <!-- Study Experience -->
             <h2 class="section-header">Study Experience</h2>
-            
+
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-gray-700 px-3">
-                  <?php if (!empty($study_experience)): ?>
-                      <?php foreach ($study_experience as $experience): ?>
+                <?php if (!empty($study_experience)): ?>
+                    <?php foreach ($study_experience as $experience): ?>
 
                         <p><strong>Institution:</strong> <?php echo $experience['institution'] ?? 'Not provided'; ?></p>
 
-                         <p><strong>Degree:</strong> <?php echo $experience['degree'] ?? 'Not provided'; ?></p>
+                        <p><strong>Degree:</strong> <?php echo $experience['degree'] ?? 'Not provided'; ?></p>
 
-                          <p><strong>Field of Study:</strong> <?php echo $experience['field_of_study'] ?? 'Not provided'; ?></p>
+                        <p><strong>Field of Study:</strong> <?php echo $experience['field_of_study'] ?? 'Not provided'; ?></p>
 
-                           <p><strong>Start Date:</strong> <?php echo $experience['start_date'] ?? 'Not provided'; ?></p>
+                        <p><strong>Start Date:</strong> <?php echo $experience['start_date'] ?? 'Not provided'; ?></p>
 
-                            <p><strong>End Date:</strong> <?php echo $experience['end_date'] ?? 'Not provided'; ?></p>
+                        <p><strong>End Date:</strong> <?php echo $experience['end_date'] ?? 'Not provided'; ?></p>
 
-                             <hr class="col-span-2 border-2">
+                        <hr class="col-span-2 border-2">
 
-                          <?php endforeach; ?>
-                      <?php else: ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
 
-                          <p>No study experience provided.</p>
+                    <p>No study experience provided.</p>
 
-                      <?php endif; ?>
+                <?php endif; ?>
             </div>
-            
+
 
             <!-- Work History -->
             <h2 class="section-header">Work History</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-gray-700 px-3">
-                <p><strong>2015-2018:</strong> Software Developer at ABC Corp</p>
-                <p><strong>2019-Present:</strong> Senior Developer at XYZ Solutions</p>
+                <?php if (!empty($work_history)): ?>
+                    <?php foreach ($work_history as $work): ?>
+                        <p><strong>Position:</strong> <?php echo $work['position'] ?? 'Not provided'; ?></p>
+                        <p><strong>Company:</strong> <?php echo $work['company'] ?? 'Not provided'; ?></p>
+                        <p><strong>Start Year:</strong> <?php echo $work['start_year'] ?? 'Not provided'; ?></p>
+                        <p><strong>End Year:</strong> <?php echo $work['end_year'] ?? 'Not provided'; ?></p>
+                        <hr class="col-span-2 border-2">
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>No work history provided.</p>
+                <?php endif; ?>
             </div>
 
             <!-- Family Members -->
@@ -309,11 +325,6 @@ if (isset($_GET['id'])) {
                 </thead>
                 <!-- Updates Table -->
                 <tbody id="updatesTableBody">
-                    <?php $updates = [
-                        ['id' => 1, 'title' => 'Application Submitted', 'date' => '2024-10-01T10:30', 'message' => 'Application submitted successfully.'],
-                        ['id' => 2, 'title' => 'Application Approved', 'date' => '2024-10-05T10:30', 'message' => 'Application approved by the admissions office.'],
-                        ['id' => 3, 'title' => 'Visa Issued', 'date' => '2024-10-10T10:30', 'message' => 'Visa issued by the Chinese consulate.'],
-                    ]; ?>
 
                     <?php foreach ($updates as $update): ?>
                         <tr>
@@ -321,7 +332,7 @@ if (isset($_GET['id'])) {
                                 <?php echo $update['title']; ?>
                             </td>
                             <td class="py-2 px-4 border-b">
-                                <?php echo $update['date']; ?>
+                                <?php echo $update['datetime']; ?>
                             </td>
                             <td class="py-2 px-4 border-b">
                                 <?php echo $update['message']; ?>
@@ -332,7 +343,7 @@ if (isset($_GET['id'])) {
                                     class="text-blue-500"
                                     data-id="<?php echo $update['id']; ?>"
                                     data-title="<?php echo htmlspecialchars($update['title'], ENT_QUOTES, 'UTF-8'); ?>"
-                                    data-date="<?php echo htmlspecialchars($update['date'], ENT_QUOTES, 'UTF-8'); ?>"
+                                    data-date="<?php echo htmlspecialchars($update['datetime'], ENT_QUOTES, 'UTF-8'); ?>"
                                     data-message="<?php echo htmlspecialchars($update['message'], ENT_QUOTES, 'UTF-8'); ?>">
                                     Edit
                                 </button>
