@@ -21,11 +21,20 @@ if (isset($_GET['id'])) {
             LEFT JOIN payment p ON ad.application_id = p.application_id 
             LEFT JOIN application a ON ad.application_id = a.application_id 
             WHERE ad.application_id = :id';
+    $studyQuery = 'SELECT * FROM study_experience WHERE application_id = :id';
+
+    
 
     try {
         $stmt = $conn->prepare($sql);
         $stmt->execute(['id' => $id]);
         $applicant = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $studyStmt = $conn->prepare($studyQuery);
+        $studyStmt->execute(['id' => $id]);
+        $study_experience = $studyStmt->fetchAll(PDO::FETCH_ASSOC);
+
+
 
         if (!$applicant) {
             $response = [
@@ -35,7 +44,6 @@ if (isset($_GET['id'])) {
             echo json_encode($response);
             exit;
         }
-        echo json_encode($applicant);
         // Set payment_status to 'Not Found' if null
         $applicant['payment_status'] = $applicant['payment_status'] ?? 'Not Found';
     } catch (PDOException $e) {
@@ -237,10 +245,31 @@ if (isset($_GET['id'])) {
 
             <!-- Study Experience -->
             <h2 class="section-header">Study Experience</h2>
+            
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-gray-700 px-3">
-                <p><strong>High School:</strong> Riverside High School (2006-2010)</p>
-                <p><strong>University:</strong> ABC University (2010-2014)</p>
+                  <?php if (!empty($study_experience)): ?>
+                      <?php foreach ($study_experience as $experience): ?>
+
+                        <p><strong>Institution:</strong> <?php echo $experience['institution'] ?? 'Not provided'; ?></p>
+
+                         <p><strong>Degree:</strong> <?php echo $experience['degree'] ?? 'Not provided'; ?></p>
+
+                          <p><strong>Field of Study:</strong> <?php echo $experience['field_of_study'] ?? 'Not provided'; ?></p>
+
+                           <p><strong>Start Date:</strong> <?php echo $experience['start_date'] ?? 'Not provided'; ?></p>
+
+                            <p><strong>End Date:</strong> <?php echo $experience['end_date'] ?? 'Not provided'; ?></p>
+
+                             <hr class="col-span-2 border-2">
+
+                          <?php endforeach; ?>
+                      <?php else: ?>
+
+                          <p>No study experience provided.</p>
+
+                      <?php endif; ?>
             </div>
+            
 
             <!-- Work History -->
             <h2 class="section-header">Work History</h2>
@@ -255,6 +284,7 @@ if (isset($_GET['id'])) {
                 <p><strong>Mother:</strong> Jane Doe - Financial Analyst</p>
                 <p><strong>Father:</strong> John Doe Sr. - Retired</p>
             </div>
+
             <!-- Document Uploads -->
             <h2 class="section-header">Uploaded Documents</h2>
             <ul class="list-disc pl-6 text-gray-700 mb-6 px-3">
