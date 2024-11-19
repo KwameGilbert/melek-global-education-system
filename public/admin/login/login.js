@@ -1,6 +1,3 @@
-// Add this in your HTML head
-
-
 document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     

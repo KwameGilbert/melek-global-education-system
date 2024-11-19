@@ -224,7 +224,7 @@ async function loadApplicants() {
 
 //End Applicant Category //
 
-// function to be run when the view of an applicant is clicked
+// Function to be run when the view of an applicant is clicked
 function viewApplicant(applicantId) {
   console.log("Loading applicant:", applicantId);
   fetch(`./pages/view-applicant.php?id=${applicantId}`)
@@ -233,9 +233,6 @@ function viewApplicant(applicantId) {
       const mainContent = document.getElementById("main-content");
       mainContent.innerHTML = applicantInfo;
       console.log(`Loaded applicant with ID: ${applicantId}`);
-
-      // Wait 5 seconds and call the populateMajorInfo()
-      setTimeout(populateMajorInfo, 5000);
       
     })
     .catch((error) => {
@@ -247,8 +244,6 @@ function viewApplicant(applicantId) {
 // Call the loadApplicants function when needed
 loadApplicants();
 // End Applicant Category //
-
-
 
 // Load the selected page and inject the content into the main-content area
 function loadPage(page) {

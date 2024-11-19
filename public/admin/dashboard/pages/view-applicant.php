@@ -1,75 +1,10 @@
 <?php
-
-if (isset($_GET['id'])) {
-    $id = filter_var($_GET['id'], FILTER_VALIDATE_INT);
-    if ($id === false) {
-        $response = [
-            'status' => 'error',
-            'message' => 'Invalid application ID'
-        ];
-        echo json_encode($response);
-        exit;
-    }
-
-    require_once __DIR__ . '/../../../../config/database.php';
-    $db = new Database();
-    $conn = $db->getConnection();
-
-    // Combine queries into a single JOIN for better performance
-    $sql = 'SELECT ad.*, p.payment_status, a.status 
-            FROM application_details ad 
-            LEFT JOIN payment p ON ad.application_id = p.application_id 
-            LEFT JOIN application a ON ad.application_id = a.application_id 
-            WHERE ad.application_id = :id';
-    $studyQuery = 'SELECT * FROM study_experience WHERE application_id = :id';
-    $workQuery = 'SELECT * FROM work_history WHERE application_id = :id';
-    $updateQuery = 'SELECT * FROM `update` WHERE application_id = :id';
-
-    try {
-        $stmt = $conn->prepare($sql);
-        $stmt->execute(['id' => $id]);
-        $applicant = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $studyStmt = $conn->prepare($studyQuery);
-        $studyStmt->execute(['id' => $id]);
-        $study_experience = $studyStmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $workStmt = $conn->prepare($workQuery);
-        $workStmt->execute(['id' => $id]);
-        $work_history = $workStmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $updateStmt = $conn->prepare($updateQuery);
-        $updateStmt->execute(['id' => $id]);
-        $updates = $updateStmt->fetchAll(PDO::FETCH_ASSOC);
-        
-
-        if (!$applicant) {
-            $response = [
-                'status' => 'error',
-                'message' => 'Applicant not found'
-            ];
-            echo json_encode($response);
-            exit;
-        }
-        // Set payment_status to 'Not Found' if null
-        $applicant['payment_status'] = $applicant['payment_status'] ?? 'Not Found';
-    } catch (PDOException $e) {
-        error_log('Database error: ' . $e->getMessage());
-        $response = [
-            'status' => 'error',
-            'message' => $e
-        ];
-        echo json_encode($response);
-        exit;
-    }
-}
-
+require_once __DIR__ . '/../../../../api/applicants/single_applicant.php';
 ?>
 
 <div class="flex flex-col md:flex-row max-w-full mx-0 top-0">
     <!--  Start Application Sidebar -->
-    <div
-        class="w-full overflow-y-hidden h-full md:min-h-screen md:w-1/4 bg-white shadow-lg p-6 pt-2 md:sticky md:top-0">
+    <div class="w-full overflow-y-hidden h-full md:min-h-screen md:w-2/5 bg-white shadow-lg p-6 pt-2 md:sticky md:top-0">
         <!-- Back Button -->
         <div>
             <button onclick="loadPage('applicants.html')"
@@ -83,11 +18,9 @@ if (isset($_GET['id'])) {
 
             <!-- Payment Status -->
             <div class="bg-green-100 text-green-800 p-2 rounded">
-                <strong>Applicant ID:</strong> <?php echo $applicant['application_id']; ?>
-                <br>
-                <strong>Applicant Status:</strong> <?php echo $applicant['status']; ?>
-                <br>
-                <strong>Payment Status:</strong> <?php echo $applicant['payment_status']; ?>
+                <strong>Applicant ID: </strong><span id="application_id"><?php echo $applicant['application_id']; ?></span><br>
+                <strong>Applicant Status: </strong><?php echo $applicant['status']; ?><br>
+                <strong>Payment Status: </strong><?php echo $applicant['payment_status']; ?>
             </div>
 
             <!-- Update Application Status -->
@@ -115,7 +48,7 @@ if (isset($_GET['id'])) {
     <!-- End Application Sidebar -->
 
     <!-- Container -->
-    <div class="flex-1 bg-gray-100 p-4 pt-0 w-full application-form">
+    <div class="flex-1 bg-gray-100 p-4 pt-0 w-full md:w-3/5 application-form">
         <div>
             <h2 class="font-bold text-xl text-black mx-auto p-4 text-center">
                 Student Application Form
@@ -236,7 +169,7 @@ if (isset($_GET['id'])) {
                 <p><strong>HSK Scores:</strong> <?php echo $applicant['hsk_scores'] ?? 'Not provided'; ?></p>
                 <p><strong>HSKK Scores:</strong> <?php echo $applicant['hskk_scores'] ?? 'Not provided'; ?></p>
                 <p><strong>Time of Chinese Learning:</strong> <?php echo $applicant['time_of_chinese_learning'] ?? 'Not provided'; ?></p>
-                <p><strong>Chinese Teacher Nationality:</strong> <?php echo $applicant['teacher_nationlity_chinese'] ?? 'Not provided'; ?></p>
+                <p><strong>Chinese Teacher Nationality:</strong> <?php echo ($applicant['teacher_nationlity_chinese'] == 1) ? 'Yes' : 'Not provided'; ?></p>
                 <p><strong>Chinese Learning Institution:</strong> <?php echo $applicant['chinese_learning_institution'] ?? 'Not provided'; ?></p>
             </div>
 
@@ -252,31 +185,20 @@ if (isset($_GET['id'])) {
 
             <!-- Study Experience -->
             <h2 class="section-header">Study Experience</h2>
-
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-gray-700 px-3">
                 <?php if (!empty($study_experience)): ?>
                     <?php foreach ($study_experience as $experience): ?>
-
                         <p><strong>Institution:</strong> <?php echo $experience['institution'] ?? 'Not provided'; ?></p>
-
                         <p><strong>Degree:</strong> <?php echo $experience['degree'] ?? 'Not provided'; ?></p>
-
                         <p><strong>Field of Study:</strong> <?php echo $experience['field_of_study'] ?? 'Not provided'; ?></p>
-
                         <p><strong>Start Date:</strong> <?php echo $experience['start_date'] ?? 'Not provided'; ?></p>
-
                         <p><strong>End Date:</strong> <?php echo $experience['end_date'] ?? 'Not provided'; ?></p>
-
                         <hr class="col-span-2 border-2">
-
                     <?php endforeach; ?>
                 <?php else: ?>
-
                     <p>No study experience provided.</p>
-
                 <?php endif; ?>
             </div>
-
 
             <!-- Work History -->
             <h2 class="section-header">Work History</h2>
@@ -294,159 +216,180 @@ if (isset($_GET['id'])) {
                 <?php endif; ?>
             </div>
 
-            <!-- Family Members -->
-            <h2 class="section-header">Family Members</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-gray-700 px-3">
-                <p><strong>Mother:</strong> Jane Doe - Financial Analyst</p>
-                <p><strong>Father:</strong> John Doe Sr. - Retired</p>
-            </div>
-
             <!-- Document Uploads -->
             <h2 class="section-header">Uploaded Documents</h2>
             <ul class="list-disc pl-6 text-gray-700 mb-6 px-3">
-                <li>Valid Passport with Visa</li>
-                <li>Highest Academic Diploma</li>
-                <li>Non-criminal Record</li>
-                <li>Bank Statement</li>
-            </ul>
-        </div>
-
-        <!-- Updates Section -->
-        <h2 class="section-header">Updates</h2>
-        <div class="overflow-x-auto">
-            <table class="min-w-full bg-white">
-                <thead>
-                    <tr>
-                        <th class="py-2 px-4 border-b">Title</th>
-                        <th class="py-2 px-4 border-b">Date</th>
-                        <th class="py-2 px-4 border-b">Message</th>
-                        <th class="py-2 px-4 border-b">Actions</th>
-                    </tr>
-                </thead>
-                <!-- Updates Table -->
-                <tbody id="updatesTableBody">
-
-                    <?php foreach ($updates as $update): ?>
-                        <tr>
-                            <td class="py-2 px-4 border-b">
-                                <?php echo $update['title']; ?>
-                            </td>
-                            <td class="py-2 px-4 border-b">
-                                <?php echo $update['datetime']; ?>
-                            </td>
-                            <td class="py-2 px-4 border-b">
-                                <?php echo $update['message']; ?>
-                            </td>
-                            <td class="py-2 px-4 border-b">
-                                <button
-                                    onclick="toggleEditUpdateModal(true, this)"
-                                    class="text-blue-500"
-                                    data-id="<?php echo $update['id']; ?>"
-                                    data-title="<?php echo htmlspecialchars($update['title'], ENT_QUOTES, 'UTF-8'); ?>"
-                                    data-date="<?php echo htmlspecialchars($update['datetime'], ENT_QUOTES, 'UTF-8'); ?>"
-                                    data-message="<?php echo htmlspecialchars($update['message'], ENT_QUOTES, 'UTF-8'); ?>">
-                                    Edit
-                                </button>
-                                <button onclick="deleteUpdate(<?php echo $update['id']; ?>)" class="text-red-500">Delete</button>
-                            </td>
-                        </tr>
+                <?php
+                $documentLabels = [
+                    'application_id' => 'Application ID',
+                    'passport' => 'Passport',
+                    'highest_certificate' => 'Highest Certificate',
+                    'academic_transcript' => 'Academic Transcript',
+                    'non_criminal_record_certificate' => 'Non-Criminal Record Certificate',
+                    'bank_statement' => 'Bank Statement',
+                    'application_fee_receipt' => 'Application Fee Receipt',
+                    'recommendation_letter' => 'Recommendation Letter',
+                    'articles_thesis' => 'Articles/Thesis',
+                    'physical_examination_form' => 'Physical Examination Form',
+                    'guardian_guarantee_letter' => 'Guardian Guarantee Letter',
+                    'english_proficiency' => 'English Proficiency',
+                    'hsk_certificate' => 'HSK Certificate',
+                    'parent_authorization' => 'Parent Authorization',
+                    'research_proposal' => 'Research Proposal',
+                    'cv' => 'CV',
+                    'additional_document' => 'Additional Document'
+                ];
+                ?>
+                <?php if (!empty($documents)): ?>
+                    <?php foreach ($documents as $document => $status): ?>
+                        <?php if ($status == 1): ?>
+                            <li><?php echo $documentLabels[$document] ?? ucfirst(str_replace('_', ' ', $document)); ?></li>
+                        <?php endif; ?>
                     <?php endforeach; ?>
-                </tbody>
-            </table>
+                <?php else: ?>
+                    <li>No documents uploaded.</li>
+                <?php endif; ?>
+            </ul>
+
+            <!-- Updates Section -->
+            <h2 class="section-header">Updates</h2>
+            <div class="mb-5 pb-5 overflow-x-auto">
+                <table class="min-w-full bg-white">
+                    <thead>
+                        <tr>
+                            <th class="py-2 px-4 border-b">Title</th>
+                            <th class="py-2 px-4 border-b">Date</th>
+                            <th class="py-2 px-4 border-b">Message</th>
+                            <th class="py-2 px-4 border-b">Actions</th>
+                        </tr>
+                    </thead>
+                    <!-- Updates Table -->
+                    <tbody id="updatesTableBody">
+                        <?php if (!empty($updates)): ?>
+                            <?php foreach ($updates as $update): ?>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">
+                                        <?php echo $update['title']; ?>
+                                    </td>
+                                    <td class="py-2 px-4 border-b">
+                                        <?php echo $update['datetime']; ?>
+                                    </td>
+                                    <td class="py-2 px-4 border-b">
+                                        <?php echo $update['message']; ?>
+                                    </td>
+                                    <td class="py-2 px-4 border-b">
+                                        <button
+                                            onclick="toggleEditUpdateModal(true, this)"
+                                            class="text-blue-500"
+                                            data-id="<?php echo $update['id']; ?>"
+                                            data-title="<?php echo htmlspecialchars($update['title'], ENT_QUOTES, 'UTF-8'); ?>"
+                                            data-date="<?php echo htmlspecialchars($update['datetime'], ENT_QUOTES, 'UTF-8'); ?>"
+                                            data-message="<?php echo htmlspecialchars($update['message'], ENT_QUOTES, 'UTF-8'); ?>">
+                                            Edit
+                                        </button>
+                                        <button onclick="deleteUpdate(<?php echo $update['id']; ?>)" class="text-red-500">Delete</button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="4" class="align-center text-center font-bold py-4 my-2">No Updates Yet</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+        <div>
+            <!-- Add Update Modal -->
+            <div id="addUpdateModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4 md:mx-0">
+                    <h2 class="text-xl font-semibold mb-4">Add Update</h2>
+                    <form id="addUpdateForm">
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Title</label>
+                            <input type="text" id="addUpdateTitle" class="w-full border border-gray-300 rounded p-2"
+                                placeholder="Enter title">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Time and Date</label>
+                            <input type="datetime-local" id="addUpdateDate" class="w-full border border-gray-300 rounded p-2">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Message</label>
+                            <textarea id="addUpdateMessage" class="w-full border border-gray-300 rounded p-2" rows="4"
+                                placeholder="Enter message"></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Attach File</label>
+                            <input type="file" id="addUpdateFile" class="w-full border border-gray-300 rounded p-2">
+                        </div>
+                        <div class="flex justify-end space-x-2">
+                            <button type="button" onclick="toggleAddUpdateModal(false)"
+                                class="px-4 py-2 rounded bg-gray-400 text-white">Cancel</button>
+                            <button type="submit" class="px-4 py-2 rounded bg-blue-500 text-white">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Edit Update Modal -->
+            <div id="editUpdateModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4 md:mx-0">
+                    <h2 class="text-xl font-semibold mb-4">Edit Update</h2>
+                    <form id="editUpdateForm">
+                        <div class="mb-4 hidden">
+                            <label class="block text-gray-700">Update ID</label>
+                            <input type="text" id="editUpdateId" class="w-full border border-gray-300 rounded p-2"
+                                placeholder="ID">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Title</label>
+                            <input type="text" id="editUpdateTitle" class="w-full border border-gray-300 rounded p-2"
+                                placeholder="Enter title">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Time and Date</label>
+                            <input type="datetime-local" id="editUpdateDate" class="w-full border border-gray-300 rounded p-2">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Message</label>
+                            <textarea id="editUpdateMessage" class="w-full border border-gray-300 rounded p-2" rows="4"
+                                placeholder="Enter message"></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Attach File</label>
+                            <input type="file" id="editUpdateFile" class="w-full border border-gray-300 rounded p-2">
+                        </div>
+                        <div class="flex justify-end space-x-2">
+                            <button type="button" onclick="toggleEditUpdateModal(false)"
+                                class="px-4 py-2 rounded bg-gray-400 text-white">Cancel</button>
+                            <button type="submit" class="px-4 py-2 rounded bg-blue-500 text-white" onclick="">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Update Application Status Modal -->
+            <div id="applicationStatusModal"
+                class="hidden fixed inset-0 md:ml-64 mx-auto bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4 md:mx-0">
+                    <h2 class="text-xl font-semibold mb-4">Update Application Status</h2>
+                    <form>
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Application Status</label>
+                            <input type="text" name="application_status" class="w-full border border-gray-300 rounded p-2" value="<?php echo $applicant['status']; ?>" placeholder="Enter application status">
+                        </div>
+                        <div class="flex justify-end space-x-2">
+                            <button type="button" onclick="toggleApplicationStatusModal(false)"
+                                class="px-4 py-2 rounded bg-gray-400 text-white">Cancel</button>
+                            <button type="submit" class="px-4 py-2 rounded bg-blue-500 text-white" onclick="updateApplicationStatus(event)">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
     </div>
-
-
-    <div>
-        <!-- Add Update Modal -->
-        <div id="addUpdateModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-            <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4 md:mx-0">
-                <h2 class="text-xl font-semibold mb-4">Add Update</h2>
-                <form id="addUpdateForm">
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Title</label>
-                        <input type="text" id="addUpdateTitle" class="w-full border border-gray-300 rounded p-2"
-                            placeholder="Enter title">
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Time and Date</label>
-                        <input type="datetime-local" id="addUpdateDate" class="w-full border border-gray-300 rounded p-2">
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Message</label>
-                        <textarea id="addUpdateMessage" class="w-full border border-gray-300 rounded p-2" rows="4"
-                            placeholder="Enter message"></textarea>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Attach File</label>
-                        <input type="file" id="addUpdateFile" class="w-full border border-gray-300 rounded p-2">
-                    </div>
-                    <div class="flex justify-end space-x-2">
-                        <button type="button" onclick="toggleAddUpdateModal(false)"
-                            class="px-4 py-2 rounded bg-gray-400 text-white">Cancel</button>
-                        <button type="submit" class="px-4 py-2 rounded bg-blue-500 text-white">Save</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Edit Update Modal -->
-        <div id="editUpdateModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-            <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4 md:mx-0">
-                <h2 class="text-xl font-semibold mb-4">Edit Update</h2>
-                <form id="editUpdateForm">
-                    <div class="mb-4 hidden">
-                        <label class="block text-gray-700">Update ID</label>
-                        <input type="text" id="editUpdateId" class="w-full border border-gray-300 rounded p-2"
-                            placeholder="ID">
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Title</label>
-                        <input type="text" id="editUpdateTitle" class="w-full border border-gray-300 rounded p-2"
-                            placeholder="Enter title">
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Time and Date</label>
-                        <input type="datetime-local" id="editUpdateDate" class="w-full border border-gray-300 rounded p-2">
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Message</label>
-                        <textarea id="editUpdateMessage" class="w-full border border-gray-300 rounded p-2" rows="4"
-                            placeholder="Enter message"></textarea>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Attach File</label>
-                        <input type="file" id="editUpdateFile" class="w-full border border-gray-300 rounded p-2">
-                    </div>
-                    <div class="flex justify-end space-x-2">
-                        <button type="button" onclick="toggleEditUpdateModal(false)"
-                            class="px-4 py-2 rounded bg-gray-400 text-white">Cancel</button>
-                        <button type="submit" class="px-4 py-2 rounded bg-blue-500 text-white">Save</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Update Application Status Modal -->
-        <div id="applicationStatusModal"
-            class="hidden fixed inset-0 md:ml-64 mx-auto bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-            <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4 md:mx-0">
-                <h2 class="text-xl font-semibold mb-4">Update Application Status</h2>
-                <form>
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Application Status</label>
-                        <input type="text" class="w-full border border-gray-300 rounded p-2"
-                            placeholder="Enter application status">
-                    </div>
-                    <div class="flex justify-end space-x-2">
-                        <button type="button" onclick="toggleApplicationStatusModal(false)"
-                            class="px-4 py-2 rounded bg-gray-400 text-white">Cancel</button>
-                        <button type="submit" class="px-4 py-2 rounded bg-blue-500 text-white">Save</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-    </div>
-
-</div>
