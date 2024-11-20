@@ -4,16 +4,16 @@ require_once __DIR__ . '/../../../../api/applicants/single_applicant.php';
 
 <div class="flex flex-col md:flex-row max-w-full mx-0 top-0">
     <!--  Start Application Sidebar -->
-    <div class="w-full overflow-y-hidden h-full md:min-h-screen md:w-2/5 bg-white shadow-lg p-6 pt-2 md:sticky md:top-0">
+    <div class="w-full overflow-y-hidden h-full md:min-h-screen md:w-2/5 lg:w-1/4 bg-white shadow-lg p-6 pt-2 md:sticky md:top-0">
         <!-- Back Button -->
         <div>
             <button onclick="loadPage('applicants.html')"
                 class="bg-gray-500 text-white py-1 px-2 rounded inline-flex items-center">
-                <i class="fas fa-arrow-left mr-2"></i> Back
+                <i class="fas fa-arrow-left mr-2"></i>Back
             </button>
         </div>
 
-        <h2 class="text-lg font-semibold mb-2 text-gray-800"> Application Menu </h2>
+        <h2 class="text-lg font-semibold mb-2 text-gray-800">Application Menu</h2>
         <div class="space-y-4">
 
             <!-- Payment Status -->
@@ -48,8 +48,9 @@ require_once __DIR__ . '/../../../../api/applicants/single_applicant.php';
     <!-- End Application Sidebar -->
 
     <!-- Container -->
-    <div class="flex-1 bg-gray-100 p-4 pt-0 w-full md:w-3/5 application-form">
-        <div>
+    <div class="flex-1 bg-gray-100 p-4 pt-0 w-full md:w-3/5 lg:3/4 application-form">
+        <!-- Application Details -->
+        <div id="application_details">
             <h2 class="font-bold text-xl text-black mx-auto p-4 text-center">
                 Student Application Form
             </h2>
@@ -61,6 +62,12 @@ require_once __DIR__ . '/../../../../api/applicants/single_applicant.php';
 
             <!-- Section Heading Styles -->
             <style>
+                @layer base {
+                    img {
+                        display: initial;
+                    }
+                }
+
                 .section-header {
                     background-color: #edf2f7;
                     /* bg-gray-200 */
@@ -84,6 +91,8 @@ require_once __DIR__ . '/../../../../api/applicants/single_applicant.php';
             <!-- Personal Information -->
             <h2 class="section-header">Personal Information</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-gray-700 px-3">
+                <p id="applicant_name" class="hidden"><?php echo  $applicant['firstname'] . " " . $applicant['lastname'] ?>
+                </p>
                 <p><strong>Family Name:</strong> <?php echo $applicant['lastname'] ?? 'Not provided'; ?></p>
                 <p><strong>Given Name:</strong> <?php echo $applicant['firstname'] ?? 'Not provided'; ?></p>
                 <p><strong>Gender:</strong> <?php echo $applicant['gender'] ?? 'Not provided'; ?></p>
@@ -306,7 +315,7 @@ require_once __DIR__ . '/../../../../api/applicants/single_applicant.php';
             <div id="addUpdateModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
                 <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4 md:mx-0">
                     <h2 class="text-xl font-semibold mb-4">Add Update</h2>
-                    <form id="addUpdateForm">
+                    <form id="addUpdateForm" onsubmit="addUpdate(event)">
                         <div class="mb-4">
                             <label class="block text-gray-700">Title</label>
                             <input type="text" id="addUpdateTitle" class="w-full border border-gray-300 rounded p-2"
@@ -314,21 +323,25 @@ require_once __DIR__ . '/../../../../api/applicants/single_applicant.php';
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700">Time and Date</label>
-                            <input type="datetime-local" id="addUpdateDate" class="w-full border border-gray-300 rounded p-2">
+                            <input type="datetime-local" id="addUpdateDateTime" class="w-full border border-gray-300 rounded p-2">
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700">Message</label>
                             <textarea id="addUpdateMessage" class="w-full border border-gray-300 rounded p-2" rows="4"
                                 placeholder="Enter message"></textarea>
                         </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700">Attach File</label>
-                            <input type="file" id="addUpdateFile" class="w-full border border-gray-300 rounded p-2">
-                        </div>
                         <div class="flex justify-end space-x-2">
                             <button type="button" onclick="toggleAddUpdateModal(false)"
                                 class="px-4 py-2 rounded bg-gray-400 text-white">Cancel</button>
-                            <button type="submit" class="px-4 py-2 rounded bg-blue-500 text-white">Save</button>
+                            <button type="submit"
+                                class="px-4 py-2 rounded bg-blue-500 text-white flex items-center justify-center min-w-[80px]"
+                                id="addUpdateBtn">
+                                <span class="inline-block">Save</span>
+                                <svg class="w-4 h-4 ml-2 hidden animate-spin" id="addUpdateSpinner" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -338,7 +351,7 @@ require_once __DIR__ . '/../../../../api/applicants/single_applicant.php';
             <div id="editUpdateModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
                 <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4 md:mx-0">
                     <h2 class="text-xl font-semibold mb-4">Edit Update</h2>
-                    <form id="editUpdateForm">
+                    <form id="editUpdateForm" onsubmit="editUpdate(event)">
                         <div class="mb-4 hidden">
                             <label class="block text-gray-700">Update ID</label>
                             <input type="text" id="editUpdateId" class="w-full border border-gray-300 rounded p-2"
@@ -358,14 +371,19 @@ require_once __DIR__ . '/../../../../api/applicants/single_applicant.php';
                             <textarea id="editUpdateMessage" class="w-full border border-gray-300 rounded p-2" rows="4"
                                 placeholder="Enter message"></textarea>
                         </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700">Attach File</label>
-                            <input type="file" id="editUpdateFile" class="w-full border border-gray-300 rounded p-2">
-                        </div>
                         <div class="flex justify-end space-x-2">
                             <button type="button" onclick="toggleEditUpdateModal(false)"
                                 class="px-4 py-2 rounded bg-gray-400 text-white">Cancel</button>
-                            <button type="submit" class="px-4 py-2 rounded bg-blue-500 text-white" onclick="">Save</button>
+                            <button type="submit"
+                                class="px-4 py-2 rounded bg-blue-500 text-white flex items-center justify-center min-w-[80px]"
+                                onclick="editUpdate(event)"
+                                id="editUpdateBtn">
+                                <span class="inline-block">Save</span>
+                                <svg class="w-4 h-4 ml-2 hidden animate-spin" id="editUpdateSpinner" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -379,12 +397,27 @@ require_once __DIR__ . '/../../../../api/applicants/single_applicant.php';
                     <form>
                         <div class="mb-4">
                             <label class="block text-gray-700">Application Status</label>
-                            <input type="text" name="application_status" class="w-full border border-gray-300 rounded p-2" value="<?php echo $applicant['status']; ?>" placeholder="Enter application status">
+                            <select name="application_status" class="w-full border border-gray-300 rounded p-2">
+                                <option value="Processing" <?php echo ($applicant['status'] === 'Processing') ? 'selected' : ''; ?>>Processing</option>
+                                <option value="Admitted" <?php echo ($applicant['status'] === 'Admitted') ? 'selected' : ''; ?>>Admitted</option>
+                                <option value="Rejected" <?php echo ($applicant['status'] === 'Rejected') ? 'selected' : ''; ?>>Rejected</option>
+                                <option value="Pending Payment" <?php echo ($applicant['status'] === 'Pending Payment') ? 'selected' : ''; ?>>Pending Payment</option>
+                                <option value="Pending Processing" <?php echo ($applicant['status'] === 'Pending Processing') ? 'selected' : ''; ?>>Pending Processing</option>
+                            </select>
                         </div>
                         <div class="flex justify-end space-x-2">
                             <button type="button" onclick="toggleApplicationStatusModal(false)"
                                 class="px-4 py-2 rounded bg-gray-400 text-white">Cancel</button>
-                            <button type="submit" class="px-4 py-2 rounded bg-blue-500 text-white" onclick="updateApplicationStatus(event)">Save</button>
+                            <button type="submit"
+                                class="px-4 py-2 rounded bg-blue-500 text-white flex items-center justify-center min-w-[80px]"
+                                onclick="updateApplicationStatus(event)"
+                                id="updateStatusBtn">
+                                <span class="inline-block">Save</span>
+                                <svg class="w-4 h-4 ml-2 hidden animate-spin" id="updateStatusSpinner" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </button>
                         </div>
                     </form>
                 </div>

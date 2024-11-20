@@ -3,12 +3,10 @@
 require __DIR__ . '/../../config/database.php';
 
 $response = [
-    'status' => 'false',
+    'status' => false,
     'message' => 'Error, Something went wrong!'
 ];
 
-$db = new Database();
-$conn = $db->getConnection();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Read the raw input
@@ -23,7 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode($response);
         exit;
     }
-
+    
+    $db = new Database();
+    $conn = $db->getConnection();
+    
     $applicationId = $data['application_id'];
     $applicationStatus = $data['application_status'];
 
