@@ -101,8 +101,6 @@ function loadAdminDashboard() {
     });
 }
 
-
-// Start Applicant Category //
 // Start Applicant Category
 async function loadApplicants() {
   console.log("Applicants loaded successfully");
@@ -222,8 +220,6 @@ async function loadApplicants() {
   });
 }
 
-//End Applicant Category //
-
 // Function to be run when the view of an applicant is clicked
 function viewApplicant(applicantId) {
   console.log("Loading applicant:", applicantId);
@@ -233,17 +229,13 @@ function viewApplicant(applicantId) {
       const mainContent = document.getElementById("main-content");
       mainContent.innerHTML = applicantInfo;
       console.log(`Loaded applicant with ID: ${applicantId}`);
-      
+
     })
     .catch((error) => {
       console.error("Error fetching applicant data:", error);
     });
 }
 
-
-// Call the loadApplicants function when needed
-loadApplicants();
-// End Applicant Category //
 
 // Load the selected page and inject the content into the main-content area
 function loadPage(page) {
@@ -263,7 +255,7 @@ function loadPage(page) {
           loadApplicants();
           break;
         case "schools.html":
-          initializeSchoolsPage(); 
+          initializeSchoolsPage();
           break;
         case "profile.html":
           loadProfile();
@@ -283,7 +275,6 @@ function loadPage(page) {
     localStorage.setItem('activePage', page);
   }
 }
-
 
 async function logout() {
   try {

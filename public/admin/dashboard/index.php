@@ -72,7 +72,7 @@ if (isset($_SESSION['admin_id'])) {
     <!-- Main Content Area -->
     <div class="flex-1 flex flex-col md:relative md:z-10 bg-white overflow-y-auto h-full">
         <!-- Header -->
-        <header class="shadow w-full flex items-center justify-between p-4 bg-gray-50">
+        <header id="header" class="shadow w-full flex items-center justify-between p-4 bg-gray-50">
             <!-- Hamburger Icon and Title -->
             <div class="flex items-center">
                 <button class="md:hidden text-gray-800 focus:outline-none" onclick="toggleSidebar()">

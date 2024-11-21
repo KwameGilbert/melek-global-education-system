@@ -1,3 +1,15 @@
+// Back to Top Button functionality
+const backToTopBtn = document.getElementById('backToTopBtn');
+const scrollableElement = document.querySelector('.overflow-y-auto');
+scrollableElement.addEventListener('scroll', () => {
+    if (scrollableElement.scrollTop > 300) {
+        backToTopBtn.classList.remove('opacity-0', 'invisible');
+        backToTopBtn.classList.add('opacity-100', 'visible');
+    } else {
+        backToTopBtn.classList.add('opacity-0', 'invisible');
+        backToTopBtn.classList.remove('opacity-100', 'visible');
+    }
+});
 
 
 // Funtion to toogle Application Status Modal

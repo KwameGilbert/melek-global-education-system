@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../../../../api/applicants/single_applicant.php';
 ?>
 
-<div class="flex flex-col md:flex-row max-w-full mx-0 top-0">
+<div id="applicant" class="flex flex-col md:flex-row max-w-full mx-0 top-0 applicant">
     <!--  Start Application Sidebar -->
     <div class="w-full overflow-y-hidden h-full md:min-h-screen md:w-2/5 lg:w-1/4 bg-white shadow-lg p-6 pt-2 md:sticky md:top-0">
         <!-- Back Button -->
@@ -289,14 +289,18 @@ require_once __DIR__ . '/../../../../api/applicants/single_applicant.php';
                                     <td class="py-2 px-4 border-b">
                                         <button
                                             onclick="toggleEditUpdateModal(true, this)"
-                                            class="text-blue-500"
+                                            class="text-blue-500 hover:text-blue-700 mr-3"
                                             data-id="<?php echo $update['id']; ?>"
                                             data-title="<?php echo htmlspecialchars($update['title'], ENT_QUOTES, 'UTF-8'); ?>"
                                             data-date="<?php echo htmlspecialchars($update['datetime'], ENT_QUOTES, 'UTF-8'); ?>"
                                             data-message="<?php echo htmlspecialchars($update['message'], ENT_QUOTES, 'UTF-8'); ?>">
-                                            Edit
+                                            <i class="fas fa-edit"></i>
                                         </button>
-                                        <button onclick="deleteUpdate(<?php echo $update['id']; ?>)" class="text-red-500">Delete</button>
+                                        <button
+                                            onclick="deleteUpdate(<?php echo $update['id']; ?>)"
+                                            class="text-red-500 hover:text-red-700">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -308,6 +312,14 @@ require_once __DIR__ . '/../../../../api/applicants/single_applicant.php';
                     </tbody>
                 </table>
             </div>
+
+            <!-- Back to Top Button -->
+            <a href="#applicant">
+                <button class="fixed bottom-4 right-4 bg-blue-500 text-white rounded-full p-3 shadow-lg hover:bg-blue-600 transition-all duration-300 visible">
+                    <i class="fas fa-arrow-up"></i>
+                    <!-- <a href="#header"> <i class="fas fa-arrow-up"></i></a> -->
+                </button>
+            </a>
         </div>
 
         <div>
@@ -422,7 +434,5 @@ require_once __DIR__ . '/../../../../api/applicants/single_applicant.php';
                     </form>
                 </div>
             </div>
-
         </div>
-
     </div>
