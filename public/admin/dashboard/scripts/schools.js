@@ -578,6 +578,24 @@ function deleteProgram(id) {
 }
 
 function initializeSchoolsPage() {
+
+     // Show loading state
+   const loadingToast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+});
+
+loadingToast.fire({
+    title: 'Loading your Schools and Programs...',
+    timer: 2000,
+    timerProgressBar: true
+});
+
     // Initial data load
     fetchAllData();
 }

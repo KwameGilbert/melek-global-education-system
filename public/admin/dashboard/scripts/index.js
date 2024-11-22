@@ -12,6 +12,24 @@ document.querySelectorAll("a[data-page]").forEach((link) => {
 function loadAdminDashboard() {
   console.log("Admin Dashboard Loaded");
 
+   // Show loading state
+   const loadingToast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+});
+
+loadingToast.fire({
+    title: 'Loading your Admin Dashboard...',
+    timer: 2000,
+    timerProgressBar: true
+});
+
+
   // Fetch data from dashboard.php for the chart and summary
   fetch("../../../api/dashboard/dashboardData.php")
     .then((response) => response.json())
@@ -104,6 +122,24 @@ function loadAdminDashboard() {
 // Start Applicant Category
 async function loadApplicants() {
   console.log("Applicants loaded successfully");
+
+    // Show loading state
+    const loadingToast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      }
+    });
+  
+    loadingToast.fire({
+      title: 'Loading applicants data...',
+      timer: 2000,
+      timerProgressBar: true
+    });
+
 
   let applicants = []; // Define applicants globally within this function
   let sortOrder = true; // Define sortOrder globally for consistent sorting
@@ -263,7 +299,8 @@ function loadPage(page) {
         case "notices.html":
           loadNoticesPage();
           break;
-        case "setings.html":
+        case "settings.html":
+          initializeSettingsPage();
           break;
         default:
           console.error("No matching function for the page:", page);
