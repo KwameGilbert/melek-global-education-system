@@ -117,5 +117,3 @@ function initializeSecurity() {
     setupPasswordToggles();
 }
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', initializeSecurity);

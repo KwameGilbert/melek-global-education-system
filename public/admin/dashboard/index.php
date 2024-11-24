@@ -41,7 +41,7 @@ if (isset($_SESSION['admin_id'])) {
 
         <!-- Profile Section -->
         <div class="flex flex-col items-center mb-6">
-            <img src="./images/applicants/<?php echo $_SESSION['picture']; ?>" alt="Profile"
+            <img src="<?php echo $_SESSION['picture']; ?>" alt="Profile"
                 class="w-24 h-24 rounded-full object-cover mb-2">
             <h2 class="text-lg font-semibold" id="adminName"><?php echo $_SESSION['admin_name']; ?></h2>
             <p class="text-sm text-gray-400" id="adminEmail"><?php echo $_SESSION['email']; ?></p>
@@ -128,8 +128,7 @@ if (isset($_SESSION['admin_id'])) {
     </script>
     <script src="./scripts/schools.js"></script>
     <script src="./scripts/settings.js"></script>
-    <script src="../scripts/settings.js"></script>
-    <script src="../scripts/security.js"></script>
+    <script src="./scripts/security.js"></script>
     <script src="../../../imports/html2pdf/html2pdf.bundle.min.js"></script>
     <script src="./scripts/view-applicant.js"></script>
     <script src="./scripts/index.js"></script>
