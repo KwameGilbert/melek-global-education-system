@@ -1,82 +1,132 @@
 // Global state management
 const state = {
     editMode: false,
-    userData: null
+    userData: null,
+    currentTab: 'profile'
 };
 
 // Initialize the page
 function initializeSettingsPage() {
-    // Set initial active tab
-    // switchTab('profile');
-    setupEventListeners();
     loadUserData();
-
-    // Handle browser back/forward buttons
-    // window.addEventListener('popstate', (event) => {
-    //     if (event.state?.page) {
-    //         switchTab(event.state.page);
-    //     }
-    // });
+    switchTab(state.currentTab);
+    checkUrlForTab();
+    setupEventHandlers();
+    setupSecurityFeatures();
+    
+    // Setup basic event handlers
+    document.querySelector('input[type="file"]').onchange = handleProfilePhotoUpload;
+    document.querySelector('button[type="button"]').onclick = toggleEditMode;
+    document.querySelector('form').onsubmit = handleFormSubmit;
+    
+    // Setup tab clicks
+    document.querySelectorAll('.tab-link').forEach(link => {
+        link.onclick = () => switchTab(link.getAttribute('data-tab'));
+    });
+    
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-button').onclick = () => {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+    };
 }
 
-// Setup all event listeners
-function setupEventListeners() {
-    // File upload handling
-    const fileInput = document.querySelector('input[type="file"]');
-    fileInput?.addEventListener('change', handleProfilePhotoUpload);
+// Switch between tabs
+function switchTab(tabId) {
+    // Update state
+    state.currentTab = tabId;
 
-    // Edit button handling
-    const editButton = document.querySelector('button[type="button"]');
-    editButton?.addEventListener('click', () => toggleEditMode());
+    // Update URL without reload
+    const url = new URL(window.location);
+    url.searchParams.set('tab', tabId);
+    window.history.pushState({}, '', url);
 
-    // Form submission
-    const form = document.querySelector('form');
-    form?.addEventListener('submit', handleFormSubmit);
+    // Update active tab styles
+    document.querySelectorAll('.tab-link').forEach(link => {
+        const isActive = link.getAttribute('data-tab') === tabId;
+        link.classList.toggle('text-white', isActive);
+        link.classList.toggle('text-gray-200', !isActive);
+        if (link.closest('#mobile-menu')) {
+            link.classList.toggle('bg-gray-600', isActive);
+        }
+    });
+
+    // Show/hide content sections
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.toggle('hidden', content.id !== `${tabId}-page`);
+    });
+
+    // Close mobile menu after selection
+    document.getElementById('mobile-menu')?.classList.add('hidden');
 }
 
 // Handle profile photo upload
-function handleProfilePhotoUpload(event) {
+async function handleProfilePhotoUpload(event) {
     const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const profileImage = document.querySelector('img[alt="Profile"]');
-            profileImage.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
+    if (!file) return;
+
+    // Show preview immediately
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        document.querySelectorAll('img[alt="Profile"]').forEach(img => {
+            img.src = e.target.result;
+        });
+    };
+    reader.readAsDataURL(file);
+
+    // Upload the file
+    try {
+        const formData = new FormData();
+        formData.append('image', file);
+        
+        showLoadingToast('Uploading image...');
+        
+        const response = await fetch('../../../api/admin/adminImage.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) throw new Error('Failed to upload image');
+        
+        const result = await response.json();
+        if (!result.status) throw new Error(result.message || 'Upload failed');
+
+        // Refresh user data to get new image path
+        await loadUserData();
+        showToast('Profile photo updated successfully', 'success');
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        showToast('Failed to upload image: ' + error.message, 'error');
     }
 }
 
 // Toggle edit mode
 function toggleEditMode() {
     state.editMode = !state.editMode;
-    const inputs = document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], select');
+    const inputs = document.querySelectorAll('input:not([type="file"]), select');
     const editButton = document.querySelector('button[type="button"]');
     const saveButton = document.querySelector('button[type="submit"]');
 
     inputs.forEach(input => {
-        input.readOnly = !state.editMode;
         if (input.tagName === 'SELECT') {
             input.disabled = !state.editMode;
+        } else {
+            input.readOnly = !state.editMode;
         }
+        input.classList.toggle('bg-gray-50', !state.editMode);
+        input.classList.toggle('bg-white', state.editMode);
     });
 
-    if (state.editMode) {
-        editButton.classList.replace('bg-yellow-500', 'bg-gray-500');
-        editButton.classList.replace('hover:bg-yellow-600', 'hover:bg-gray-600');
-        saveButton.classList.remove('hidden');
-    } else {
-        editButton.classList.replace('bg-gray-500', 'bg-yellow-500');
-        editButton.classList.replace('hover:bg-gray-600', 'hover:bg-yellow-600');
-        saveButton.classList.add('hidden');
-    }
+    editButton.innerHTML = state.editMode ? 
+        '<i class="fas fa-times mr-2"></i>Cancel' : 
+        '<i class="fas fa-edit mr-2"></i>Edit';
+    editButton.classList.toggle('bg-yellow-500', !state.editMode);
+    editButton.classList.toggle('bg-gray-500', state.editMode);
+    saveButton.classList.toggle('hidden', !state.editMode);
 }
 
 // Handle form submission
 async function handleFormSubmit(event) {
     event.preventDefault();
     
-    // Collect form data
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
 
@@ -89,102 +139,79 @@ async function handleFormSubmit(event) {
         return;
     }
 
-    // Validate email format
+    // Basic validation
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
         showToast('Please enter a valid email address', 'error');
         return;
     }
 
-    // Validate phone number (international format)
     if (!/^\+\d{1,4}\s?\d{6,14}$/.test(data.contact)) {
         showToast('Please enter a valid international phone number (e.g., +1 1234567890)', 'error');
         return;
     }
-    
-    const loadingToast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer);
-            toast.addEventListener('mouseleave', Swal.resumeTimer);
-        }
-    });
 
-    loadingToast.fire({
-        title: 'Saving changes...',
-        timer: 2000,
-        timerProgressBar: true
-    });
+    showLoadingToast('Saving changes...');
 
     try {
         const response = await fetch('../../../api/admin/updateAdmin.php', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const result = await response.json();
-
-        if (!result.status) {
-            throw new Error(result.message || 'Unknown error occurred');
-        }
+        if (!result.status) throw new Error(result.message || 'Update failed');
 
         showToast('Settings updated successfully', 'success');
         toggleEditMode();
         
+        // Refresh data after successful update
         await loadUserData();
     } catch (error) {
         console.error('Error updating settings:', error);
         showToast(`Failed to update settings: ${error.message}`, 'error');
-    } finally {
-        loadingToast.close();
     }
 }
 
 // Load user data
 async function loadUserData() {
-    const loadingToast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer);
-            toast.addEventListener('mouseleave', Swal.resumeTimer);
-        }
-    });
-
-    loadingToast.fire({
-        title: 'Loading your settings...',
-        timer: 2000,
-        timerProgressBar: true
-    });
+    showLoadingToast('Loading your settings...');
 
     try {
         const response = await fetch('../../../api/admin/adminData.php');
         const result = await response.json();
 
-        if (!result.status) {
-            throw new Error(result.message);
+        if (!result.status) throw new Error(result.message);
+
+        const userData = result.data;
+        
+        // Update profile header
+        document.querySelector('h2.text-3xl').textContent = 
+            `${userData.firstName || ''} ${userData.lastName || ''}`;
+        
+        // Update role and location if elements exist
+        const roleElement = document.querySelector('#adminRole');
+        if (roleElement) roleElement.textContent = userData.role || '';
+        
+        const locationElement = document.querySelector('#adminLocation');
+        if (locationElement) locationElement.textContent = userData.address || '';
+
+        // Update profile images
+        if (userData.profilePhoto) {
+            document.querySelectorAll('img[alt="Profile"]').forEach(img => {
+                img.src = userData.profilePhoto;
+            });
+        }else{
+            document.querySelectorAll('img[alt="Profile"]').forEach(img => {
+                img.src = './images/admin/default.png';
+            });
         }
 
-        // Populate form fields
-        const userData = result.data;
+        // Fill all form inputs
         Object.entries(userData).forEach(([key, value]) => {
             const input = document.querySelector(`[name="${key}"]`);
-            if (input) {
-                if (key === 'profilePhoto' && value) {
-                    document.querySelector('img[alt="Profile"]').src = value;
-                } else {
-                    input.value = value;
-                }
-            }
+            if (input) input.value = value || '';
         });
 
         state.userData = userData;
@@ -194,20 +221,148 @@ async function loadUserData() {
     }
 }
 
-// Show toast messages
+// Toast utilities
+function showLoadingToast(message) {
+    return Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+        }
+    }).fire({
+        title: message,
+        timer: 3000,
+        timerProgressBar: true
+    });
+}
+
 function showToast(message, icon = 'success') {
     Swal.fire({
         toast: true,
         position: 'top-end',
-        icon: icon,
+        icon,
         title: message,
         showConfirmButton: false,
         timer: 3000
     });
 }
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    setupEventListeners();
-    loadUserData();
-});
+// Check URL for initial tab
+function checkUrlForTab() {
+    const params = new URLSearchParams(window.location.search);
+    const tabFromUrl = params.get('tab');
+    if (tabFromUrl && ['profile', 'security', 'payment'].includes(tabFromUrl)) {
+        state.currentTab = tabFromUrl;
+    }
+}
+
+// Security-related functions
+async function handleSecurityAction(action, data) {
+    try {
+        const response = await fetch('../../../api/admin/adminSecurity.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action, ...data })
+        });
+
+        const result = await response.json();
+        if (!result.status) throw new Error(result.message);
+        return result;
+    } catch (error) {
+        console.error(`Security action failed: ${error.message}`);
+        throw error;
+    }
+}
+
+// Handle password update
+async function handlePasswordUpdate(currentPassword, newPassword, confirmPassword) {
+    try {
+        showLoadingToast('Updating password...');
+        await handleSecurityAction('updatePassword', {
+            currentPassword,
+            newPassword,
+            confirmPassword
+        });
+        showToast('Password updated successfully', 'success');
+        return true;
+    } catch (error) {
+        showToast(error.message, 'error');
+        return false;
+    }
+}
+
+// Handle 2FA toggle
+async function handle2FAToggle(enabled) {
+    try {
+        showLoadingToast(`${enabled ? 'Enabling' : 'Disabling'} 2FA...`);
+        await handleSecurityAction('toggle2FA', { enabled });
+        showToast(`Two-factor authentication ${enabled ? 'enabled' : 'disabled'}`, 'success');
+        return true;
+    } catch (error) {
+        showToast(error.message, 'error');
+        return false;
+    }
+}
+
+// Check 2FA status
+async function check2FAStatus() {
+    try {
+        const result = await handleSecurityAction('get2FAStatus');
+        const toggle = document.getElementById('twoFactorToggle');
+        if (toggle) {
+            toggle.checked = result.data.enabled;
+            toggle.parentElement.previousElementSibling.textContent = 
+                result.data.enabled ? 'Enabled' : 'Disabled';
+        }
+    } catch (error) {
+        console.error('Failed to check 2FA status:', error);
+    }
+}
+
+// Setup security features
+function setupSecurityFeatures() {
+    // Password visibility toggles
+    document.querySelectorAll('.toggle-password').forEach(button => {
+        button.onclick = function() {
+            const input = this.parentElement.querySelector('input');
+            const icon = this.querySelector('i');
+            input.type = input.type === 'password' ? 'text' : 'password';
+            icon.classList.toggle('fa-eye');
+            icon.classList.toggle('fa-eye-slash');
+        };
+    });
+
+    // Security form handling
+    const securityForm = document.getElementById('securityForm');
+    if (securityForm) {
+        securityForm.onsubmit = async function(e) {
+            e.preventDefault();
+            const success = await handlePasswordUpdate(
+                this.currentPassword.value,
+                this.newPassword.value,
+                this.confirmPassword.value
+            );
+            if (success) {
+                document.getElementById('toggleSecurityEdit').click();
+            }
+        };
+    }
+
+    // 2FA toggle handling
+    const twoFactorToggle = document.getElementById('twoFactorToggle');
+    if (twoFactorToggle) {
+        twoFactorToggle.onchange = async function() {
+            const success = await handle2FAToggle(this.checked);
+            if (!success) {
+                this.checked = !this.checked;
+            }
+        };
+    }
+
+    // Check initial 2FA status
+    check2FAStatus();
+}
+
+initializeSettingsPage();

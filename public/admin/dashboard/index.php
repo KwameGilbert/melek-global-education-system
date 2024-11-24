@@ -83,8 +83,8 @@ if (isset($_SESSION['admin_id'])) {
 
             <!-- Welcome and Logout Button -->
             <div class="flex items-center">
-                <span class="text-gray-700 mr-4">Welcome, <?php echo $_SESSION['admin_name']; ?></span>
-                <button class="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600" onclick="onclick()">Logout</button>
+                <span class="text-gray-700 mr-4">Welcome, <?php echo $_SESSION['firstname']; ?></span>
+                <button class="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600" onclick="logout()">Logout</button>
             </div>
 
         </header>

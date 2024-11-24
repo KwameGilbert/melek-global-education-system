@@ -50,10 +50,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $stmt->fetch();
 
         // Verify user exists and password is correct
-        if (!$user || !password_verify($password, $user['password'])) {
-            throw new Exception('Invalid email or password');
+        if (!$user) {
+            throw new Exception('User not found');
+        }else if(!password_verify($password, $user['password'])){
+            throw new Exception('Wrong Password');
         }
 
+        
+        
         // Set user session
         $_SESSION['admin_id'] = $user['admin_id'];
         $_SESSION['firstname'] = $user['firstname'];
@@ -88,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $response['redirect'] = '../dashboard/';
     } catch (Exception $e) {
         // In production, consider using a generic error message
-        $response['message'] = 'An error occurred during login. Please try again.';
+        $response['message'] = 'Error '. $e->getMessage();
         // Log the actual error for debugging purposes
         error_log($e->getMessage());
     }
