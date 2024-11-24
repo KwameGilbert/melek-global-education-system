@@ -301,6 +301,7 @@ function loadPage(page) {
           break;
         case "settings.html":
           initializeSettingsPage();
+          initializeSecurity();
           break;
         default:
           console.error("No matching function for the page:", page);

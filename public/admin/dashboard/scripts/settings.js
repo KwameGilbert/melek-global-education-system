@@ -10,8 +10,6 @@ function initializeSettingsPage() {
     loadUserData();
     switchTab(state.currentTab);
     checkUrlForTab();
-    setupEventHandlers();
-    setupSecurityFeatures();
     
     // Setup basic event handlers
     document.querySelector('input[type="file"]').onchange = handleProfilePhotoUpload;
@@ -256,113 +254,6 @@ function checkUrlForTab() {
     if (tabFromUrl && ['profile', 'security', 'payment'].includes(tabFromUrl)) {
         state.currentTab = tabFromUrl;
     }
-}
-
-// Security-related functions
-async function handleSecurityAction(action, data) {
-    try {
-        const response = await fetch('../../../api/admin/adminSecurity.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action, ...data })
-        });
-
-        const result = await response.json();
-        if (!result.status) throw new Error(result.message);
-        return result;
-    } catch (error) {
-        console.error(`Security action failed: ${error.message}`);
-        throw error;
-    }
-}
-
-// Handle password update
-async function handlePasswordUpdate(currentPassword, newPassword, confirmPassword) {
-    try {
-        showLoadingToast('Updating password...');
-        await handleSecurityAction('updatePassword', {
-            currentPassword,
-            newPassword,
-            confirmPassword
-        });
-        showToast('Password updated successfully', 'success');
-        return true;
-    } catch (error) {
-        showToast(error.message, 'error');
-        return false;
-    }
-}
-
-// Handle 2FA toggle
-async function handle2FAToggle(enabled) {
-    try {
-        showLoadingToast(`${enabled ? 'Enabling' : 'Disabling'} 2FA...`);
-        await handleSecurityAction('toggle2FA', { enabled });
-        showToast(`Two-factor authentication ${enabled ? 'enabled' : 'disabled'}`, 'success');
-        return true;
-    } catch (error) {
-        showToast(error.message, 'error');
-        return false;
-    }
-}
-
-// Check 2FA status
-async function check2FAStatus() {
-    try {
-        const result = await handleSecurityAction('get2FAStatus');
-        const toggle = document.getElementById('twoFactorToggle');
-        if (toggle) {
-            toggle.checked = result.data.enabled;
-            toggle.parentElement.previousElementSibling.textContent = 
-                result.data.enabled ? 'Enabled' : 'Disabled';
-        }
-    } catch (error) {
-        console.error('Failed to check 2FA status:', error);
-    }
-}
-
-// Setup security features
-function setupSecurityFeatures() {
-    // Password visibility toggles
-    document.querySelectorAll('.toggle-password').forEach(button => {
-        button.onclick = function() {
-            const input = this.parentElement.querySelector('input');
-            const icon = this.querySelector('i');
-            input.type = input.type === 'password' ? 'text' : 'password';
-            icon.classList.toggle('fa-eye');
-            icon.classList.toggle('fa-eye-slash');
-        };
-    });
-
-    // Security form handling
-    const securityForm = document.getElementById('securityForm');
-    if (securityForm) {
-        securityForm.onsubmit = async function(e) {
-            e.preventDefault();
-            const success = await handlePasswordUpdate(
-                this.currentPassword.value,
-                this.newPassword.value,
-                this.confirmPassword.value
-            );
-            if (success) {
-                document.getElementById('toggleSecurityEdit').click();
-            }
-        };
-    }
-
-    // 2FA toggle handling
-    const twoFactorToggle = document.getElementById('twoFactorToggle');
-    if (twoFactorToggle) {
-        twoFactorToggle.onchange = async function() {
-            const success = await handle2FAToggle(this.checked);
-            if (!success) {
-                this.checked = !this.checked;
-            }
-        };
-    }
-
-    // Check initial 2FA status
-    check2FAStatus();
 }
 
 initializeSettingsPage();

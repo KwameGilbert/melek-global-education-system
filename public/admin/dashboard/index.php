@@ -128,6 +128,8 @@ if (isset($_SESSION['admin_id'])) {
     </script>
     <script src="./scripts/schools.js"></script>
     <script src="./scripts/settings.js"></script>
+    <script src="../scripts/settings.js"></script>
+    <script src="../scripts/security.js"></script>
     <script src="../../../imports/html2pdf/html2pdf.bundle.min.js"></script>
     <script src="./scripts/view-applicant.js"></script>
     <script src="./scripts/index.js"></script>
