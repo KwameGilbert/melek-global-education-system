@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const data = await response.json();
 
-            if (response.ok) {
+            if (data.status === 'success') {
                 // Success message
                 Swal.fire({
                     title: 'Success!',
@@ -63,10 +63,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     window.location.href = '../dashboard/';
                 });
             } else {
-                // Error message
+                // Error message from API
                 Swal.fire({
-                    title: 'Error!',
-                    text: data.message || 'Login failed. Please try again.',
+                    title: 'Login Failed',
+                    text: data.message || 'An error occurred during login',
                     icon: 'error',
                     confirmButtonText: 'OK'
                 });
@@ -75,14 +75,14 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Login error:', error);
             Swal.fire({
                 title: 'Error!',
-                text: 'An unexpected error occurred. Please try again later.',
+                text: error,
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
         } finally {
             // Reset button state
             const submitButton = loginForm.querySelector('button[type="submit"]');
-            submitButton.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Login to Dashboard';
+            submitButton.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Access Portal';
             submitButton.disabled = false;
         }
     });
