@@ -60,21 +60,21 @@ loadingToast.fire({
                   data.metric.pendingProcessing,
                 ],
                 backgroundColor: [
-                  "rgba(30, 58, 138, 0.7)", // Blue gradient for "Total Applicants"
-                  "rgba(34, 197, 94, 0.7)", // Green gradient for "Total Admitted"
-                  "rgba(126, 34, 206, 0.7)", // Purple gradient for "Total Processing"
-                  "rgba(239, 68, 68, 0.7)", // Red gradient for "Total Rejected"
-                  "rgba(234, 179, 8, 0.7)", // Yellow gradient for "Pending Payment"
-                  "rgba(99, 102, 241, 0.7)", // Indigo gradient for "Pending Processing"
-                ],
-                borderColor: [
-                  "rgba(30, 58, 138, 1)", // Blue for "Total Applicants"
-                  "rgba(34, 197, 94, 1)", // Green for "Total Admitted"
-                  "rgba(126, 34, 206, 1)", // Purple for "Total Processing"
-                  "rgba(239, 68, 68, 1)", // Red for "Total Rejected"
-                  "rgba(234, 179, 8, 1)", // Yellow for "Pending Payment"
-                  "rgba(99, 102, 241, 1)", // Indigo for "Pending Processing"
-                ],
+                  'rgba(250, 87, 0, 0.7)',
+                  'rgba(5, 198, 131, 0.7)',
+                  'rgba(219, 0, 69, 0.7)',
+                  'rgba(0, 92, 197, 0.7)',
+                  'rgba(92, 41, 0, 0.7)',
+                  'rgba(174, 0, 209, 0.7)'
+              ],
+              borderColor: [
+                  'rgba(250, 87, 0, 1)',
+                  'rgba(5, 198, 131, 1)',
+                  'rgba(219, 0, 69, 1)',
+                  'rgba(0, 92, 197, 1)',
+                  'rgba(92, 41, 0, 1)',
+                  'rgba(174, 0, 209, 1)'
+              ],
                 borderWidth: 1,
               },
             ],

@@ -2,7 +2,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     
     try {
-        const response = await fetch('../../../api/login/login.php', {
+        const response = await fetch('../../../api/login/admin/login.php', {
             method: 'POST',
             body: new FormData(e.target)
         });
@@ -15,7 +15,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
                 title: 'Login Successfully!',
                 text: data.message,
                 icon: data.icon,
-                timer: 2000,
+                timer: 3000,
                 showConfirmButton: false,
                 allowOutsideClick: false,
                 didClose: () => {
