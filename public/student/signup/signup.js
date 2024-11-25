@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     title: 'Success!',
                     text: data.message,
                     icon: 'success',
-                    timer: 2000,
+                    timer: 3000,
                     showConfirmButton: false
                 }).then(() => {
                     // Redirect to login page
