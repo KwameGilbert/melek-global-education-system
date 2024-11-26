@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.querySelector('form');
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
+    const rememberBox = document.getElementById('remember');
 
     loginForm.addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -37,14 +38,15 @@ document.addEventListener('DOMContentLoaded', function() {
             submitButton.disabled = true;
 
             // Make API call to login endpoint
-            const response = await fetch('../../api/student/login.php', {
+            const response = await fetch('../../../api/student/login.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     email: emailInput.value,
-                    password: passwordInput.value
+                    password: passwordInput.value,
+                    remember: rememberBox.value
                 })
             });
 
@@ -56,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     title: 'Success!',
                     text: 'Login successful',
                     icon: 'success',
-                    timer: 1500,
+                    timer: 3000,
                     showConfirmButton: false
                 }).then(() => {
                     // Redirect to dashboard
@@ -68,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     title: 'Login Failed',
                     text: data.message || 'An error occurred during login',
                     icon: 'error',
-                    confirmButtonText: 'OK'
+                    confirmButtonText: 'Try Again'
                 });
             }
         } catch (error) {

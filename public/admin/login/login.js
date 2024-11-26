@@ -17,7 +17,6 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
                 icon: data.icon,
                 timer: 3000,
                 showConfirmButton: false,
-                allowOutsideClick: false,
                 didClose: () => {
                     window.location.href = data.redirect;
                 }

@@ -1,36 +1,45 @@
 <?php
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Content-Type');
+// login.php
+require_once __DIR__ . '/../../config/database.php';
 
-require_once '../../config/database.php';
+// Start PHP session
+session_start();
+
+// Response array
+$response = [
+    'status' => 'error',
+    'message' => '',
+    'data' => null
+];
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
-    echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
+    $response['message'] = 'Method not allowed';
+    echo json_encode($response);
     exit();
 }
-
-// Get POST data
-$data = json_decode(file_get_contents('php://input'), true);
-
-if (!isset($data['email']) || !isset($data['password'])) {
-    http_response_code(400);
-    echo json_encode(['status' => 'error', 'message' => 'Email and password are required']);
-    exit();
-}
-
-$email = filter_var($data['email'], FILTER_SANITIZE_EMAIL);
-$password = $data['password'];
 
 try {
-    $db = new PDO(
-        "mysql:host=$host;dbname=$dbname",
-        $username,
-        $password,
-        array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
-    );
+    // Get POST data
+    $data = json_decode(file_get_contents('php://input'), true);
+    
+    // Get and sanitize inputs
+    $email = filter_var($data['email'] ?? '', FILTER_SANITIZE_EMAIL);
+    $password = $data['password'] ?? '';
+    $remember = $data['remember'] ?? '';
+
+    // Validate email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        throw new Exception('Please enter a valid email address');
+    }
+
+    if (empty($password)) {
+        throw new Exception('Password is required');
+    }
+
+    // Database connection
+    $database = new Database();
+    $db = $database->getConnection();
 
     // Check if student exists with all columns from the model
     $stmt = $db->prepare("SELECT 
@@ -47,21 +56,19 @@ try {
         update_at
         FROM student 
         WHERE email = ?");
+    
     $stmt->execute([$email]);
     $student = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$student) {
-        http_response_code(401);
-        echo json_encode(['status' => 'error', 'message' => 'Student email not found']);
-        exit();
-    } elseif (!password_verify($password, $student['password'])) {
-        http_response_code(401);
-        echo json_encode(['status' => 'error', 'message' => 'Invalid password']);
-        exit();
+        throw new Exception('Student email not found');
+    }
+
+    if (!password_verify($password, $student['password'])) {
+        throw new Exception('Invalid password');
     }
 
     // Start session and store student info
-    session_start();
     $_SESSION['student_id'] = $student['student_id'];
     $_SESSION['firstname'] = $student['firstname'];
     $_SESSION['lastname'] = $student['lastname'];
@@ -72,32 +79,41 @@ try {
     $_SESSION['email'] = $student['email'];
     $_SESSION['logged_in'] = true;
 
-    // Update last login by modifying update_at
+    if($remember){
+        $cookieParams = session_get_cookie_params();
+        setcookie(
+            session_name(),
+            session_id(),
+            time() + (30 * 24 * 60 * 60), // 30 days
+            $cookieParams["path"],
+            $cookieParams["domain"],
+            $cookieParams["secure"],
+            $cookieParams["httponly"]
+        );
+    }
+
+    // Update last login
     $updateStmt = $db->prepare("UPDATE student SET update_at = NOW() WHERE student_id = ?");
     $updateStmt->execute([$student['student_id']]);
 
-    // Return success response with student data (excluding sensitive info)
-    http_response_code(200);
-    echo json_encode([
-        'status' => 'success',
-        'message' => 'Login successful',
-        'data' => [
-            'student_id' => $student['student_id'],
-            'firstname' => $student['firstname'],
-            'lastname' => $student['lastname'],
-            'gender' => $student['gender'],
-            'nationality' => $student['nationality'],
-            'dob' => $student['dob'],
-            'contact' => $student['contact'],
-            'email' => $student['email'],
-            'created_at' => $student['created_at'],
-            'update_at' => $student['update_at']
-        ]
-    ]);
+    // Prepare success response
+    $response['status'] = 'success';
+    $response['message'] = 'Welcome back, ' . htmlspecialchars($student['firstname'] . ' ' . $student['lastname']) . '!';
 
-} catch (PDOException $e) {
+    http_response_code(200);
+
+} catch (Exception $e) {
+    http_response_code(500);
+    $response['message'] = 'Error:' . $e->getMessage();
     error_log("Login error: " . $e->getMessage());
- //   http_response_code(500);
-    echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
-    exit();
 }
+// Clear sensitive data
+unset($password, $student);
+
+// Send JSON response
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Content-Type');
+echo json_encode($response);
+exit;

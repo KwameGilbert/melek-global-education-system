@@ -55,9 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }else if(!password_verify($password, $user['password'])){
             throw new Exception('Wrong Password');
         }
-
-        
-        
+ 
         // Set user session
         $_SESSION['admin_id'] = $user['admin_id'];
         $_SESSION['firstname'] = $user['firstname'];
