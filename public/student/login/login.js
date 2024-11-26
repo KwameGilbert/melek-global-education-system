@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Success message
                 Swal.fire({
                     title: 'Success!',
-                    text: 'Login successful',
+                    text: data.message,
                     icon: 'success',
                     timer: 3000,
                     showConfirmButton: false

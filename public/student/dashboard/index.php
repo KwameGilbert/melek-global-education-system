@@ -1,3 +1,18 @@
+<?php
+require __DIR__ . '/../../../config/database.php';
+
+// Start PHP session
+session_start();
+
+// Check if the user is logged in by verifying session variables
+if (isset($_SESSION['student_id'])) {
+} else {
+    // Redirect to login if session is not set
+    header('Location: ../login/');
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,8 +48,9 @@
         <div class="flex flex-col items-center mb-6">
             <img src="https://avatar.iran.liara.run/public" alt="Profile"
                 class="w-24 h-24 rounded-full object-cover mb-2">
-            <h2 class="text-lg font-semibold" id="studentName">John Doe</h2>
-            <p class="text-sm text-gray-400" id="studentEmail">john.doe@example.com</p>
+            <h2 class="text-lg font-semibold" id="studentName">
+                <?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']  ?></h2>
+            <p class="text-sm text-gray-400" id="studentEmail"><?php echo $_SESSION['email'] ?></p>
         </div>
 
         <!-- Navigation -->
@@ -71,7 +87,7 @@
 
             <!-- Welcome and Logout Button -->
             <div class="flex items-center">
-                <span class="text-gray-700 mr-4">Welcome, John Doe</span>
+                <span class="text-gray-700 mr-4">Welcome, <?php echo $_SESSION['firstname']; ?></span>
                 <button class="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600">Logout</button>
             </div>
         </header>

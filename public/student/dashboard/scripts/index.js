@@ -22,7 +22,7 @@ function loadDashboard() {
     });
 
 
-    fetch('./api/application.json')
+    fetch('../../../api/student/application/application.php')
         .then(response => response.json())
         .then(data => {
             // Populate application and payment status
@@ -34,7 +34,8 @@ function loadDashboard() {
             console.error('Error fetching dashboard data:', error);
         });
 
-    fetch('./api/notices.json')
+
+    fetch('../../../api/student/notice/notice.php')
         .then(response => response.json())
         .then(data => {
             // Populate notices with date and time
