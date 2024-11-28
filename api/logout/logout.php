@@ -14,6 +14,6 @@ if (isset($_COOKIE['token'])) {
 }
 
 // Redirect to login page
-header('Location: ../logout/');
+header('Location: ../login/');
 exit;
 ?>

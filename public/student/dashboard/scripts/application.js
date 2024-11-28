@@ -99,7 +99,7 @@ function loadApplications() {
     async function populateFormOptions() {
         // Fetch countries and nationalities from Rest Countries API
         try {
-            const responseCountries = await fetch('./api/countries_list.json');
+            const responseCountries = await fetch('../../../api/country/countries_list.json');
             const countriesData = await responseCountries.json();
 
             const nationalityInput = document.getElementById("nationality");
@@ -201,16 +201,7 @@ function loadApplications() {
 
 
 
-
-
-
-
-
-
-
-
-
-
+    
     const countrySelect = document.getElementById("country");
     const schoolSelect = document.getElementById("school");
     const degreeSelect = document.getElementById("degree");

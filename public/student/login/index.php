@@ -1,23 +1,37 @@
+<?php
+//Check if user is already logged in and redirect to dashbaord
+session_start();
+
+if (isset($_SESSION['student_id'])) {
+    header('Location: ../dashboard/');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Melek Global Education - Student Portal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com/3.4.15"></script>
+    <!-- FontAwesome Icons -->
+    <link href="../../../imports/fontawesome/css/all.min.css" rel="stylesheet">
+    <script src="../../../imports/sweetalert/sweetalert2@11.js"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-        
-        body, html {
+
+        body,
+        html {
             height: 95vh;
             font-family: 'Space Grotesk', sans-serif;
             overflow: hidden;
         }
 
         body {
-            background-image: url('../images/13643.jpg');
+            background-image: url('../dashboard/images/13643.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -29,7 +43,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 100%);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
             z-index: -1;
         }
 
@@ -54,11 +68,11 @@
             border-radius: inherit;
             padding: 2px;
             background: linear-gradient(45deg, #3B82F6, #2563EB, #10B981);
-            -webkit-mask: 
-                linear-gradient(#fff 0 0) content-box, 
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
                 linear-gradient(#fff 0 0);
-            mask: 
-                linear-gradient(#fff 0 0) content-box, 
+            mask:
+                linear-gradient(#fff 0 0) content-box,
                 linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
@@ -76,9 +90,17 @@
         }
 
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
         }
 
         .float-animation {
@@ -86,6 +108,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="overlay"></div>
 
@@ -114,7 +137,7 @@
                         <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
                             <i class="fas fa-envelope text-gray-400 text-sm"></i>
                         </div>
-                        <input type="email" id="email" 
+                        <input type="email" id="email"
                             class="cyber-input w-full pl-10 pr-4 py-2.5 rounded-lg text-white placeholder-gray-400 focus:outline-none"
                             placeholder="student@email.com">
                     </div>
@@ -136,7 +159,7 @@
                         <a href="../password-reset/" class="text-blue-400 hover:text-blue-300">Forgot?</a>
                     </div>
 
-                    <button type="submit" 
+                    <button type="submit"
                         class="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white py-2.5 rounded-lg hover:from-blue-500 hover:to-blue-400 transition-all duration-200 flex items-center justify-center space-x-2 group">
                         <i class="fas fa-sign-in-alt group-hover:rotate-12 transition-transform"></i>
                         <span>Access Portal</span>
@@ -162,4 +185,5 @@
     </div>
     <script src="./login.js"></script>
 </body>
+
 </html>

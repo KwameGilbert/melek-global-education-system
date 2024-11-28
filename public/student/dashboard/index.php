@@ -22,7 +22,7 @@ if (isset($_SESSION['student_id'])) {
     <title>Dashboard - Melek Global Education</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../../../imports/tailwind/tailwind.min.css">
+    <script src="../../../imports/sweetalert/sweetalert2@11.js"></script>
     <!-- FontAwesome Icons -->
     <link href="../../../imports/fontawesome/css/all.min.css" rel="stylesheet">
     <style>
@@ -46,8 +46,9 @@ if (isset($_SESSION['student_id'])) {
 
         <!-- Profile Section -->
         <div class="flex flex-col items-center mb-6">
-            <img src="https://avatar.iran.liara.run/public" alt="Profile"
-                class="w-24 h-24 rounded-full object-cover mb-2">
+            <img src="<?php echo isset($_SESSION['profile_image']) && $_SESSION['profile_image'] ? htmlspecialchars($_SESSION['profile_image']) : 'https://avatar.iran.liara.run/public'; ?>" alt="User Avatar"
+                class="w-28 h-28 rounded-full border-4 border-white mb-4">
+
             <h2 class="text-lg font-semibold" id="studentName">
                 <?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']  ?></h2>
             <p class="text-sm text-gray-400" id="studentEmail"><?php echo $_SESSION['email'] ?></p>
@@ -58,7 +59,7 @@ if (isset($_SESSION['student_id'])) {
             <a href="#" data-page="dashboard.html" class="flex items-center py-2.5 px-4 hover:bg-gray-700">
                 <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
             </a>
-            <a href="#" data-page="profile.html" class="flex items-center py-2.5 px-4 hover:bg-gray-700">
+            <a href="#" data-page="profile.php" class="flex items-center py-2.5 px-4 hover:bg-gray-700">
                 <i class="fas fa-user mr-3"></i> Profile
             </a>
             <a href="#" data-page="application.php" class="flex items-center py-2.5 px-4 hover:bg-gray-700">
@@ -88,7 +89,7 @@ if (isset($_SESSION['student_id'])) {
             <!-- Welcome and Logout Button -->
             <div class="flex items-center">
                 <span class="text-gray-700 mr-4">Welcome, <?php echo $_SESSION['firstname']; ?></span>
-                <button class="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600">Logout</button>
+                <button class="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600" onclick="logout()">Logout</button>
             </div>
         </header>
 
@@ -99,6 +100,7 @@ if (isset($_SESSION['student_id'])) {
     </div>
 
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/profile.js"></script>
     <script src="./scripts/application.js"></script>
     <script>
         // Toggle sidebar visibility
@@ -121,14 +123,10 @@ if (isset($_SESSION['student_id'])) {
             }
         }
 
-        // On page load, check localStorage and load the appropriate page
-
-        window.onload = function () {
+        window.onload = function() {
             const activePage = localStorage.getItem('activePage') || 'dashboard.html'; // Default to 'dashboard.html'
             loadPage(activePage);
         };
-
-
     </script>
 </body>
 

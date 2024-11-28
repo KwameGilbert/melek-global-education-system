@@ -35,7 +35,7 @@ function loadDashboard() {
         });
 
 
-    fetch('../../../api/student/notice/notice.php')
+    fetch('../../../api/student/notice/notices.php')
         .then(response => response.json())
         .then(data => {
             // Populate notices with date and time
@@ -90,6 +90,7 @@ function loadPayments() {
 function loadProfile() {
     console.log('Profile page loaded!');
     // Add code to handle profile data here
+    initializeProfilePage();
 }
 
 function loadNoticesPage() {
@@ -182,7 +183,7 @@ function loadPage(page) {
                 case 'payments.html':
                     loadPayments();
                     break;
-                case 'profile.html':
+                case 'profile.php':
                     loadProfile();
                     break;
                 case 'notices.html':
@@ -193,4 +194,42 @@ function loadPage(page) {
             }
         })
         .catch(error => console.error('Error loading page:', error));
+}
+
+async function logout() {
+    try {
+        const response = await fetch('../../../api/logout/logout.php', {
+            method: 'GET'
+        });
+
+        if (response.ok) {
+            // Redirect to login page
+            Swal.fire({
+                title: "Success",
+                text: "Logout successful",
+                icon: "success",
+                showConfirmButton: false,
+                allowOutsideClick: false,
+            })
+            window.location.href = '../login/index.php';
+        } else {
+            // Show error message
+            Swal.fire({
+                title: "Error!",
+                text: "Failed to log out. Please try again.",
+                icon: "error",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "OK"
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        Swal.fire({
+            title: "Error!",
+            text: "An unexpected error occurred. Please try again.",
+            icon: "error",
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "OK"
+        });
+    }
 }
