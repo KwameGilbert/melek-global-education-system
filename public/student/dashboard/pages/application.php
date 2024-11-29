@@ -1312,30 +1312,52 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 Study Experience (Start from High School Till Now)
             </h3>
             <div id="study-experience-container" class="space-y-4">
-                <?php foreach ($study_experience as $experience): ?>
+                <?php if (!empty($study_experience)): ?>
+                    <?php foreach ($study_experience as $experience): ?>
+                        <div class="study-entry grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
+                                <input type="text" class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                    value="<?php echo htmlspecialchars($experience['institution']); ?>" required />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
+                                <input type="text" class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                    value="<?php echo htmlspecialchars($experience['degree']); ?>" required />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Year of Attendance (From - To) *</label>
+                                <input type="text" class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                    value="<?php echo htmlspecialchars($experience['start_date']) . ' - ' . htmlspecialchars($experience['end_date']); ?>" required />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Contact Person</label>
+                                <input type="text" class="contact-person w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                    value="<?php echo htmlspecialchars($experience['contact_person'] ?? ''); ?>" />
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <!-- Blank Form for New Entry -->
                     <div class="study-entry grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
-                            <input type="text" class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                                value="<?php echo htmlspecialchars($experience['institution']); ?>" required />
+                            <input type="text" class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required />
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
-                            <input type="text" class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                                value="<?php echo htmlspecialchars($experience['degree']); ?>" required />
+                            <input type="text" class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required />
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">Year of Attendance (From - To) *</label>
-                            <input type="text" class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                                value="<?php echo htmlspecialchars($experience['start_date']) . ' - ' . htmlspecialchars($experience['end_date']); ?>" required />
+                            <input type="text" class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required />
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">Contact Person</label>
-                            <input type="text" class="contact-person w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                                value="<?php echo htmlspecialchars($experience['contact_person']); ?>" />
+                            <input type="text" class="contact-person w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                     </div>
-                <?php endforeach; ?>
+                <?php endif; ?>
             </div>
             <button id="add-study-entry" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">
                 Add More
