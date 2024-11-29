@@ -42,19 +42,21 @@ try {
     $db = $database->getConnection();
 
     // Check if student exists with all columns from the model
-    $stmt = $db->prepare("SELECT 
-        student_id, 
-        firstname, 
-        lastname, 
-        gender,
-        nationality,
-        dob,
-        contact,
-        email, 
-        password,
-        created_at,
-        update_at
-        FROM student 
+    $stmt = $db->prepare("SELECT
+        a.application_id, 
+        s.student_id, 
+        s.firstname, 
+        s.lastname, 
+        s.gender,
+        s.nationality,
+        s.dob,
+        s.contact,
+        s.email, 
+        s.password,
+        s.created_at,
+        s.update_at
+        FROM student s
+        JOIN application a ON s.student_id = a.student_id
         WHERE email = ?");
     
     $stmt->execute([$email]);
@@ -78,6 +80,7 @@ try {
     $_SESSION['contact'] = $student['contact'];
     $_SESSION['email'] = $student['email'];
     $_SESSION['logged_in'] = true;
+    $_SESSION['application_id'] = $student['application_id'];
 
     if($remember){
         $cookieParams = session_get_cookie_params();

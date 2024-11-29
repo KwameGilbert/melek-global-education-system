@@ -55,6 +55,7 @@ try {
                 break;
             }
         }
+        $_SESSION['application_id'] = $application['application_id'];
 
         $response = [
             'applicantID' => $application['application_id'],
