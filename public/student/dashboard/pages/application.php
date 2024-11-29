@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 // Check if user is logged in
 if (!isset($_SESSION['student_id'])) {
     header('Location: ../../login/');
@@ -16,8 +15,8 @@ if ($stmt->rowCount() > 0) {
     $application = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-$stmt = $pdo->prepare("SELECT * FROM study_experience WHERE application_id = :application_id");
-$stmt->execute([':application_id' => $application_id]);
+$stmt = $conn->prepare("SELECT * FROM study_experience WHERE application_id = ?");
+$stmt->execute([$_SESSION['application_id']]);
 $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -1306,8 +1305,6 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
         </div>
-
-
 
         <!-- Study Experience Section -->
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
