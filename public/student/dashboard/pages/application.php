@@ -16,7 +16,9 @@ if ($stmt->rowCount() > 0) {
     $application = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-echo json_encode($application);
+$stmt = $pdo->prepare("SELECT * FROM study_experience WHERE application_id = :application_id");
+$stmt->execute([':application_id' => $application_id]);
+$study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <style>
@@ -949,9 +951,7 @@ echo json_encode($application);
 
         <!-- Learning Experience in China -->
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
-            <h3 class="text-xl font-bold mb-4 text-gray-700">
-                Learning Experience in China
-            </h3>
+            <h3 class="text-xl font-bold mb-4 text-gray-700">Learning Experience in China</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Studied in China -->
                 <div>
@@ -959,11 +959,12 @@ echo json_encode($application);
                     <div class="flex items-center space-x-4">
                         <label class="flex items-center space-x-2">
                             <input type="radio" name="studied-in-china" value="Yes" class="form-radio text-blue-500"
-                                required />
+                                <?php echo isset($application['studied_in_china']) && $application['studied_in_china'] === 'Yes' ? 'checked' : ''; ?> required />
                             <span>Yes</span>
                         </label>
                         <label class="flex items-center space-x-2">
-                            <input type="radio" name="studied-in-china" value="No" class="form-radio text-blue-500" />
+                            <input type="radio" name="studied-in-china" value="No" class="form-radio text-blue-500"
+                                <?php echo isset($application['studied_in_china']) && $application['studied_in_china'] === 'No' ? 'checked' : ''; ?> />
                             <span>No</span>
                         </label>
                     </div>
@@ -973,24 +974,25 @@ echo json_encode($application);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Visa Type *</label>
                     <input type="text" id="visa-type"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        value="<?php echo htmlspecialchars($application['visa_type'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
                 </div>
                 <!-- Visa Expiry Date -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Visa Expiry Date *</label>
                     <input type="date" id="visa-expiry-date"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        value="<?php echo htmlspecialchars($application['visa_expiry_date'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
                 </div>
                 <!-- Institution in China -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Institution in China that you are studying
-                        now</label>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Institution in China that you are studying now</label>
                     <input type="text" id="institution-china"
-                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        value="<?php echo htmlspecialchars($application['institution_in_china_studying'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
             </div>
         </div>
+
 
         <!-- Financial Sponsor's Information -->
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
@@ -1046,54 +1048,53 @@ echo json_encode($application);
 
         <!-- Guarantor's Information -->
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
-            <h3 class="text-xl font-bold mb-4 text-gray-700">
-                Guarantor's Information
-            </h3>
+            <h3 class="text-xl font-bold mb-4 text-gray-700">Guarantor's Information</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Guarantor Name -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Name *</label>
                     <input type="text" id="guarantor-name"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        value="<?php echo htmlspecialchars($application['guarantor_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
                 </div>
                 <!-- Guarantor Relationship -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Relationship *</label>
                     <input type="text" id="guarantor-relationship"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        value="<?php echo htmlspecialchars($application['guarantor_relationship'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
                 </div>
                 <!-- Guarantor Work Place -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Work Place *</label>
                     <input type="text" id="guarantor-workplace"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        value="<?php echo htmlspecialchars($application['guarantor_work_place'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
                 </div>
                 <!-- Guarantor Occupation -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
                     <input type="text" id="guarantor-occupation"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        value="<?php echo htmlspecialchars($application['guarantor_occupation'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
                 </div>
                 <!-- Guarantor Email -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Email *</label>
                     <input type="email" id="guarantor-email"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        value="<?php echo htmlspecialchars($application['guarantor_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
                 </div>
                 <!-- Guarantor Phone/Mobile -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile *</label>
                     <input type="tel" id="guarantor-phone"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        value="<?php echo htmlspecialchars($application['guarantor_phone'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
                 </div>
             </div>
         </div>
+
 
         <!-- Emergency Contact -->
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
@@ -1158,8 +1159,7 @@ echo json_encode($application);
                     <select id="country" onchange="fetchSchools()" class="w-full p-3 border border-gray-300 rounded-md"
                         required>
                         <option value="">Select a country</option>
-                        <?php include './pages/get_data.php';
-                        echo populateOptions('countries'); ?>
+
                     </select>
                 </div>
                 <!-- School -->
@@ -1193,52 +1193,6 @@ echo json_encode($application);
             </div>
         </div>
 
-        <?php
-
-        function populateOptions($type)
-        {
-            $data = json_decode(file_get_contents('majorInfo.json'), true);
-            $options = '';
-
-            if ($type === 'countries') {
-                foreach ($data['countries'] as $country) {
-                    $options .= "<option value=\"{$country['id']}\">{$country['country_name']}</option>";
-                }
-            }
-            return $options;
-        }
-
-        if (isset($_GET['type']) && isset($_GET['id']) && isset($_GET['filter'])) {
-            $data = json_decode(file_get_contents('majorInfo.json'), true);
-            $result = [];
-
-            switch ($_GET['type']) {
-                case 'school':
-                    $result = array_filter($data['schools'], fn($school) => $school[$_GET['filter']] === $_GET['id']);
-                    break;
-                case 'degree':
-                    $schools = array_filter($data['programs'], fn($program) => $program[$_GET['filter']] === $_GET['id']);
-                    $result = array_unique(array_column($schools, 'degree'));
-                    break;
-                case 'program':
-                    $result = array_filter(
-                        $data['programs'],
-                        fn($program) =>
-                        $program['school_id'] === $_GET['id']['school_id'] && $program['degree'] === $_GET['id']['degree']
-                    );
-                    break;
-                case 'duration':
-                    $program = array_filter($data['programs'], fn($program) => $program['id'] === $_GET['id']);
-                    $result = $program ? ['duration' => array_shift($program)['duration']] : null;
-                    break;
-            }
-
-            echo json_encode(array_values($result));
-        }
-        ?>
-
-
-
         <!-- Language Proficiency -->
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
             <h3 class="text-xl font-bold mb-4 text-gray-700">Language Proficiency</h3>
@@ -1248,7 +1202,7 @@ echo json_encode($application);
                     <label class="block text-sm font-bold text-gray-700 mb-1">English Proficiency *</label>
                     <input type="text" id="english-proficiency"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        value="<?php echo htmlspecialchars($application['english_proficiency'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
                 </div>
                 <!-- English Proficiency Certificate -->
                 <div>
@@ -1261,52 +1215,52 @@ echo json_encode($application);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Chinese Proficiency *</label>
                     <input type="text" id="chinese-proficiency"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        value="<?php echo htmlspecialchars($application['chinese_proficiency'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
                 </div>
                 <!-- HSK Level -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">HSK Level *</label>
                     <input type="text" id="hsk-level"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        value="<?php echo htmlspecialchars($application['hsk_level'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
                 </div>
                 <!-- HSK Scores -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">HSK Scores</label>
                     <input type="text" id="hsk-scores"
-                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        value="<?php echo htmlspecialchars($application['hsk_scores'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- HSKK Scores -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">HSKK Scores</label>
                     <input type="text" id="hskk-scores"
-                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        value="<?php echo htmlspecialchars($application['hskk_scores'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Time of Chinese language learning -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Time of Chinese language learning
-                        *</label>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Time of Chinese language learning *</label>
                     <input type="text" id="chinese-learning-time"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        value="<?php echo htmlspecialchars($application['time_of_chinese_learning'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
                 </div>
                 <!-- Whether the Chinese teacher own a Chinese Nationality -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Chinese Teacher's Nationality *</label>
                     <select id="teacher-nationality"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
-                        <option value="">Select</option>
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
+                        <option value="" <?php echo !isset($application['teacher_nationlity_chinese']) ? 'selected' : ''; ?>>Select</option>
+                        <option value="yes" <?php echo ($application['teacher_nationlity_chinese'] ?? '') === '1' ? 'selected' : ''; ?>>Yes</option>
+                        <option value="no" <?php echo ($application['teacher_nationlity_chinese'] ?? '') === '0' ? 'selected' : ''; ?>>No</option>
                     </select>
                 </div>
                 <!-- Name of institution for Chinese learning -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Name of institution for Chinese learning
-                        *</label>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Name of institution for Chinese learning *</label>
                     <input type="text" id="institution-name"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        value="<?php echo htmlspecialchars($application['chinese_learning_institution'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
                 </div>
             </div>
         </div>
@@ -1315,40 +1269,45 @@ echo json_encode($application);
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
             <h3 class="text-xl font-bold mb-4 text-gray-700">Education Background</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Highest Degree -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Highest Degree *</label>
                     <input type="text" id="highest-degree"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        value="<?php echo htmlspecialchars($application['highest_degree'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
                 </div>
+                <!-- Highest Degree Graduation School -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Highest Degree Graduation School *</label>
                     <input type="text" id="graduation-school"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        value="<?php echo htmlspecialchars($application['highest_degree_school'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
                 </div>
+                <!-- Certificate Type of Highest Degree Level -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Certificate Type of Highest Degree Level
-                        *</label>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Certificate Type of Highest Degree Level *</label>
                     <input type="text" id="certificate-type"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        value="<?php echo htmlspecialchars($application['highest_degree_certificate_type'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
                 </div>
+                <!-- Mark Range if Full Mark is 100 -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Mark Range if Full Mark is 100 *</label>
                     <input type="number" id="mark-range"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        value="<?php echo htmlspecialchars($application['best_mark_if_100'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
                 </div>
+                <!-- Any Failure in Highest Degree Marks if Full Mark is 100 -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Any Failure in Highest Degree Marks if
-                        Full Mark is 100 *</label>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Any Failure in Highest Degree Marks if Full Mark is 100 *</label>
                     <input type="text" id="degree-failure"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        value="<?php echo htmlspecialchars($application['worst_mark_if_100'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
                 </div>
             </div>
         </div>
+
+
 
         <!-- Study Experience Section -->
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
@@ -1356,32 +1315,30 @@ echo json_encode($application);
                 Study Experience (Start from High School Till Now)
             </h3>
             <div id="study-experience-container" class="space-y-4">
-                <div class="study-entry grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
-                        <input type="text"
-                            class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                            required />
+                <?php foreach ($study_experience as $experience): ?>
+                    <div class="study-entry grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
+                            <input type="text" class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                value="<?php echo htmlspecialchars($experience['institution']); ?>" required />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
+                            <input type="text" class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                value="<?php echo htmlspecialchars($experience['degree']); ?>" required />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Year of Attendance (From - To) *</label>
+                            <input type="text" class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                value="<?php echo htmlspecialchars($experience['start_date']) . ' - ' . htmlspecialchars($experience['end_date']); ?>" required />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Contact Person</label>
+                            <input type="text" class="contact-person w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                value="<?php echo htmlspecialchars($experience['contact_person']); ?>" />
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
-                        <input type="text"
-                            class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                            required />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Year of Attendance (From - To)
-                            *</label>
-                        <input type="text"
-                            class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                            required />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Contact Person</label>
-                        <input type="text"
-                            class="contact-person w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
             <button id="add-study-entry" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">
                 Add More

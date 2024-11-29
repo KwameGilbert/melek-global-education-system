@@ -1,23 +1,13 @@
 
 
-// function loadApplications() {
-//     console.log('Applications page loaded!');
-//     // JavaScript to handle form navigation and API fetch calls
-//     const form = document.getElementById('application-form');
-//     const submitBtn = document.getElementById('submit-btn');
-//     const saveBtn = document.getElementById('save-btn');
-
-//     form.addEventListener('input', checkFormCompletion);
-
-//     function checkFormCompletion() {
-//         const isComplete = Array.from(form.elements).every(input => {
-//             return input.type === "file" ? input.files.length > 0 : input.value.trim() !== "";
-//         });
-//         submitBtn.disabled = !isComplete;
-//         submitBtn.classList.toggle('bg-blue-500', isComplete);
-//         submitBtn.classList.toggle('bg-gray-300', !isComplete);
-//         submitBtn.classList.toggle('cursor-not-allowed', !isComplete);
-//     }
+function loadApplications() {
+    document.getElementById('add-study-entry').addEventListener('click', function () {
+        const container = document.getElementById('study-experience-container');
+        const newEntry = document.querySelector('.study-entry').cloneNode(true);
+        container.appendChild(newEntry);
+    });
+     
+     }
 // //0246814884
 //     saveBtn.addEventListener('click', async (e) => {
 //         e.preventDefault();
