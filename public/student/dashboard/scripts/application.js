@@ -1,4 +1,22 @@
 function loadApplications() {
+
+    // Show loading state
+   const loadingToast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+});
+
+loadingToast.fire({
+    title: 'Loading your Dashboard...',
+    timer: 3000,
+    timerProgressBar: true
+});
+
     document.getElementById('add-study-entry').addEventListener('click', function (event) {
         event.preventDefault(); // Prevent form submission
 

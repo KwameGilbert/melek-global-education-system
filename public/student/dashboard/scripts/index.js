@@ -12,6 +12,24 @@ document.querySelectorAll('a[data-page]').forEach(link => {
 // Function to load the dashboard data
 function loadDashboard() {
     console.log('Dashboard loaded!');
+
+    // Show loading state
+    const loadingToast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+        }
+    });
+
+    loadingToast.fire({
+        title: 'Loading your Dashboard...',
+        timer: 3000,
+        timerProgressBar: true
+    });
+
     const view_all_notices = document.getElementById('view-all-notices');
 
     view_all_notices.addEventListener('click', function (event) {
@@ -73,6 +91,22 @@ function loadDashboard() {
 
 function loadPayments() {
     console.log('Payments page loaded!');
+      // Show loading state
+   const loadingToast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+});
+
+loadingToast.fire({
+    title: 'Loading your payments...',
+    timer: 3000,
+    timerProgressBar: true
+});
     // Add code to handle payments here
     function showPaymentForm() {
         const paymentMethod = document.getElementById("payment-method").value;
@@ -90,11 +124,44 @@ function loadPayments() {
 function loadProfile() {
     console.log('Profile page loaded!');
     // Add code to handle profile data here
+      // Show loading state
+   const loadingToast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+});
+
+loadingToast.fire({
+    title: 'Loading your Profile Page...',
+    timer: 3000,
+    timerProgressBar: true
+});
+
     initializeProfilePage();
 }
 
 function loadNoticesPage() {
     console.log('Updates page loaded!');
+      // Show loading state
+   const loadingToast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+});
+
+loadingToast.fire({
+    title: 'Loading your Updates...',
+    timer: 3000,
+    timerProgressBar: true
+});
     // Add code to handle updates here
     // Fetch notices from JSON
     async function loadNotices() {

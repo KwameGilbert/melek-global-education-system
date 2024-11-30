@@ -98,12 +98,31 @@ async function changePassword(e) {
 function handleProfileImageUpload() {
     const input = document.getElementById('profile-image');
 
+    // Define a reusable SweetAlert toast
+    const toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+        }
+    });
+
     input.addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (!file) return;
 
         const formData = new FormData();
         formData.append('image', file);
+
+        // Show loading state
+        toast.fire({
+            icon: 'info',
+            title: 'Uploading Profile Picture...',
+            timer: 2000
+        });
 
         try {
             const response = await fetch('../../../api/student/profile/studentProfileImage.php', {
@@ -118,19 +137,51 @@ function handleProfileImageUpload() {
                 document.querySelectorAll('img[alt="User Avatar"]').forEach(img => {
                     img.src = data.image_url;
                 });
-                // Show success message
-                alert('Profile image updated successfully!');
+
+                // Show success toast
+                toast.fire({
+                    icon: 'success',
+                    title: 'Image Uploaded Successfully!',
+                    timer: 2000
+                });
             } else {
-                alert(data.message || 'Failed to update profile image');
+                // Show error toast with message from response
+                toast.fire({
+                    icon: 'error',
+                    title: data.message || 'Failed to update profile image',
+                    timer: 2000
+                });
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('Failed to upload image');
+
+            // Show error toast for network or other unexpected issues
+            toast.fire({
+                icon: 'error',
+                title: 'Failed to upload image',
+                timer: 2000
+            });
         }
     });
 }
 
-function initializeProfilePage() {
 
+function initializeProfilePage() {
+            // Show loading state
+   const loadingToast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+});
+
+loadingToast.fire({
+    title: 'Loading Profile Page...',
+    timer: 3000,
+    timerProgressBar: true
+});
     handleProfileImageUpload();
 }
