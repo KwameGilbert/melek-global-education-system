@@ -25,6 +25,7 @@ if (isset($_SESSION['student_id'])) {
     <script src="../../../imports/sweetalert/sweetalert2@11.js"></script>
     <!-- FontAwesome Icons -->
     <link href="../../../imports/fontawesome/css/all.min.css" rel="stylesheet">
+    <link href="../../../imports/tailwind/tailwind.min.css" rel="stylesheet">
     <style>
         .hidden {
             display: none;

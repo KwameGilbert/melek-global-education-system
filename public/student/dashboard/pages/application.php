@@ -15,9 +15,17 @@ if ($stmt->rowCount() > 0) {
     $application = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-$stmt = $conn->prepare("SELECT * FROM study_experience WHERE application_id = ?");
+$stmt = $conn->prepare("SELECT * FROM `study_experience` WHERE application_id = ?");
 $stmt->execute([$_SESSION['application_id']]);
 $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$workStmt = $conn->prepare("SELECT * FROM `work_history` WHERE application_id = ?");
+$workStmt->execute([$_SESSION['application_id']]);
+$work_history = $workStmt->fetchAll(PDO::FETCH_ASSOC);
+
+$majorStmt = $conn->prepare("SELECT * FROM `country`");
+$majorStmt->execute();
+$major_countries = $majorStmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <style>
@@ -28,7 +36,6 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
         padding-bottom: 10px;
     }
 </style>
-
 
 <!-- Save and Submit Buttons -->
 <div class="sticky top-0 bg-white z-10 flex justify-end space-x-2 py-2 w-full">
@@ -1143,35 +1150,43 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <!-- Country -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Country *</label>
+                    <!-- Country -->
                     <select id="country" onchange="fetchSchools()" class="w-full p-3 border border-gray-300 rounded-md">
                         <option value="">Select a country</option>
-
+                        <?php foreach ($major_countries as $country): ?>
+                            <option value="<?php echo $country['country_id']; ?>"><?php echo $country['country_name']; ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <!-- School -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">School *</label>
-                    <select id="school" onchange="fetchDegrees()" class="w-full p-3 border border-gray-300 rounded-md">
+                    <!-- School -->
+                    <select id="school" onchange="fetchDegrees()" class="w-full p-3 border border-gray-300 rounded-md" disabled>
                         <option value="">Select a school</option>
                     </select>
                 </div>
                 <!-- Degree -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
-                    <select id="degree" onchange="fetchPrograms()" class="w-full p-3 border border-gray-300 rounded-md">
+                    <!-- Degree -->
+                    <select id="degree" onchange="fetchPrograms()" class="w-full p-3 border border-gray-300 rounded-md" disabled>
                         <option value="">Select a degree</option>
                     </select>
                 </div>
                 <!-- Program -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Program *</label>
-                    <select id="program" onchange="showDuration()" class="w-full p-3 border border-gray-300 rounded-md">
+                    <!-- Program -->
+                    <select id="program" onchange="showDuration()" class="w-full p-3 border border-gray-300 rounded-md" disabled>
                         <option value="">Select a program</option>
                     </select>
                 </div>
                 <!-- Study Duration -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Study Duration *</label>
+
+                    <!-- Study Duration -->
                     <input type="text" id="study-duration" class="w-full p-3 border border-gray-300 rounded-md" readonly />
                 </div>
             </div>
@@ -1322,7 +1337,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     value="<?php echo htmlspecialchars($experience['contact_person'] ?? ''); ?>" />
                             </div>
                         </div>
-                        <hr>
+                        <hr class="border border-gray-500">
                         </hr>
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -1346,7 +1361,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <input type="text" class="contact-person w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                     </div>
-                    <hr>
+                    <hr class="border border-gray-500">
                     </hr>
                 <?php endif; ?>
             </div>
@@ -1376,10 +1391,10 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     value="<?php echo htmlspecialchars($work['end_date']); ?>" />
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">Occupation</label>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Position</label>
                                 <input type="text"
-                                    class="occupation w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                                    value="<?php echo htmlspecialchars($work['occupation']); ?>" />
+                                    class="position w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                    value="<?php echo htmlspecialchars($work['position']); ?>" />
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-1">Company</label>
@@ -1388,19 +1403,20 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     value="<?php echo htmlspecialchars($work['company']); ?>" />
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile</label>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Company Phone/Mobile</label>
                                 <input type="tel"
                                     class="phone w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                                    value="<?php echo htmlspecialchars($work['phone']); ?>" />
+                                    value="<?php echo htmlspecialchars($work['company_phone']); ?>" />
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">Email</label>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Company Email</label>
                                 <input type="email"
                                     class="email w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                                    value="<?php echo htmlspecialchars($work['email']); ?>" />
+                                    value="<?php echo htmlspecialchars($work['company_email']); ?>" />
                             </div>
                         </div>
-                        <hr>
+                        <hr class="border border-gray-500">
+                        </hr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <!-- Blank Form for New Entry -->
@@ -1416,9 +1432,9 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 class="work-end w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Occupation</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Position</label>
                             <input type="text"
-                                class="occupation w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                                class="position w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">Company</label>
@@ -1426,24 +1442,24 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 class="company w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Company Phone/Mobile</label>
                             <input type="tel"
-                                class="phone w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                                class="company-phone w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Email</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Company Email</label>
                             <input type="email"
-                                class="email w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                                class="company-email w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                     </div>
-                    <hr>
+                    <hr class="border border-gray-500">
+                    </hr>
                 <?php endif; ?>
             </div>
             <button id="add-work-entry" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">
                 Add More
             </button>
         </div>
-
 
         <!-- Upload Documents Section -->
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
