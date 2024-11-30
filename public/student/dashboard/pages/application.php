@@ -644,7 +644,6 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
 
-
         <!-- Current Address -->
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
             <h3 class="text-xl font-bold mb-4 text-gray-700">Current Address</h3>
@@ -896,7 +895,6 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
         </div>
-
 
         <!-- Passport and Visa Information -->
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
@@ -1301,11 +1299,12 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div id="study-experience-container" class="space-y-4">
                 <?php if (!empty($study_experience)): ?>
                     <?php foreach ($study_experience as $experience): ?>
+                        <!-- Existing Entry -->
                         <div class="study-entry grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
                                 <input type="text" class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                                value="<?php echo htmlspecialchars($experience['institution']); ?>" />
+                                    value="<?php echo htmlspecialchars($experience['institution']); ?>" />
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
@@ -1323,10 +1322,13 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     value="<?php echo htmlspecialchars($experience['contact_person'] ?? ''); ?>" />
                             </div>
                         </div>
+                        <hr>
+                        </hr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <!-- Blank Form for New Entry -->
                     <div class="study-entry grid grid-cols-1 md:grid-cols-2 gap-4">
+
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
                             <input type="text" class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
@@ -1344,6 +1346,8 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <input type="text" class="contact-person w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                     </div>
+                    <hr>
+                    </hr>
                 <?php endif; ?>
             </div>
             <button id="add-study-entry" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">
@@ -1355,43 +1359,91 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
             <h3 class="text-xl font-bold mb-4 text-gray-700">Work History</h3>
             <div id="work-history-container" class="space-y-4">
-                <div class="work-entry grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Starting Time</label>
-                        <input type="date"
-                            class="work-start w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                <?php if (!empty($work_history)): ?>
+                    <?php foreach ($work_history as $work): ?>
+                        <!-- Existing Entry -->
+                        <div class="work-entry grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Starting Time</label>
+                                <input type="date"
+                                    class="work-start w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                    value="<?php echo htmlspecialchars($work['start_date']); ?>" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Ending Time</label>
+                                <input type="date"
+                                    class="work-end w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                    value="<?php echo htmlspecialchars($work['end_date']); ?>" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Occupation</label>
+                                <input type="text"
+                                    class="occupation w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                    value="<?php echo htmlspecialchars($work['occupation']); ?>" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Company</label>
+                                <input type="text"
+                                    class="company w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                    value="<?php echo htmlspecialchars($work['company']); ?>" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile</label>
+                                <input type="tel"
+                                    class="phone w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                    value="<?php echo htmlspecialchars($work['phone']); ?>" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Email</label>
+                                <input type="email"
+                                    class="email w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                    value="<?php echo htmlspecialchars($work['email']); ?>" />
+                            </div>
+                        </div>
+                        <hr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <!-- Blank Form for New Entry -->
+                    <div class="work-entry grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Starting Time</label>
+                            <input type="date"
+                                class="work-start w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Ending Time</label>
+                            <input type="date"
+                                class="work-end w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Occupation</label>
+                            <input type="text"
+                                class="occupation w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Company</label>
+                            <input type="text"
+                                class="company w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile</label>
+                            <input type="tel"
+                                class="phone w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Email</label>
+                            <input type="email"
+                                class="email w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Ending Time</label>
-                        <input type="date"
-                            class="work-end w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Occupation</label>
-                        <input type="text"
-                            class="occupation w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Company</label>
-                        <input type="text"
-                            class="company w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile</label>
-                        <input type="tel"
-                            class="phone w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Email</label>
-                        <input type="email"
-                            class="email w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
-                    </div>
-                </div>
+                    <hr>
+                <?php endif; ?>
             </div>
             <button id="add-work-entry" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">
                 Add More
             </button>
         </div>
+
 
         <!-- Upload Documents Section -->
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
