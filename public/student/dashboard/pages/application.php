@@ -55,7 +55,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Family Name *</label>
                     <input type="text" id="family-name"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required
+
                         value='<?php echo $application['lastname'] ?>' />
                 </div>
                 <!-- Given Name -->
@@ -63,15 +63,14 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Given Name *</label>
                     <input type="text" id="given-name"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required
+
                         value="<?php echo $application['firstname'] ?>" />
                 </div>
                 <!-- Gender -->
                 <div>
                     <label for="gender" class="block text-sm font-bold text-gray-700 mb-1">Gender:</label>
                     <select id="gender"
-                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required>
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
                         <option value="">Select</option>
                         <option value="Male" <?php echo $application['gender'] == 'Male' ? 'selected' : '' ?>>Male</option>
                         <option value="Female" <?php echo $application['gender'] == 'Female' ? 'selected' : '' ?>>Female</option>
@@ -81,8 +80,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <!-- Passport Size Photo -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Upload Passport Size Photo *</label>
-                    <input type="file" id="passport-photo" accept="image" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                    <input type="file" id="passport-photo" accept="image" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                 </div>
                 <!-- Nationality -->
                 <div>
@@ -94,8 +92,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Marital Status *</label>
                     <select id="marital-status"
-                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required>
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
                         <option value="">Select</option>
                         <option value="single" <?php echo isset($application['marital_status']) && $application['marital_status'] == 'Single' ? 'selected' : ''; ?>>Single</option>
                         <option value="married" <?php echo isset($application['marital_status']) && $application['marital_status'] == 'Married' ? 'selected' : ''; ?>>Married</option>
@@ -107,13 +104,12 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Date of Birth *</label>
                     <input type="date" id="dob"
-                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required />
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                 </div>
                 <!-- Religion -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Religion *</label>
-                    <select id="religion" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required>
+                    <select id="religion" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
                         <option value="">Select</option>
                         <option value="Christianity" <?php echo isset($application['religion']) && $application['religion'] == 'Christianity' ? 'selected' : '' ?>>Christianity</option>
                         <option value="Islam" <?php echo isset($application['religion']) && $application['religion'] == 'Islam' ? 'selected' : '' ?>>Islam</option>
@@ -132,8 +128,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Country of Birth *</label>
                     <select id="country-birth"
-                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        required>
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
                         <option value="">Select</option>
                         <?php
                         // Array of countries
@@ -347,14 +342,14 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <!-- Occupation -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
-                    <input type="text" id="occupation" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required value="<?php echo htmlspecialchars($application['occupation'] ?? ''); ?>" />
+                    <input type="text" id="occupation" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" value="<?php echo htmlspecialchars($application['occupation'] ?? ''); ?>" />
                 </div>
                 <!-- Place of Birth -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Place of Birth *</label>
                     <input type="text" id="place-birth"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['place_of_birth'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['place_of_birth'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
 
                 <!-- Employer or Institution Affiliated -->
@@ -372,13 +367,13 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <label class="inline-flex items-center">
                             <input type="radio" name="in-china" value="yes"
                                 class="form-radio text-blue-400 focus:border-blue-400"
-                                <?php echo (isset($application['in_china_now']) && $application['in_china_now'] === 'Yes') ? 'checked' : ''; ?> required />
+                                <?php echo (isset($application['in_china_now']) && $application['in_china_now'] === 'Yes') ? 'checked' : ''; ?> />
                             <span class="ml-2">Yes</span>
                         </label>
                         <label class="inline-flex items-center">
                             <input type="radio" name="in-china" value="no"
                                 class="form-radio text-blue-400 focus:border-blue-400"
-                                <?php echo (isset($application['in_china_now']) && $application['in_china_now'] === 'No') ? 'checked' : ''; ?> required />
+                                <?php echo (isset($application['in_china_now']) && $application['in_china_now'] === 'No') ? 'checked' : ''; ?> />
                             <span class="ml-2">No</span>
                         </label>
                     </div>
@@ -389,7 +384,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Native Language *</label>
                     <input type="text" id="native-language"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['native_language'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['native_language'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
 
             </div>
@@ -406,27 +401,27 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Detailed Address *</label>
                     <input type="text" id="correspondence-detailed-address"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['correspondence_detailed_address'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['correspondence_detailed_address'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- City/Province -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">City/Province *</label>
                     <input type="text" id="correspondence-city-province"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['correspondence_city'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['correspondence_city'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Zipcode -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Zipcode *</label>
                     <input type="text" id="correspondence-zipcode"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['correspondence_zipcode'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['correspondence_zipcode'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Country of Correspondence -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Country *</label>
                     <select id="country-correspondence"
-                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required>
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
                         <option value="">Select</option>
                         <?php
                         $countries = [
@@ -637,14 +632,14 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Phone or Mobile *</label>
                     <input type="tel" id="correspondence-phone"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['correspondence_phone'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['correspondence_phone'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Email Address -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Email Address *</label>
                     <input type="email" id="correspondence-email"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['correspondence_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['correspondence_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
             </div>
         </div>
@@ -659,27 +654,27 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Detailed Address *</label>
                     <input type="text" id="current-detailed-address"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['applicant_detailed_address'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['applicant_detailed_address'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- City/Province -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">City/Province *</label>
                     <input type="text" id="current-city-province"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['applicant_city'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['applicant_city'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Zipcode -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Zipcode *</label>
                     <input type="text" id="current-zipcode"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['applicant_zipcode'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['applicant_zipcode'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Country of Current Address -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Country *</label>
                     <select id="country-residence"
-                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required>
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
                         <option value="">Select</option>
                         <?php
                         $countries = [
@@ -890,14 +885,14 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Phone or Mobile *</label>
                     <input type="tel" id="current-phone"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['applicant_phone'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['applicant_phone'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Email Address -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Email Address *</label>
                     <input type="email" id="current-email"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['applicant_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['applicant_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
             </div>
         </div>
@@ -914,21 +909,21 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Passport No.</label>
                     <input type="text" id="passport-no"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['passport_number'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['passport_number'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Passport Start Date -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Passport Start Date</label>
                     <input type="date" id="passport-start-date"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['passport_start_date'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['passport_start_date'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Passport Expiry Date -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Passport Expiry Date</label>
                     <input type="date" id="passport-expiry-date"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['passport_expiry_date'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['passport_expiry_date'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Old Passport No. -->
                 <div>
@@ -958,7 +953,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <div class="flex items-center space-x-4">
                         <label class="flex items-center space-x-2">
                             <input type="radio" name="studied-in-china" value="Yes" class="form-radio text-blue-500"
-                                <?php echo isset($application['studied_in_china']) && $application['studied_in_china'] === 'Yes' ? 'checked' : ''; ?> required />
+                                <?php echo isset($application['studied_in_china']) && $application['studied_in_china'] === 'Yes' ? 'checked' : ''; ?> />
                             <span>Yes</span>
                         </label>
                         <label class="flex items-center space-x-2">
@@ -973,14 +968,14 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Visa Type *</label>
                     <input type="text" id="visa-type"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['visa_type'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['visa_type'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Visa Expiry Date -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Visa Expiry Date *</label>
                     <input type="date" id="visa-expiry-date"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['visa_expiry_date'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['visa_expiry_date'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Institution in China -->
                 <div>
@@ -1004,35 +999,35 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Name *</label>
                     <input type="text" id="sponsor-name"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['fin_sponsor_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['fin_sponsor_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Sponsor Relationship -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Relationship *</label>
                     <input type="text" id="sponsor-relationship"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['fin_sponsor_relationship'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['fin_sponsor_relationship'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Sponsor Work Place -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Work Place *</label>
                     <input type="text" id="sponsor-workplace"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['fin_sponsor_work_place'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['fin_sponsor_work_place'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Sponsor Occupation -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
                     <input type="text" id="sponsor-occupation"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['fin_sponsor_occupation'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['fin_sponsor_occupation'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Sponsor Email -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Email *</label>
                     <input type="email" id="sponsor-email"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['fin_sponsor_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['fin_sponsor_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Sponsor Phone/Mobile -->
                 <div>
@@ -1054,42 +1049,42 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Name *</label>
                     <input type="text" id="guarantor-name"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['guarantor_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['guarantor_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Guarantor Relationship -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Relationship *</label>
                     <input type="text" id="guarantor-relationship"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['guarantor_relationship'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['guarantor_relationship'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Guarantor Work Place -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Work Place *</label>
                     <input type="text" id="guarantor-workplace"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['guarantor_work_place'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['guarantor_work_place'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Guarantor Occupation -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
                     <input type="text" id="guarantor-occupation"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['guarantor_occupation'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['guarantor_occupation'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Guarantor Email -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Email *</label>
                     <input type="email" id="guarantor-email"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['guarantor_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['guarantor_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Guarantor Phone/Mobile -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile *</label>
                     <input type="tel" id="guarantor-phone"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['guarantor_phone'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['guarantor_phone'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
             </div>
         </div>
@@ -1107,42 +1102,42 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Name *</label>
                     <input type="text" id="emergency-contact-name"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['emergency_contact_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['emergency_contact_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Emergency Contact Relationship -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Relationship *</label>
                     <input type="text" id="emergency-contact-relationship"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['emergency_contact_relationship'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['emergency_contact_relationship'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Emergency Contact Work Place -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Work Place *</label>
                     <input type="text" id="emergency-contact-workplace"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['emergency_contact_work_place'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['emergency_contact_work_place'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Emergency Contact Occupation -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
                     <input type="text" id="emergency-contact-occupation"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['emergency_contact_occupation'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['emergency_contact_occupation'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Emergency Contact Email -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Email *</label>
                     <input type="email" id="emergency-contact-email"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['emergency_contact_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['emergency_contact_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Emergency Contact Phone/Mobile -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile *</label>
                     <input type="tel" id="emergency-contact-phone"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['emergency_contact_phone'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['emergency_contact_phone'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
             </div>
         </div>
@@ -1155,8 +1150,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <!-- Country -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Country *</label>
-                    <select id="country" onchange="fetchSchools()" class="w-full p-3 border border-gray-300 rounded-md"
-                        required>
+                    <select id="country" onchange="fetchSchools()" class="w-full p-3 border border-gray-300 rounded-md">
                         <option value="">Select a country</option>
 
                     </select>
@@ -1164,23 +1158,21 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <!-- School -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">School *</label>
-                    <select id="school" onchange="fetchDegrees()" class="w-full p-3 border border-gray-300 rounded-md" required>
+                    <select id="school" onchange="fetchDegrees()" class="w-full p-3 border border-gray-300 rounded-md">
                         <option value="">Select a school</option>
                     </select>
                 </div>
                 <!-- Degree -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
-                    <select id="degree" onchange="fetchPrograms()" class="w-full p-3 border border-gray-300 rounded-md"
-                        required>
+                    <select id="degree" onchange="fetchPrograms()" class="w-full p-3 border border-gray-300 rounded-md">
                         <option value="">Select a degree</option>
                     </select>
                 </div>
                 <!-- Program -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Program *</label>
-                    <select id="program" onchange="showDuration()" class="w-full p-3 border border-gray-300 rounded-md"
-                        required>
+                    <select id="program" onchange="showDuration()" class="w-full p-3 border border-gray-300 rounded-md">
                         <option value="">Select a program</option>
                     </select>
                 </div>
@@ -1201,7 +1193,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">English Proficiency *</label>
                     <input type="text" id="english-proficiency"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['english_proficiency'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['english_proficiency'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- English Proficiency Certificate -->
                 <div>
@@ -1214,14 +1206,14 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Chinese Proficiency *</label>
                     <input type="text" id="chinese-proficiency"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['chinese_proficiency'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['chinese_proficiency'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- HSK Level -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">HSK Level *</label>
                     <input type="text" id="hsk-level"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['hsk_level'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['hsk_level'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- HSK Scores -->
                 <div>
@@ -1242,7 +1234,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Time of Chinese language learning *</label>
                     <input type="text" id="chinese-learning-time"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['time_of_chinese_learning'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['time_of_chinese_learning'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Whether the Chinese teacher own a Chinese Nationality -->
                 <div>
@@ -1259,7 +1251,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Name of institution for Chinese learning *</label>
                     <input type="text" id="institution-name"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['chinese_learning_institution'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['chinese_learning_institution'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
             </div>
         </div>
@@ -1273,35 +1265,35 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Highest Degree *</label>
                     <input type="text" id="highest-degree"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['highest_degree'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['highest_degree'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Highest Degree Graduation School -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Highest Degree Graduation School *</label>
                     <input type="text" id="graduation-school"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['highest_degree_school'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['highest_degree_school'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Certificate Type of Highest Degree Level -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Certificate Type of Highest Degree Level *</label>
                     <input type="text" id="certificate-type"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['highest_degree_certificate_type'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['highest_degree_certificate_type'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Mark Range if Full Mark is 100 -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Mark Range if Full Mark is 100 *</label>
                     <input type="number" id="mark-range"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['best_mark_if_100'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['best_mark_if_100'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Any Failure in Highest Degree Marks if Full Mark is 100 -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Any Failure in Highest Degree Marks if Full Mark is 100 *</label>
                     <input type="text" id="degree-failure"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        value="<?php echo htmlspecialchars($application['worst_mark_if_100'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required />
+                        value="<?php echo htmlspecialchars($application['worst_mark_if_100'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
             </div>
         </div>
@@ -1318,17 +1310,17 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
                                 <input type="text" class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                                    value="<?php echo htmlspecialchars($experience['institution']); ?>" required />
+                                    value="<?php echo htmlspecialchars($experience['institution']); ?>" />
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
                                 <input type="text" class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                                    value="<?php echo htmlspecialchars($experience['degree']); ?>" required />
+                                    value="<?php echo htmlspecialchars($experience['degree']); ?>" />
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-1">Year of Attendance (From - To) *</label>
                                 <input type="text" class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                                    value="<?php echo htmlspecialchars($experience['start_date']) . ' - ' . htmlspecialchars($experience['end_date']); ?>" required />
+                                    value="<?php echo htmlspecialchars($experience['start_date']) . ' - ' . htmlspecialchars($experience['end_date']); ?>" />
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-1">Contact Person</label>
@@ -1342,15 +1334,15 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <div class="study-entry grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
-                            <input type="text" class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required />
+                            <input type="text" class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
-                            <input type="text" class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required />
+                            <input type="text" class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">Year of Attendance (From - To) *</label>
-                            <input type="text" class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" required />
+                            <input type="text" class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">Contact Person</label>
@@ -1420,7 +1412,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Valid Passport with Visa Page *</label>
                     <input type="file"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" required />
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
 
                 <!-- Highest academic Diploma/Certificate -->
@@ -1429,7 +1421,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         *</label>
                     <input type="file"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" required />
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
 
                 <!-- Highest academic transcripts -->
@@ -1437,7 +1429,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="block text-sm font-bold text-gray-700 mb-1">Highest Academic Transcripts *</label>
                     <input type="file"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" required />
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
 
                 <!-- Non-criminal record -->
@@ -1446,7 +1438,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         Non-criminal Record *</label>
                     <input type="file"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" required />
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
 
                 <!-- Bank Statement -->
@@ -1495,7 +1487,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         *</label>
                     <input type="file"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" required />
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
 
                 <!-- Guardian's Letter of Guarantee -->
@@ -1569,8 +1561,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <!-- Admission Notice Collection Method -->
             <div class="mt-6">
                 <label class="block text-sm font-bold text-gray-700 mb-2">How to Collect the Admission Notice *</label>
-                <select class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                    required>
+                <select class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
                     <option value="" disabled selected>Select an option</option>
                     <option value="home">The same as home address</option>
                     <option value="current">
