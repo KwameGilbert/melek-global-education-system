@@ -43,7 +43,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="container mx-auto">
 
     <!-- Application Form -->
-    <form id="application-form" class="bg-white py-4 rounded">
+    <form id="application-form" class="bg-white py-4 rounded" method="POST">
         <h2 class="text-2xl font-bold text-center">Application Form</h2>
         <!-- Personal Information -->
 
@@ -942,7 +942,6 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
 
-
         <!-- Learning Experience in China -->
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
             <h3 class="text-xl font-bold mb-4 text-gray-700">Learning Experience in China</h3>
@@ -986,7 +985,6 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
         </div>
-
 
         <!-- Financial Sponsor's Information -->
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
@@ -1039,7 +1037,6 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
 
-
         <!-- Guarantor's Information -->
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
             <h3 class="text-xl font-bold mb-4 text-gray-700">Guarantor's Information</h3>
@@ -1088,7 +1085,6 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
         </div>
-
 
         <!-- Emergency Contact -->
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
@@ -1141,7 +1137,6 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
         </div>
-
 
         <!-- Major's Information Form -->
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
@@ -1310,7 +1305,7 @@ $study_experience = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
                                 <input type="text" class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                                    value="<?php echo htmlspecialchars($experience['institution']); ?>" />
+                                value="<?php echo htmlspecialchars($experience['institution']); ?>" />
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
