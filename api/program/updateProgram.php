@@ -9,7 +9,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 if (
     !isset($data['id']) ||
     !isset($data['name']) || empty(trim($data['name'])) ||
-    !isset($data['degreeType']) || empty(trim($data['degreeType']))
+    !isset($data['degreeType']) || empty($data['degreeType'])
 ) {
     http_response_code(400);
     echo json_encode([
@@ -45,7 +45,7 @@ try {
     );
     $duplicateStmt->execute([
         trim($data['name']),
-        trim($data['degreeType']),
+        $data['degreeType'],
         $data['id'],
         $data['id']
     ]);
@@ -67,7 +67,7 @@ try {
     );
     $success = $stmt->execute([
         trim($data['name']),
-        trim($data['degreeType']),
+        $data['degreeType'],
         $data['id']
     ]);
 

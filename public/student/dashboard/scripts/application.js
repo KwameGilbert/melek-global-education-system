@@ -1,21 +1,21 @@
+
 function loadApplications() {
-
     // Show loading state
-   const loadingToast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer);
-        toast.addEventListener('mouseleave', Swal.resumeTimer);
-    }
-});
+    const loadingToast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+        }
+    });
 
-loadingToast.fire({
-    title: 'Loading your Dashboard...',
-    timer: 3000,
-    timerProgressBar: true
-});
+    loadingToast.fire({
+        title: 'Loading your Dashboard...',
+        timer: 3000,
+        timerProgressBar: true
+    });
 
     document.getElementById('add-study-entry').addEventListener('click', function (event) {
         event.preventDefault(); // Prevent form submission
@@ -56,15 +56,7 @@ loadingToast.fire({
         // Append the cleared cloned entry to the container
         container.appendChild(newEntry);
     });
-
-
-
-
-
-
-
 }
-
 
 // Fetch schools by country
 async function fetchSchools() {
@@ -99,7 +91,6 @@ async function fetchSchools() {
     }
 }
 
-
 //Fetch Degrees By school
 async function fetchDegrees() {
     const schoolId = document.getElementById('school').value;
@@ -121,15 +112,14 @@ async function fetchDegrees() {
         if (degrees.length > 0) {
             degrees.forEach((degree) => {
                 const option = document.createElement('option');
-                option.value = degree.program_degree;
-                option.textContent = degree.program_degree;
+                option.value = degree.degree_id;
+                option.textContent = degree.degree_name;
                 degreeDropdown.appendChild(option);
             });
             degreeDropdown.disabled = false;
         }
     }
 }
-
 
 // Fetch programes based on school
 async function fetchPrograms() {
@@ -160,7 +150,6 @@ async function fetchPrograms() {
     }
 }
 
-
 // Show program duration
 function showDuration() {
     const programDropdown = document.getElementById('program');
@@ -173,6 +162,8 @@ function showDuration() {
         studyDuration.value = '';
     }
 }
+
+
 
 
 // //0246814884

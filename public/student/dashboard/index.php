@@ -6,6 +6,7 @@ session_start();
 
 // Check if the user is logged in by verifying session variables
 if (isset($_SESSION['student_id'])) {
+    
 } else {
     // Redirect to login if session is not set
     header('Location: ../login/');
@@ -66,7 +67,7 @@ if (isset($_SESSION['student_id'])) {
             <a href="#" data-page="application.php" class="flex items-center py-2.5 px-4 hover:bg-gray-700">
                 <i class="fas fa-folder-open mr-3"></i> Application
             </a>
-            <a href="#" data-page="payments.html" class="flex items-center py-2.5 px-4 hover:bg-gray-700">
+            <a href="#" data-page="payments.php" class="flex items-center py-2.5 px-4 hover:bg-gray-700">
                 <i class="fas fa-money-check-alt mr-3"></i> Payments
             </a>
             <a href="#" data-page="notices.html" class="flex items-center py-2.5 px-4 hover:bg-gray-700">

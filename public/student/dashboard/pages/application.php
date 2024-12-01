@@ -23,9 +23,24 @@ $workStmt = $conn->prepare("SELECT * FROM `work_history` WHERE application_id = 
 $workStmt->execute([$_SESSION['application_id']]);
 $work_history = $workStmt->fetchAll(PDO::FETCH_ASSOC);
 
-$majorStmt = $conn->prepare("SELECT * FROM `country`");
-$majorStmt->execute();
-$major_countries = $majorStmt->fetchAll(PDO::FETCH_ASSOC);
+$majorCountryStmt = $conn->prepare("SELECT country_id, country_name FROM `country`");
+$majorCountryStmt->execute();
+$major_countries = $majorCountryStmt->fetchAll(PDO::FETCH_ASSOC);
+
+$majorSchoolStmt = $conn->prepare("SELECT school_id, school_name FROM `school`");
+$majorSchoolStmt->execute();
+$major_schools = $majorSchoolStmt->fetchAll(PDO::FETCH_ASSOC);
+
+$majorDegreeStmt = $conn->prepare("SELECT degree_id, degree_name FROM `degree`");
+$majorDegreeStmt->execute();
+$major_degrees = $majorDegreeStmt->fetchAll(PDO::FETCH_ASSOC);
+
+$majorProgramStmt = $conn->prepare("SELECT program_id, program_name, program_duration FROM `program`");
+$majorProgramStmt->execute();
+$major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+
 ?>
 
 <style>
@@ -1146,48 +1161,80 @@ $major_countries = $majorStmt->fetchAll(PDO::FETCH_ASSOC);
         <!-- Major's Information Form -->
         <div class="form-section p-4 bg-gray-100 rounded-lg shadow-md mt-6">
             <h3 class="text-xl font-bold mb-4 text-gray-700">Major's Information</h3>
+            <p class="text-gray-600 mb-4">
+                Please select your desired Country -> School -> Degree -> Program.
+            </p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Country -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Country *</label>
-                    <!-- Country -->
                     <select id="country" onchange="fetchSchools()" class="w-full p-3 border border-gray-300 rounded-md">
                         <option value="">Select a country</option>
                         <?php foreach ($major_countries as $country): ?>
-                            <option value="<?php echo $country['country_id']; ?>"><?php echo $country['country_name']; ?></option>
+                            <option value="<?php echo $country['country_id']; ?>"
+                                <?php echo isset($application['major_country']) && $application['major_country'] == $country['country_id'] ? 'selected' : ''; ?>>
+                                <?php echo $country['country_name']; ?>
+                            </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
+
                 <!-- School -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">School *</label>
-                    <!-- School -->
-                    <select id="school" onchange="fetchDegrees()" class="w-full p-3 border border-gray-300 rounded-md" disabled>
+                    <select id="school" onchange="fetchDegrees()" class="w-full p-3 border border-gray-300 rounded-md"
+                        <?php echo isset($$application['major_school']) ? '' : 'disabled'; ?>>
                         <option value="">Select a school</option>
+                        <?php if (isset($major_schools)): ?>
+                            <?php foreach ($major_schools as $school): ?>
+                                <option value="<?php echo $school['school_id']; ?>"
+                                    <?php echo isset($application['major_school']) && $application['major_school'] == $school['school_id'] ? 'selected' : ''; ?>>
+                                    <?php echo $school['school_name']; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </select>
                 </div>
+
                 <!-- Degree -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
-                    <!-- Degree -->
-                    <select id="degree" onchange="fetchPrograms()" class="w-full p-3 border border-gray-300 rounded-md" disabled>
+                    <select id="degree" onchange="fetchPrograms()" class="w-full p-3 border border-gray-300 rounded-md"
+                        <?php echo isset($application['major_degree']) ? '' : 'disabled'; ?>>
                         <option value="">Select a degree</option>
+                        <?php if (isset($major_degrees)): ?>
+                            <?php foreach ($major_degrees as $degree): ?>
+                                <option value="<?php echo $degree['degree_id']; ?>"
+                                    <?php echo isset($application['major_degree']) && $application['major_degree'] == $degree['degree_id'] ? 'selected' : ''; ?>>
+                                    <?php echo $degree['degree_name']; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </select>
                 </div>
+
                 <!-- Program -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Program *</label>
-                    <!-- Program -->
-                    <select id="program" onchange="showDuration()" class="w-full p-3 border border-gray-300 rounded-md" disabled>
+                    <select id="program" onchange="showDuration()" class="w-full p-3 border border-gray-300 rounded-md"
+                        <?php echo isset($application['major_program']) ? '' : 'disabled'; ?>>
                         <option value="">Select a program</option>
+                        <?php if (isset($major_programs)): ?>
+                            <?php foreach ($major_programs as $program): ?>
+                                <option value="<?php echo $program['program_id']; ?>"
+                                    <?php echo isset($application['major_program']) && $application['major_program'] == $program['program_id'] ? 'selected' : ''; ?>>
+                                    <?php echo $program['program_name']; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </select>
                 </div>
+
                 <!-- Study Duration -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Study Duration *</label>
-
-                    <!-- Study Duration -->
-                    <input type="text" id="study-duration" class="w-full p-3 border border-gray-300 rounded-md" readonly />
+                    <input type="text" id="study-duration" class="w-full p-3 border border-gray-300 rounded-md"
+                        value="<?php echo isset($application['major_program']) ? $major_programs[array_search($application['major_program'], array_column($major_programs, 'program_id'))]['program_duration'] : ''; ?>" readonly />
                 </div>
             </div>
         </div>

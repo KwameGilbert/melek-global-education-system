@@ -13,14 +13,18 @@ try {
             c.country_name AS country_name,
             s.school_id AS school_id,
             s.school_name AS school_name,
+            s.application_cost AS application_cost,
             s.school_city AS school_city,
             p.program_id AS program_id,
             p.program_name AS program_name,
-            p.program_degree AS program_degree
+            p.program_degree AS program_degree,
+            d.degree_id AS degree_id,
+            d.degree_name AS degree_name
         FROM country c
         LEFT JOIN school s ON c.country_id = s.country_id
         LEFT JOIN program p ON s.school_id = p.school_id
-        ORDER BY c.country_name, s.school_name, p.program_name
+        LEFT JOIN degree d ON p.program_degree = d.degree_id
+        ORDER BY c.country_name, s.school_name, p.program_name, d.degree_name
     ";
 
     $stmt = $conn->prepare($query);
@@ -30,6 +34,7 @@ try {
     // Initialize arrays
     $countries = [];
     $schools = [];
+    $degrees = [];
     $programs = [];
 
     // Process results
@@ -48,10 +53,18 @@ try {
                 'id' => $row['school_id'],
                 'name' => $row['school_name'],
                 'city' => $row['school_city'],
+                'applicationCost' => $row['application_cost'],
                 'country_id' => $row['country_id']
             ];
         }
 
+         if ($row['degree_id'] && !isset($degrees[$row['degree_id']])) {
+            $degrees[$row['degree_id']] = [
+                'id' => $row['degree_id'],
+                'name' => $row['degree_name']
+            ];
+        }
+        
         // Add program if not exists and if program data exists
         if ($row['program_id'] && !isset($programs[$row['program_id']])) {
             $programs[$row['program_id']] = [
@@ -68,6 +81,7 @@ try {
         'success' => true,
         'countries' => array_values($countries),
         'schools' => array_values($schools),
+        'degrees' => array_values($degrees),
         'programs' => array_values($programs)
     ];
 

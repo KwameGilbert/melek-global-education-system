@@ -9,12 +9,13 @@ $data = json_decode(file_get_contents('php://input'), true);
 if (
     !isset($data['name']) || empty(trim($data['name'])) ||
     !isset($data['city']) || empty(trim($data['city'])) ||
+    !isset($data['applicationCost']) || empty(($data['applicationCost'])) ||
     !isset($data['country_id']) || empty($data['country_id'])
 ) {
     http_response_code(400);
     echo json_encode([
         'success' => false,
-        'message' => 'School name, city, and country are required'
+        'message' => 'School name, city, application cost and country are required'
     ]);
     exit;
 }
@@ -54,10 +55,11 @@ try {
     }
 
     // Insert new school
-    $stmt = $conn->prepare("INSERT INTO school (school_name, school_city, country_id) VALUES (?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO school (school_name, school_city, application_cost, country_id) VALUES (?, ?, ?, ?)");
     $success = $stmt->execute([
         trim($data['name']),
         trim($data['city']),
+        $data['applicationCost'],
         $data['country_id']
     ]);
 

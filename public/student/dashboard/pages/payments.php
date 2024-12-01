@@ -1,6 +1,9 @@
 
     <div class="container mx-auto p-6 max-w-lg bg-white rounded-lg shadow-lg mt-12">
         <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Complete Your Payment</h2>
+       
+        
+
         <p class="text-gray-600 text-center mb-8">Select a payment method and provide the necessary details to complete
             your transaction.</p>
 

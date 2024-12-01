@@ -9,12 +9,13 @@ $data = json_decode(file_get_contents('php://input'), true);
 if (
     !isset($data['id']) ||
     !isset($data['name']) || empty(trim($data['name'])) ||
+    !isset($data['applicationCost']) || empty(($data['applicationCost'])) ||
     !isset($data['city']) || empty(trim($data['city']))
 ) {
     http_response_code(400);
     echo json_encode([
         'success' => false,
-        'message' => 'School ID, name, and city are required'
+        'message' => 'School ID, name, application cost and city are required'
     ]);
     exit;
 }
@@ -60,12 +61,13 @@ try {
     // Update school
     $stmt = $conn->prepare(
         "UPDATE school 
-        SET school_name = ?, school_city = ? 
+        SET school_name = ?, school_city = ?, application_cost = ?
         WHERE school_id = ?"
     );
     $success = $stmt->execute([
         trim($data['name']),
         trim($data['city']),
+        $data['applicationCost'],
         $data['id']
     ]);
 

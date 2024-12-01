@@ -2,6 +2,7 @@
 let globalData = {
     countries: [],
     schools: [],
+    degrees: [],
     programs: []
 };
 
@@ -53,6 +54,7 @@ function renderSchoolList() {
         <div>
           <span id="school-${school.id}">${school.name}</span>
           <span class="text-sm text-gray-500"> - ${school.city}, ${country?.name || 'Unknown'}</span>
+          <span class="block text-sm text-green-600 mt-1">Application Cost: $${parseFloat(school.applicationCost).toFixed(2)}</span>
         </div>
         <div class="space-x-2">
           <button onclick="editSchool(${school.id})" class="text-blue-600 hover:text-blue-800">
@@ -67,28 +69,37 @@ function renderSchoolList() {
     }).join('');
 }
 
+
 function renderProgramList() {
     const list = document.getElementById('programList');
+
     list.innerHTML = globalData.programs.map(program => {
         const school = globalData.schools.find(s => s.id === program.school_id);
+        const degree = globalData.degrees.find(d => d.id === program.degree);
+
         return `
-      <li class="py-4 flex justify-between items-center">
-        <div>
-          <span id="program-${program.id}">${program.degree} ${program.name}</span>
-          <span class="text-sm text-gray-500"> - ${school?.name || 'Unknown'}</span>
-        </div>
-        <div class="space-x-2">
-          <button onclick="editProgram(${program.id})" class="text-blue-600 hover:text-blue-800">
-            <i class="fas fa-edit"></i>
-          </button>
-          <button onclick="deleteProgram(${program.id})" class="text-red-600 hover:text-red-800">
-            <i class="fas fa-trash"></i>
-          </button>
-        </div>
-      </li>
-    `;
+            <li class="py-4 flex justify-between items-center">
+                <div>
+                    <span id="program-${program.id}">
+                        ${degree?.name || 'Unknown Degree'} . ${program.name}
+                    </span>
+                    <span class="text-sm text-gray-500">
+                        - ${school?.name || 'Unknown School'}
+                    </span>
+                </div>
+                <div class="space-x-2">
+                    <button onclick="editProgram(${program.id})" class="text-blue-600 hover:text-blue-800">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button onclick="deleteProgram(${program.id})" class="text-red-600 hover:text-red-800">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </li>
+        `;
     }).join('');
 }
+
 
 function renderAllLists() {
     renderCountryList();
@@ -98,20 +109,39 @@ function renderAllLists() {
 
 // Populate dropdowns
 function populateDropdowns() {
-    // Populate country dropdown
-    const countrySelect = document.getElementById('selectCountry');
-    countrySelect.innerHTML = '<option value="">Select Country</option>' +
-        globalData.countries.map(country =>
-            `<option value="${country.id}">${country.name}</option>`
-        ).join('');
+    try {
+        // Populate country dropdown
+        const countrySelect = document.getElementById('selectCountry');
+        countrySelect.innerHTML = '<option value="">Select Country</option>' +
+            globalData.countries.map(country =>
+                `<option value="${country.id}">${country.name}</option>`
+            ).join('');
 
-    // Populate school dropdown
-    const schoolSelect = document.getElementById('selectSchool');
-    schoolSelect.innerHTML = '<option value="">Select School</option>' +
-        globalData.schools.map(school =>
-            `<option value="${school.id}">${school.name}</option>`
-        ).join('');
+        // Populate school dropdown
+        const schoolSelect = document.getElementById('selectSchool');
+        schoolSelect.innerHTML = '<option value="">Select School</option>' +
+            globalData.schools.map(school =>
+                `<option value="${school.id}">${school.name}</option>`
+            ).join('');
+
+        // Populate degree dropdown
+        const degreeSelect = document.getElementById('degreeType');
+        degreeSelect.innerHTML = '<option value="">Select Degree Type</option>' +
+            globalData.degrees.map(degree =>
+                `<option value="${degree.id}">${degree.name}</option>`
+            ).join('');
+
+        console.log('Dropdowns populated successfully.');
+    } catch (error) {
+        console.error('Error populating dropdowns:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Failed to populate dropdowns!',
+        });
+    }
 }
+
 
 // Add functions
 function addCountry() {
@@ -148,13 +178,15 @@ function addCountry() {
 function addSchool() {
     const nameInput = document.getElementById('schoolName');
     const cityInput = document.getElementById('schoolCity');
+    const applicationCostInput = document.getElementById('applicationCost');
     const countrySelect = document.getElementById('selectCountry');
-
+    
     const name = nameInput.value.trim();
     const city = cityInput.value.trim();
+    const applicationCost = parseFloat(applicationCostInput.value);
     const country_id = countrySelect.value;
 
-    if (!name || !city || !country_id) {
+    if (!name || !city || applicationCost === '' || !country_id) {
         Swal.fire({
             icon: 'error',
             title: 'Error!',
@@ -166,7 +198,12 @@ function addSchool() {
     fetch('../../../api/school/addSchool.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, city, country_id })
+        body: JSON.stringify({ 
+            name, 
+            city,
+            applicationCost,
+            country_id
+        })
     })
         .then(response => response.json())
         .then(data => {
@@ -179,6 +216,7 @@ function addSchool() {
                 fetchAllData();
                 nameInput.value = '';
                 cityInput.value = '';
+                applicationCostInput.value = '';
                 countrySelect.value = '';
             } else {
                 Swal.fire({
@@ -315,6 +353,7 @@ function editSchool(id) {
         html: `
             <input id="swal-school-name" class="swal2-input" placeholder="School Name" value="${school.name}">
             <input id="swal-school-city" class="swal2-input" placeholder="City" value="${school.city}">
+            <input id="swal-application-cost" type="number" class="swal2-input" placeholder="Application Cost" value="${school.applicationCost}">
         `,
         showCancelButton: true,
         confirmButtonText: 'Update',
@@ -322,15 +361,21 @@ function editSchool(id) {
         preConfirm: () => {
             const newName = document.getElementById('swal-school-name').value;
             const newCity = document.getElementById('swal-school-city').value;
-            if (!newName || !newCity) {
+            const newCost = document.getElementById('swal-application-cost').value;
+
+            if (!newName || !newCity || newCost === '') {
                 Swal.showValidationMessage('Please fill in all fields');
                 return false;
             }
-            if (newName === school.name && newCity === school.city) {
+            if (
+                newName === school.name &&
+                newCity === school.city &&
+                parseFloat(newCost) === parseFloat(school.applicationCost)
+            ) {
                 Swal.showValidationMessage('Please make changes before updating');
                 return false;
             }
-            return { newName, newCity };
+            return { newName, newCity, newCost };
         }
     }).then((result) => {
         if (result.isConfirmed) {
@@ -340,7 +385,8 @@ function editSchool(id) {
                 body: JSON.stringify({
                     id,
                     name: result.value.newName,
-                    city: result.value.newCity
+                    city: result.value.newCity,
+                    applicationCost: parseFloat(result.value.newCost) // Ensure it's a numeric value
                 })
             })
                 .then(response => response.json())
@@ -372,17 +418,19 @@ function editSchool(id) {
     });
 }
 
+
 function editProgram(id) {
     const program = globalData.programs.find(p => p.id === id);
+    const degrees = globalData.degrees; // Fetch degrees dynamically
 
     Swal.fire({
         title: 'Edit Program',
         html: `
             <input id="swal-program-name" class="swal2-input" placeholder="Program Name" value="${program.name}">
             <select id="swal-program-degree" class="swal2-input" style="border: 1px solid #d9d9d9;">
-                <option value="BSc" ${program.degree === 'BSc' ? 'selected' : ''}>BSc</option>
-                <option value="MSc" ${program.degree === 'MSc' ? 'selected' : ''}>MSc</option>
-                <option value="PhD" ${program.degree === 'PhD' ? 'selected' : ''}>PhD</option>
+                ${degrees.map(degree => `
+                    <option value="${degree.id}" ${program.degree === degree.id ? 'selected' : ''}>${degree.name}</option>
+                `).join('')}
             </select>
         `,
         showCancelButton: true,
@@ -395,7 +443,7 @@ function editProgram(id) {
                 Swal.showValidationMessage('Please fill in all fields');
                 return false;
             }
-            if (newName === program.name && newDegree === program.degree) {
+            if (newName === program.name && parseInt(newDegree) === program.degree) {
                 Swal.showValidationMessage('Please make changes before updating');
                 return false;
             }
@@ -409,7 +457,7 @@ function editProgram(id) {
                 body: JSON.stringify({
                     id,
                     name: result.value.newName,
-                    degreeType: result.value.newDegree
+                    degreeType: parseInt(result.value.newDegree) // Ensure degree ID is sent as an integer
                 })
             })
                 .then(response => response.json())
@@ -420,7 +468,7 @@ function editProgram(id) {
                             title: 'Success!',
                             text: data.message
                         });
-                        fetchAllData();
+                        fetchAllData(); // Refresh the program data
                     } else {
                         Swal.fire({
                             icon: 'error',
@@ -440,6 +488,8 @@ function editProgram(id) {
         }
     });
 }
+
+
 
 // Delete functions
 function deleteCountry(id) {
@@ -579,22 +629,22 @@ function deleteProgram(id) {
 
 function initializeSchoolsPage() {
 
-     // Show loading state
-   const loadingToast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer);
-        toast.addEventListener('mouseleave', Swal.resumeTimer);
-    }
-});
+    // Show loading state
+    const loadingToast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+        }
+    });
 
-loadingToast.fire({
-    title: 'Loading your Schools and Programs...',
-    timer: 2000,
-    timerProgressBar: true
-});
+    loadingToast.fire({
+        title: 'Loading your Schools and Programs...',
+        timer: 2000,
+        timerProgressBar: true
+    });
 
     // Initial data load
     fetchAllData();

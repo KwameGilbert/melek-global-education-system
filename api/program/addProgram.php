@@ -8,7 +8,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 // Validate input
 if (
     !isset($data['name']) || empty(trim($data['name'])) ||
-    !isset($data['degreeType']) || empty(trim($data['degreeType'])) ||
+    !isset($data['degreeType']) || empty($data['degreeType']) ||
     !isset($data['school_id']) || empty($data['school_id'])
 ) {
     http_response_code(400);
@@ -27,7 +27,7 @@ try {
     $checkStmt = $conn->prepare("SELECT program_id FROM program WHERE program_name = ? AND program_degree = ? AND school_id = ?");
     $checkStmt->execute([
         trim($data['name']),
-        trim($data['degreeType']),
+        $data['degreeType'],
         $data['school_id']
     ]);
 
@@ -57,7 +57,7 @@ try {
     $stmt = $conn->prepare("INSERT INTO program (program_name, program_degree, school_id) VALUES (?, ?, ?)");
     $success = $stmt->execute([
         trim($data['name']),
-        trim($data['degreeType']),
+        $data['degreeType'],
         $data['school_id']
     ]);
 
