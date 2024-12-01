@@ -1,3 +1,5 @@
 fontawesome
 vendor
 node_modules
+.vscode
+.env

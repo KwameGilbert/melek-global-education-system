@@ -12,7 +12,7 @@ function loadApplications() {
     });
 
     loadingToast.fire({
-        title: 'Loading your Dashboard...',
+        title: 'Loading your application form...',
         timer: 3000,
         timerProgressBar: true
     });

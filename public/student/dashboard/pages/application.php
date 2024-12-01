@@ -126,7 +126,8 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Date of Birth *</label>
                     <input type="date" id="dob"
-                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" 
+                        value='<?php echo $application['dob'] ?>'/>
                 </div>
                 <!-- Religion -->
                 <div>
