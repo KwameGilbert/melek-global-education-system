@@ -1,4 +1,3 @@
-
 function loadApplications() {
     // Show loading state
     const loadingToast = Swal.mixin({
@@ -164,6 +163,38 @@ function showDuration() {
 }
 
 
+function saveApplication(event) {
+    event.preventDefault();
+    const form = document.getElementById('application-form');
+    const formData = new FormData(form);
+    const formDataObj = {};
+    formData.forEach((value, key) => {
+        formDataObj[key] = value;
+    });
 
+    console.log(JSON.stringify(formDataObj));
+
+    fetch('../../../api/application_form/save_application.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Application submitted successfully',
+                    text: data.message
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Application submission failed',
+                    text: data.message
+                });
+            }
+        })
+
+}
 
 // //0246814884

@@ -39,7 +39,202 @@ $majorProgramStmt = $conn->prepare("SELECT program_id, program_name, program_dur
 $majorProgramStmt->execute();
 $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
 
-
+$countries = [
+    "Afghanistan",
+    "Albania",
+    "Algeria",
+    "Andorra",
+    "Angola",
+    "Antigua and Barbuda",
+    "Argentina",
+    "Armenia",
+    "Australia",
+    "Austria",
+    "Azerbaijan",
+    "Bahamas",
+    "Bahrain",
+    "Bangladesh",
+    "Barbados",
+    "Belarus",
+    "Belgium",
+    "Belize",
+    "Benin",
+    "Bhutan",
+    "Bolivia",
+    "Bosnia and Herzegovina",
+    "Botswana",
+    "Brazil",
+    "Brunei",
+    "Bulgaria",
+    "Burkina Faso",
+    "Burundi",
+    "Cabo Verde",
+    "Cambodia",
+    "Cameroon",
+    "Canada",
+    "Central African Republic",
+    "Chad",
+    "Chile",
+    "China",
+    "Colombia",
+    "Comoros",
+    "Congo (Congo-Brazzaville)",
+    "Congo (DRC)",
+    "Costa Rica",
+    "Croatia",
+    "Cuba",
+    "Cyprus",
+    "Czechia (Czech Republic)",
+    "Denmark",
+    "Djibouti",
+    "Dominica",
+    "Dominican Republic",
+    "Ecuador",
+    "Egypt",
+    "El Salvador",
+    "Equatorial Guinea",
+    "Eritrea",
+    "Estonia",
+    "Eswatini",
+    "Ethiopia",
+    "Fiji",
+    "Finland",
+    "France",
+    "Gabon",
+    "Gambia",
+    "Georgia",
+    "Germany",
+    "Ghana",
+    "Greece",
+    "Grenada",
+    "Guatemala",
+    "Guinea",
+    "Guinea-Bissau",
+    "Guyana",
+    "Haiti",
+    "Honduras",
+    "Hungary",
+    "Iceland",
+    "India",
+    "Indonesia",
+    "Iran",
+    "Iraq",
+    "Ireland",
+    "Israel",
+    "Italy",
+    "Jamaica",
+    "Japan",
+    "Jordan",
+    "Kazakhstan",
+    "Kenya",
+    "Kiribati",
+    "Kuwait",
+    "Kyrgyzstan",
+    "Laos",
+    "Latvia",
+    "Lebanon",
+    "Lesotho",
+    "Liberia",
+    "Libya",
+    "Liechtenstein",
+    "Lithuania",
+    "Luxembourg",
+    "Madagascar",
+    "Malawi",
+    "Malaysia",
+    "Maldives",
+    "Mali",
+    "Malta",
+    "Marshall Islands",
+    "Mauritania",
+    "Mauritius",
+    "Mexico",
+    "Micronesia",
+    "Moldova",
+    "Monaco",
+    "Mongolia",
+    "Montenegro",
+    "Morocco",
+    "Mozambique",
+    "Myanmar (Burma)",
+    "Namibia",
+    "Nauru",
+    "Nepal",
+    "Netherlands",
+    "New Zealand",
+    "Nicaragua",
+    "Niger",
+    "Nigeria",
+    "North Korea",
+    "North Macedonia",
+    "Norway",
+    "Oman",
+    "Pakistan",
+    "Palau",
+    "Panama",
+    "Papua New Guinea",
+    "Paraguay",
+    "Peru",
+    "Philippines",
+    "Poland",
+    "Portugal",
+    "Qatar",
+    "Romania",
+    "Russia",
+    "Rwanda",
+    "Saint Kitts and Nevis",
+    "Saint Lucia",
+    "Saint Vincent and the Grenadines",
+    "Samoa",
+    "San Marino",
+    "Sao Tome and Principe",
+    "Saudi Arabia",
+    "Senegal",
+    "Serbia",
+    "Seychelles",
+    "Sierra Leone",
+    "Singapore",
+    "Slovakia",
+    "Slovenia",
+    "Solomon Islands",
+    "Somalia",
+    "South Africa",
+    "South Korea",
+    "South Sudan",
+    "Spain",
+    "Sri Lanka",
+    "Sudan",
+    "Suriname",
+    "Sweden",
+    "Switzerland",
+    "Syria",
+    "Taiwan",
+    "Tajikistan",
+    "Tanzania",
+    "Thailand",
+    "Timor-Leste",
+    "Togo",
+    "Tonga",
+    "Trinidad and Tobago",
+    "Tunisia",
+    "Turkey",
+    "Turkmenistan",
+    "Tuvalu",
+    "Uganda",
+    "Ukraine",
+    "United Arab Emirates",
+    "United Kingdom",
+    "United States of America",
+    "Uruguay",
+    "Uzbekistan",
+    "Vanuatu",
+    "Vatican City",
+    "Venezuela",
+    "Vietnam",
+    "Yemen",
+    "Zambia",
+    "Zimbabwe"
+];
 
 ?>
 
@@ -54,7 +249,7 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!-- Save and Submit Buttons -->
 <div class="sticky top-0 bg-white z-10 flex justify-end space-x-2 py-2 w-full">
-    <button id="save-btn" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+    <button id="save-btn" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600" onclick="saveApplication(event)">
         Save
     </button>
     <button id="submit-btn" class="bg-gray-300 text-white py-2 px-4 rounded cursor-not-allowed" disabled>
@@ -63,7 +258,6 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 <!-- Form Heading -->
 <div class="container mx-auto">
-
     <!-- Application Form -->
     <form id="application-form" class="bg-white py-4 rounded" method="POST">
         <h2 class="text-2xl font-bold text-center">Application Form</h2>
@@ -74,16 +268,15 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Family Name -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Family Name *</label>
-                    <input type="text" id="family-name"
+                    <label class="block text-sm font-bold text-gray-700 mb-1" for="lname">Family Name *</label>
+                    <input type="text" id="family-name" name="lname"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-
                         value='<?php echo $application['lastname'] ?>' />
                 </div>
                 <!-- Given Name -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Given Name *</label>
-                    <input type="text" id="given-name"
+                    <label class="block text-sm font-bold text-gray-700 mb-1" for="fname">Given Name *</label>
+                    <input type="text" id="given-name" name="fname"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
 
                         value="<?php echo $application['firstname'] ?>" />
@@ -91,7 +284,7 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
                 <!-- Gender -->
                 <div>
                     <label for="gender" class="block text-sm font-bold text-gray-700 mb-1">Gender:</label>
-                    <select id="gender"
+                    <select id="gender" name="gender"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
                         <option value="">Select</option>
                         <option value="Male" <?php echo $application['gender'] == 'Male' ? 'selected' : '' ?>>Male</option>
@@ -101,19 +294,19 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <!-- Passport Size Photo -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Upload Passport Size Photo *</label>
-                    <input type="file" id="passport-photo" accept="image" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                    <label class="block text-sm font-bold text-gray-700 mb-1" for="passport">Upload Passport Size Photo *</label>
+                    <input type="file" id="passport-photo" name="passport" accept="image" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                 </div>
                 <!-- Nationality -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Nationality *</label>
+                    <label class="block text-sm font-bold text-gray-700 mb-1" for="nationality">Nationality *</label>
                     <input type="text" name="nationality" id="nationality" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo $application['nationality'] ?>" />
                 </div>
                 <!-- Marital Status -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Marital Status *</label>
-                    <select id="marital-status"
+                    <label class="block text-sm font-bold text-gray-700 mb-1" for="marital-status">Marital Status *</label>
+                    <select id="marital-status" name="marital-status"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
                         <option value="">Select</option>
                         <option value="single" <?php echo isset($application['marital_status']) && $application['marital_status'] == 'Single' ? 'selected' : ''; ?>>Single</option>
@@ -124,15 +317,15 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <!-- Date of Birth -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Date of Birth *</label>
-                    <input type="date" id="dob"
-                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" 
-                        value='<?php echo $application['dob'] ?>'/>
+                    <label class="block text-sm font-bold text-gray-700 mb-1" for="dob">Date of Birth *</label>
+                    <input type="date" id="dob" name="dob"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        value='<?php echo $application['dob'] ?>' />
                 </div>
                 <!-- Religion -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Religion *</label>
-                    <select id="religion" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
+                    <label class="block text-sm font-bold text-gray-700 mb-1" for="religion">Religion *</label>
+                    <select id="religion" name="religion" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
                         <option value="">Select</option>
                         <option value="Christianity" <?php echo isset($application['religion']) && $application['religion'] == 'Christianity' ? 'selected' : '' ?>>Christianity</option>
                         <option value="Islam" <?php echo isset($application['religion']) && $application['religion'] == 'Islam' ? 'selected' : '' ?>>Islam</option>
@@ -149,209 +342,11 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- Country of Birth -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Country of Birth *</label>
-                    <select id="country-birth"
+                    <label class="block text-sm font-bold text-gray-700 mb-1" for="country_of_birth">Country of Birth *</label>
+                    <select id="country-birth" name="country_of_birth"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
                         <option value="">Select</option>
                         <?php
-                        // Array of countries
-                        $countries = [
-                            "Afghanistan",
-                            "Albania",
-                            "Algeria",
-                            "Andorra",
-                            "Angola",
-                            "Antigua and Barbuda",
-                            "Argentina",
-                            "Armenia",
-                            "Australia",
-                            "Austria",
-                            "Azerbaijan",
-                            "Bahamas",
-                            "Bahrain",
-                            "Bangladesh",
-                            "Barbados",
-                            "Belarus",
-                            "Belgium",
-                            "Belize",
-                            "Benin",
-                            "Bhutan",
-                            "Bolivia",
-                            "Bosnia and Herzegovina",
-                            "Botswana",
-                            "Brazil",
-                            "Brunei",
-                            "Bulgaria",
-                            "Burkina Faso",
-                            "Burundi",
-                            "Cabo Verde",
-                            "Cambodia",
-                            "Cameroon",
-                            "Canada",
-                            "Central African Republic",
-                            "Chad",
-                            "Chile",
-                            "China",
-                            "Colombia",
-                            "Comoros",
-                            "Congo (Congo-Brazzaville)",
-                            "Congo (DRC)",
-                            "Costa Rica",
-                            "Croatia",
-                            "Cuba",
-                            "Cyprus",
-                            "Czechia (Czech Republic)",
-                            "Denmark",
-                            "Djibouti",
-                            "Dominica",
-                            "Dominican Republic",
-                            "Ecuador",
-                            "Egypt",
-                            "El Salvador",
-                            "Equatorial Guinea",
-                            "Eritrea",
-                            "Estonia",
-                            "Eswatini",
-                            "Ethiopia",
-                            "Fiji",
-                            "Finland",
-                            "France",
-                            "Gabon",
-                            "Gambia",
-                            "Georgia",
-                            "Germany",
-                            "Ghana",
-                            "Greece",
-                            "Grenada",
-                            "Guatemala",
-                            "Guinea",
-                            "Guinea-Bissau",
-                            "Guyana",
-                            "Haiti",
-                            "Honduras",
-                            "Hungary",
-                            "Iceland",
-                            "India",
-                            "Indonesia",
-                            "Iran",
-                            "Iraq",
-                            "Ireland",
-                            "Israel",
-                            "Italy",
-                            "Jamaica",
-                            "Japan",
-                            "Jordan",
-                            "Kazakhstan",
-                            "Kenya",
-                            "Kiribati",
-                            "Kuwait",
-                            "Kyrgyzstan",
-                            "Laos",
-                            "Latvia",
-                            "Lebanon",
-                            "Lesotho",
-                            "Liberia",
-                            "Libya",
-                            "Liechtenstein",
-                            "Lithuania",
-                            "Luxembourg",
-                            "Madagascar",
-                            "Malawi",
-                            "Malaysia",
-                            "Maldives",
-                            "Mali",
-                            "Malta",
-                            "Marshall Islands",
-                            "Mauritania",
-                            "Mauritius",
-                            "Mexico",
-                            "Micronesia",
-                            "Moldova",
-                            "Monaco",
-                            "Mongolia",
-                            "Montenegro",
-                            "Morocco",
-                            "Mozambique",
-                            "Myanmar (Burma)",
-                            "Namibia",
-                            "Nauru",
-                            "Nepal",
-                            "Netherlands",
-                            "New Zealand",
-                            "Nicaragua",
-                            "Niger",
-                            "Nigeria",
-                            "North Korea",
-                            "North Macedonia",
-                            "Norway",
-                            "Oman",
-                            "Pakistan",
-                            "Palau",
-                            "Panama",
-                            "Papua New Guinea",
-                            "Paraguay",
-                            "Peru",
-                            "Philippines",
-                            "Poland",
-                            "Portugal",
-                            "Qatar",
-                            "Romania",
-                            "Russia",
-                            "Rwanda",
-                            "Saint Kitts and Nevis",
-                            "Saint Lucia",
-                            "Saint Vincent and the Grenadines",
-                            "Samoa",
-                            "San Marino",
-                            "Sao Tome and Principe",
-                            "Saudi Arabia",
-                            "Senegal",
-                            "Serbia",
-                            "Seychelles",
-                            "Sierra Leone",
-                            "Singapore",
-                            "Slovakia",
-                            "Slovenia",
-                            "Solomon Islands",
-                            "Somalia",
-                            "South Africa",
-                            "South Korea",
-                            "South Sudan",
-                            "Spain",
-                            "Sri Lanka",
-                            "Sudan",
-                            "Suriname",
-                            "Sweden",
-                            "Switzerland",
-                            "Syria",
-                            "Taiwan",
-                            "Tajikistan",
-                            "Tanzania",
-                            "Thailand",
-                            "Timor-Leste",
-                            "Togo",
-                            "Tonga",
-                            "Trinidad and Tobago",
-                            "Tunisia",
-                            "Turkey",
-                            "Turkmenistan",
-                            "Tuvalu",
-                            "Uganda",
-                            "Ukraine",
-                            "United Arab Emirates",
-                            "United Kingdom",
-                            "United States of America",
-                            "Uruguay",
-                            "Uzbekistan",
-                            "Vanuatu",
-                            "Vatican City",
-                            "Venezuela",
-                            "Vietnam",
-                            "Yemen",
-                            "Zambia",
-                            "Zimbabwe"
-                        ];
-
                         $selectedCountry = $application['country_of_birth'] ?? '';
                         foreach ($countries as $country) {
                             // Check if the current country matches the selected country
@@ -364,21 +359,21 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- Occupation -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
-                    <input type="text" id="occupation" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" value="<?php echo htmlspecialchars($application['occupation'] ?? ''); ?>" />
+                    <label class="block text-sm font-bold text-gray-700 mb-1" for="occupation">Occupation *</label>
+                    <input type="text" id="occupation" name="occupation" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" value="<?php echo htmlspecialchars($application['occupation'] ?? ''); ?>" />
                 </div>
                 <!-- Place of Birth -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Place of Birth *</label>
-                    <input type="text" id="place-birth"
+                    <label class="block text-sm font-bold text-gray-700 mb-1" for="place_of_birth">Place of Birth *</label>
+                    <input type="text" id="place-birth" name="place_of_birth"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['place_of_birth'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
 
                 <!-- Employer or Institution Affiliated -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Employer or Institution Affiliated to *</label>
-                    <input type="text" id="employer"
+                    <label class="block text-sm font-bold text-gray-700 mb-1" for="employer">Employer or Institution Affiliated to *</label>
+                    <input type="text" id="employer" name="employer"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['affiliated_institution'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
@@ -387,14 +382,14 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Whether in China now? *</label>
                     <div class="flex space-x-4">
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="in-china" value="yes"
+                        <label class="inline-flex items-center" for="in_china_now">
+                            <input type="radio" name="in_china_now" value="yes"
                                 class="form-radio text-blue-400 focus:border-blue-400"
                                 <?php echo (isset($application['in_china_now']) && $application['in_china_now'] === 'Yes') ? 'checked' : ''; ?> />
                             <span class="ml-2">Yes</span>
                         </label>
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="in-china" value="no"
+                        <label class="inline-flex items-center" for="in_china_now">
+                            <input type="radio" name="in_china_now" value="no"
                                 class="form-radio text-blue-400 focus:border-blue-400"
                                 <?php echo (isset($application['in_china_now']) && $application['in_china_now'] === 'No') ? 'checked' : ''; ?> />
                             <span class="ml-2">No</span>
@@ -404,8 +399,8 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- Native Language -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Native Language *</label>
-                    <input type="text" id="native-language"
+                    <label class="block text-sm font-bold text-gray-700 mb-1" for="native_language">Native Language *</label>
+                    <input type="text" id="native-language" name="native_language"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['native_language'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
@@ -421,228 +416,32 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Detailed Address -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Detailed Address *</label>
-                    <input type="text" id="correspondence-detailed-address"
+                    <label for="correspondence_detailed_address" class="block text-sm font-bold text-gray-700 mb-1">Detailed Address *</label>
+                    <input type="text" id="correspondence_detailed_address" name="correspondence_detailed_address"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['correspondence_detailed_address'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- City/Province -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">City/Province *</label>
-                    <input type="text" id="correspondence-city-province"
+                    <label for="correspondence_city" class="block text-sm font-bold text-gray-700 mb-1">City/Province *</label>
+                    <input type="text" id="correspondence_city" name="correspondence_city"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['correspondence_city'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Zipcode -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Zipcode *</label>
-                    <input type="text" id="correspondence-zipcode"
+                    <label for="correspondence_zipcode" class="block text-sm font-bold text-gray-700 mb-1">Zipcode *</label>
+                    <input type="text" id="correspondence_zipcode" name="correspondence_zipcode"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['correspondence_zipcode'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Country of Correspondence -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Country *</label>
-                    <select id="country-correspondence"
+                    <label for="correspondence_country" class="block text-sm font-bold text-gray-700 mb-1">Country *</label>
+                    <select id="correspondence_country" name="correspondence_country"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
                         <option value="">Select</option>
                         <?php
-                        $countries = [
-                            "Afghanistan",
-                            "Albania",
-                            "Algeria",
-                            "Andorra",
-                            "Angola",
-                            "Antigua and Barbuda",
-                            "Argentina",
-                            "Armenia",
-                            "Australia",
-                            "Austria",
-                            "Azerbaijan",
-                            "Bahamas",
-                            "Bahrain",
-                            "Bangladesh",
-                            "Barbados",
-                            "Belarus",
-                            "Belgium",
-                            "Belize",
-                            "Benin",
-                            "Bhutan",
-                            "Bolivia",
-                            "Bosnia and Herzegovina",
-                            "Botswana",
-                            "Brazil",
-                            "Brunei",
-                            "Bulgaria",
-                            "Burkina Faso",
-                            "Burundi",
-                            "Cabo Verde",
-                            "Cambodia",
-                            "Cameroon",
-                            "Canada",
-                            "Central African Republic",
-                            "Chad",
-                            "Chile",
-                            "China",
-                            "Colombia",
-                            "Comoros",
-                            "Congo (Congo-Brazzaville)",
-                            "Congo (DRC)",
-                            "Costa Rica",
-                            "Croatia",
-                            "Cuba",
-                            "Cyprus",
-                            "Czechia (Czech Republic)",
-                            "Denmark",
-                            "Djibouti",
-                            "Dominica",
-                            "Dominican Republic",
-                            "Ecuador",
-                            "Egypt",
-                            "El Salvador",
-                            "Equatorial Guinea",
-                            "Eritrea",
-                            "Estonia",
-                            "Eswatini",
-                            "Ethiopia",
-                            "Fiji",
-                            "Finland",
-                            "France",
-                            "Gabon",
-                            "Gambia",
-                            "Georgia",
-                            "Germany",
-                            "Ghana",
-                            "Greece",
-                            "Grenada",
-                            "Guatemala",
-                            "Guinea",
-                            "Guinea-Bissau",
-                            "Guyana",
-                            "Haiti",
-                            "Honduras",
-                            "Hungary",
-                            "Iceland",
-                            "India",
-                            "Indonesia",
-                            "Iran",
-                            "Iraq",
-                            "Ireland",
-                            "Israel",
-                            "Italy",
-                            "Jamaica",
-                            "Japan",
-                            "Jordan",
-                            "Kazakhstan",
-                            "Kenya",
-                            "Kiribati",
-                            "Kuwait",
-                            "Kyrgyzstan",
-                            "Laos",
-                            "Latvia",
-                            "Lebanon",
-                            "Lesotho",
-                            "Liberia",
-                            "Libya",
-                            "Liechtenstein",
-                            "Lithuania",
-                            "Luxembourg",
-                            "Madagascar",
-                            "Malawi",
-                            "Malaysia",
-                            "Maldives",
-                            "Mali",
-                            "Malta",
-                            "Marshall Islands",
-                            "Mauritania",
-                            "Mauritius",
-                            "Mexico",
-                            "Micronesia",
-                            "Moldova",
-                            "Monaco",
-                            "Mongolia",
-                            "Montenegro",
-                            "Morocco",
-                            "Mozambique",
-                            "Myanmar (Burma)",
-                            "Namibia",
-                            "Nauru",
-                            "Nepal",
-                            "Netherlands",
-                            "New Zealand",
-                            "Nicaragua",
-                            "Niger",
-                            "Nigeria",
-                            "North Korea",
-                            "North Macedonia",
-                            "Norway",
-                            "Oman",
-                            "Pakistan",
-                            "Palau",
-                            "Panama",
-                            "Papua New Guinea",
-                            "Paraguay",
-                            "Peru",
-                            "Philippines",
-                            "Poland",
-                            "Portugal",
-                            "Qatar",
-                            "Romania",
-                            "Russia",
-                            "Rwanda",
-                            "Saint Kitts and Nevis",
-                            "Saint Lucia",
-                            "Saint Vincent and the Grenadines",
-                            "Samoa",
-                            "San Marino",
-                            "Sao Tome and Principe",
-                            "Saudi Arabia",
-                            "Senegal",
-                            "Serbia",
-                            "Seychelles",
-                            "Sierra Leone",
-                            "Singapore",
-                            "Slovakia",
-                            "Slovenia",
-                            "Solomon Islands",
-                            "Somalia",
-                            "South Africa",
-                            "South Korea",
-                            "South Sudan",
-                            "Spain",
-                            "Sri Lanka",
-                            "Sudan",
-                            "Suriname",
-                            "Sweden",
-                            "Switzerland",
-                            "Syria",
-                            "Taiwan",
-                            "Tajikistan",
-                            "Tanzania",
-                            "Thailand",
-                            "Timor-Leste",
-                            "Togo",
-                            "Tonga",
-                            "Trinidad and Tobago",
-                            "Tunisia",
-                            "Turkey",
-                            "Turkmenistan",
-                            "Tuvalu",
-                            "Uganda",
-                            "Ukraine",
-                            "United Arab Emirates",
-                            "United Kingdom",
-                            "United States of America",
-                            "Uruguay",
-                            "Uzbekistan",
-                            "Vanuatu",
-                            "Vatican City",
-                            "Venezuela",
-                            "Vietnam",
-                            "Yemen",
-                            "Zambia",
-                            "Zimbabwe"
-                        ];
                         foreach ($countries as $country) {
                             $selected = (isset($application['correspondence_country']) && $application['correspondence_country'] === $country) ? 'selected' : '';
                             echo "<option value=\"$country\" $selected>$country</option>";
@@ -652,15 +451,15 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <!-- Phone or Mobile -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Phone or Mobile *</label>
-                    <input type="tel" id="correspondence-phone"
+                    <label for="correspondence_phone" class="block text-sm font-bold text-gray-700 mb-1">Phone or Mobile *</label>
+                    <input type="tel" id="correspondence_phone" name="correspondence_phone"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['correspondence_phone'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Email Address -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Email Address *</label>
-                    <input type="email" id="correspondence-email"
+                    <label for="correspondence_email" class="block text-sm font-bold text-gray-700 mb-1">Email Address *</label>
+                    <input type="email" id="correspondence_email" name="correspondence_email"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['correspondence_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
@@ -673,228 +472,32 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Detailed Address -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Detailed Address *</label>
-                    <input type="text" id="current-detailed-address"
+                    <label for="applicant_detailed_address" class="block text-sm font-bold text-gray-700 mb-1">Detailed Address *</label>
+                    <input type="text" id="applicant_detailed_address" name="applicant_detailed_address"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['applicant_detailed_address'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- City/Province -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">City/Province *</label>
-                    <input type="text" id="current-city-province"
+                    <label for="applicant_city" class="block text-sm font-bold text-gray-700 mb-1">City/Province *</label>
+                    <input type="text" id="applicant_city" name="applicant_city"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['applicant_city'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Zipcode -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Zipcode *</label>
-                    <input type="text" id="current-zipcode"
+                    <label for="applicant_zipcode" class="block text-sm font-bold text-gray-700 mb-1">Zipcode *</label>
+                    <input type="text" id="applicant_zipcode" name="applicant_zipcode"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['applicant_zipcode'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Country of Current Address -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Country *</label>
-                    <select id="country-residence"
+                    <label for="applicant_country" class="block text-sm font-bold text-gray-700 mb-1">Country *</label>
+                    <select id="applicant_country" name="applicant_country"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
                         <option value="">Select</option>
                         <?php
-                        $countries = [
-                            "Afghanistan",
-                            "Albania",
-                            "Algeria",
-                            "Andorra",
-                            "Angola",
-                            "Antigua and Barbuda",
-                            "Argentina",
-                            "Armenia",
-                            "Australia",
-                            "Austria",
-                            "Azerbaijan",
-                            "Bahamas",
-                            "Bahrain",
-                            "Bangladesh",
-                            "Barbados",
-                            "Belarus",
-                            "Belgium",
-                            "Belize",
-                            "Benin",
-                            "Bhutan",
-                            "Bolivia",
-                            "Bosnia and Herzegovina",
-                            "Botswana",
-                            "Brazil",
-                            "Brunei",
-                            "Bulgaria",
-                            "Burkina Faso",
-                            "Burundi",
-                            "Cabo Verde",
-                            "Cambodia",
-                            "Cameroon",
-                            "Canada",
-                            "Central African Republic",
-                            "Chad",
-                            "Chile",
-                            "China",
-                            "Colombia",
-                            "Comoros",
-                            "Congo (Congo-Brazzaville)",
-                            "Congo (DRC)",
-                            "Costa Rica",
-                            "Croatia",
-                            "Cuba",
-                            "Cyprus",
-                            "Czechia (Czech Republic)",
-                            "Denmark",
-                            "Djibouti",
-                            "Dominica",
-                            "Dominican Republic",
-                            "Ecuador",
-                            "Egypt",
-                            "El Salvador",
-                            "Equatorial Guinea",
-                            "Eritrea",
-                            "Estonia",
-                            "Eswatini",
-                            "Ethiopia",
-                            "Fiji",
-                            "Finland",
-                            "France",
-                            "Gabon",
-                            "Gambia",
-                            "Georgia",
-                            "Germany",
-                            "Ghana",
-                            "Greece",
-                            "Grenada",
-                            "Guatemala",
-                            "Guinea",
-                            "Guinea-Bissau",
-                            "Guyana",
-                            "Haiti",
-                            "Honduras",
-                            "Hungary",
-                            "Iceland",
-                            "India",
-                            "Indonesia",
-                            "Iran",
-                            "Iraq",
-                            "Ireland",
-                            "Israel",
-                            "Italy",
-                            "Jamaica",
-                            "Japan",
-                            "Jordan",
-                            "Kazakhstan",
-                            "Kenya",
-                            "Kiribati",
-                            "Kuwait",
-                            "Kyrgyzstan",
-                            "Laos",
-                            "Latvia",
-                            "Lebanon",
-                            "Lesotho",
-                            "Liberia",
-                            "Libya",
-                            "Liechtenstein",
-                            "Lithuania",
-                            "Luxembourg",
-                            "Madagascar",
-                            "Malawi",
-                            "Malaysia",
-                            "Maldives",
-                            "Mali",
-                            "Malta",
-                            "Marshall Islands",
-                            "Mauritania",
-                            "Mauritius",
-                            "Mexico",
-                            "Micronesia",
-                            "Moldova",
-                            "Monaco",
-                            "Mongolia",
-                            "Montenegro",
-                            "Morocco",
-                            "Mozambique",
-                            "Myanmar (Burma)",
-                            "Namibia",
-                            "Nauru",
-                            "Nepal",
-                            "Netherlands",
-                            "New Zealand",
-                            "Nicaragua",
-                            "Niger",
-                            "Nigeria",
-                            "North Korea",
-                            "North Macedonia",
-                            "Norway",
-                            "Oman",
-                            "Pakistan",
-                            "Palau",
-                            "Panama",
-                            "Papua New Guinea",
-                            "Paraguay",
-                            "Peru",
-                            "Philippines",
-                            "Poland",
-                            "Portugal",
-                            "Qatar",
-                            "Romania",
-                            "Russia",
-                            "Rwanda",
-                            "Saint Kitts and Nevis",
-                            "Saint Lucia",
-                            "Saint Vincent and the Grenadines",
-                            "Samoa",
-                            "San Marino",
-                            "Sao Tome and Principe",
-                            "Saudi Arabia",
-                            "Senegal",
-                            "Serbia",
-                            "Seychelles",
-                            "Sierra Leone",
-                            "Singapore",
-                            "Slovakia",
-                            "Slovenia",
-                            "Solomon Islands",
-                            "Somalia",
-                            "South Africa",
-                            "South Korea",
-                            "South Sudan",
-                            "Spain",
-                            "Sri Lanka",
-                            "Sudan",
-                            "Suriname",
-                            "Sweden",
-                            "Switzerland",
-                            "Syria",
-                            "Taiwan",
-                            "Tajikistan",
-                            "Tanzania",
-                            "Thailand",
-                            "Timor-Leste",
-                            "Togo",
-                            "Tonga",
-                            "Trinidad and Tobago",
-                            "Tunisia",
-                            "Turkey",
-                            "Turkmenistan",
-                            "Tuvalu",
-                            "Uganda",
-                            "Ukraine",
-                            "United Arab Emirates",
-                            "United Kingdom",
-                            "United States of America",
-                            "Uruguay",
-                            "Uzbekistan",
-                            "Vanuatu",
-                            "Vatican City",
-                            "Venezuela",
-                            "Vietnam",
-                            "Yemen",
-                            "Zambia",
-                            "Zimbabwe"
-                        ];
                         foreach ($countries as $country) {
                             $selected = (isset($application['applicant_country']) && $application['applicant_country'] === $country) ? 'selected' : '';
                             echo "<option value=\"$country\" $selected>$country</option>";
@@ -904,15 +507,15 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <!-- Phone or Mobile -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Phone or Mobile *</label>
-                    <input type="tel" id="current-phone"
+                    <label for="applicant_phone" class="block text-sm font-bold text-gray-700 mb-1">Phone or Mobile *</label>
+                    <input type="tel" id="applicant_phone" name="applicant_phone"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['applicant_phone'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Email Address -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Email Address *</label>
-                    <input type="email" id="current-email"
+                    <label for="applicant_email" class="block text-sm font-bold text-gray-700 mb-1">Email Address *</label>
+                    <input type="email" id="applicant_email" name="applicant_email"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['applicant_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
@@ -927,36 +530,36 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Passport No. -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Passport No.</label>
-                    <input type="text" id="passport-no"
+                    <label for="passport_number" class="block text-sm font-bold text-gray-700 mb-1">Passport No.</label>
+                    <input type="text" id="passport_number" name="passport_number"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['passport_number'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Passport Start Date -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Passport Start Date</label>
-                    <input type="date" id="passport-start-date"
+                    <label for="passport_start_date" class="block text-sm font-bold text-gray-700 mb-1">Passport Start Date</label>
+                    <input type="date" id="passport_start_date" name="passport_start_date"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['passport_start_date'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Passport Expiry Date -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Passport Expiry Date</label>
-                    <input type="date" id="passport-expiry-date"
+                    <label for="passport_expiry_date" class="block text-sm font-bold text-gray-700 mb-1">Passport Expiry Date</label>
+                    <input type="date" id="passport_expiry_date" name="passport_expiry_date"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['passport_expiry_date'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Old Passport No. -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Old Passport No.</label>
-                    <input type="text" id="old-passport-no"
+                    <label for="old_passport_number" class="block text-sm font-bold text-gray-700 mb-1">Old Passport No.</label>
+                    <input type="text" id="old_passport_number" name="old_passport_number"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['old_passport_number'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Expiration of Old Passport -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Expiration of Old Passport</label>
-                    <input type="date" id="old-passport-expiry-date"
+                    <label for="old_expiry_date" class="block text-sm font-bold text-gray-700 mb-1">Expiration of Old Passport</label>
+                    <input type="date" id="old_expiry_date" name="old_expiry_date"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['old_expiry_date'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
@@ -969,15 +572,15 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Studied in China -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Have you studied in China or not?</label>
+                    <label for="studied_in_china" class="block text-sm font-bold text-gray-700 mb-1">Have you studied in China or not?</label>
                     <div class="flex items-center space-x-4">
                         <label class="flex items-center space-x-2">
-                            <input type="radio" name="studied-in-china" value="Yes" class="form-radio text-blue-500"
+                            <input type="radio" id="studied_in_china_yes" name="studied_in_china" value="Yes" class="form-radio text-blue-500"
                                 <?php echo isset($application['studied_in_china']) && $application['studied_in_china'] === 'Yes' ? 'checked' : ''; ?> />
                             <span>Yes</span>
                         </label>
                         <label class="flex items-center space-x-2">
-                            <input type="radio" name="studied-in-china" value="No" class="form-radio text-blue-500"
+                            <input type="radio" id="studied_in_china_no" name="studied_in_china" value="No" class="form-radio text-blue-500"
                                 <?php echo isset($application['studied_in_china']) && $application['studied_in_china'] === 'No' ? 'checked' : ''; ?> />
                             <span>No</span>
                         </label>
@@ -985,22 +588,22 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <!-- Visa Type -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Visa Type *</label>
-                    <input type="text" id="visa-type"
+                    <label for="visa_type" class="block text-sm font-bold text-gray-700 mb-1">Visa Type *</label>
+                    <input type="text" id="visa_type" name="visa_type"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['visa_type'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Visa Expiry Date -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Visa Expiry Date *</label>
-                    <input type="date" id="visa-expiry-date"
+                    <label for="visa_expiry_date" class="block text-sm font-bold text-gray-700 mb-1">Visa Expiry Date *</label>
+                    <input type="date" id="visa_expiry_date" name="visa_expiry_date"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['visa_expiry_date'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Institution in China -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Institution in China that you are studying now</label>
-                    <input type="text" id="institution-china"
+                    <label for="institution_in_china_studying" class="block text-sm font-bold text-gray-700 mb-1">Institution in China that you are studying now</label>
+                    <input type="text" id="institution_in_china_studying" name="institution_in_china_studying"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['institution_in_china_studying'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
@@ -1015,43 +618,43 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Sponsor Name -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Name *</label>
-                    <input type="text" id="sponsor-name"
+                    <label for="sponsor_name" class="block text-sm font-bold text-gray-700 mb-1">Name *</label>
+                    <input type="text" id="sponsor_name" name="sponsor_name"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['fin_sponsor_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Sponsor Relationship -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Relationship *</label>
-                    <input type="text" id="sponsor-relationship"
+                    <label for="sponsor_relationship" class="block text-sm font-bold text-gray-700 mb-1">Relationship *</label>
+                    <input type="text" id="sponsor_relationship" name="sponsor_relationship"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['fin_sponsor_relationship'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Sponsor Work Place -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Work Place *</label>
-                    <input type="text" id="sponsor-workplace"
+                    <label for="sponsor_workplace" class="block text-sm font-bold text-gray-700 mb-1">Work Place *</label>
+                    <input type="text" id="sponsor_workplace" name="sponsor_workplace"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['fin_sponsor_work_place'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Sponsor Occupation -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
-                    <input type="text" id="sponsor-occupation"
+                    <label for="sponsor_occupation" class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
+                    <input type="text" id="sponsor_occupation" name="sponsor_occupation"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['fin_sponsor_occupation'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Sponsor Email -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Email *</label>
-                    <input type="email" id="sponsor-email"
+                    <label for="sponsor_email" class="block text-sm font-bold text-gray-700 mb-1">Email *</label>
+                    <input type="email" id="sponsor_email" name="sponsor_email"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['fin_sponsor_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Sponsor Phone/Mobile -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile *</label>
-                    <input type="tel" id="sponsor-phone"
+                    <label for="sponsor_phone" class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile *</label>
+                    <input type="tel" id="sponsor_phone" name="sponsor_phone"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['fin_sponsor_phone'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
@@ -1064,43 +667,43 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Guarantor Name -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Name *</label>
-                    <input type="text" id="guarantor-name"
+                    <label for="guarantor_name" class="block text-sm font-bold text-gray-700 mb-1">Name *</label>
+                    <input type="text" id="guarantor_name" name="guarantor_name"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['guarantor_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Guarantor Relationship -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Relationship *</label>
-                    <input type="text" id="guarantor-relationship"
+                    <label for="guarantor_relationship" class="block text-sm font-bold text-gray-700 mb-1">Relationship *</label>
+                    <input type="text" id="guarantor_relationship" name="guarantor_relationship"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['guarantor_relationship'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Guarantor Work Place -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Work Place *</label>
-                    <input type="text" id="guarantor-workplace"
+                    <label for="guarantor_work_place" class="block text-sm font-bold text-gray-700 mb-1">Work Place *</label>
+                    <input type="text" id="guarantor_work_place" name="guarantor_work_place"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['guarantor_work_place'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Guarantor Occupation -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
-                    <input type="text" id="guarantor-occupation"
+                    <label for="guarantor_occupation" class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
+                    <input type="text" id="guarantor_occupation" name="guarantor_occupation"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['guarantor_occupation'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Guarantor Email -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Email *</label>
-                    <input type="email" id="guarantor-email"
+                    <label for="guarantor_email" class="block text-sm font-bold text-gray-700 mb-1">Email *</label>
+                    <input type="email" id="guarantor_email" name="guarantor_email"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['guarantor_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Guarantor Phone/Mobile -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile *</label>
-                    <input type="tel" id="guarantor-phone"
+                    <label for="guarantor_phone" class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile *</label>
+                    <input type="tel" id="guarantor_phone" name="guarantor_phone"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['guarantor_phone'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
@@ -1116,43 +719,43 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Emergency Contact Name -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Name *</label>
-                    <input type="text" id="emergency-contact-name"
+                    <label for="emergency_contact_name" class="block text-sm font-bold text-gray-700 mb-1">Name *</label>
+                    <input type="text" id="emergency_contact_name" name="emergency_contact_name"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['emergency_contact_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Emergency Contact Relationship -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Relationship *</label>
-                    <input type="text" id="emergency-contact-relationship"
+                    <label for="emergency_contact_relationship" class="block text-sm font-bold text-gray-700 mb-1">Relationship *</label>
+                    <input type="text" id="emergency_contact_relationship" name="emergency_contact_relationship"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['emergency_contact_relationship'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Emergency Contact Work Place -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Work Place *</label>
-                    <input type="text" id="emergency-contact-workplace"
+                    <label for="emergency_contact_work_place" class="block text-sm font-bold text-gray-700 mb-1">Work Place *</label>
+                    <input type="text" id="emergency_contact_work_place" name="emergency_contact_work_place"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['emergency_contact_work_place'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Emergency Contact Occupation -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
-                    <input type="text" id="emergency-contact-occupation"
+                    <label for="emergency_contact_occupation" class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
+                    <input type="text" id="emergency_contact_occupation" name="emergency_contact_occupation"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['emergency_contact_occupation'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Emergency Contact Email -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Email *</label>
-                    <input type="email" id="emergency-contact-email"
+                    <label for="emergency_contact_email" class="block text-sm font-bold text-gray-700 mb-1">Email *</label>
+                    <input type="email" id="emergency_contact_email" name="emergency_contact_email"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['emergency_contact_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Emergency Contact Phone/Mobile -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile *</label>
-                    <input type="tel" id="emergency-contact-phone"
+                    <label for="emergency_contact_phone" class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile *</label>
+                    <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['emergency_contact_phone'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
@@ -1168,8 +771,8 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Country -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Country *</label>
-                    <select id="country" onchange="fetchSchools()" class="w-full p-3 border border-gray-300 rounded-md">
+                    <label for="major_country" class="block text-sm font-bold text-gray-700 mb-1">Country *</label>
+                    <select id="major_country" name="major_country" onchange="fetchSchools()" class="w-full p-3 border border-gray-300 rounded-md">
                         <option value="">Select a country</option>
                         <?php foreach ($major_countries as $country): ?>
                             <option value="<?php echo $country['country_id']; ?>"
@@ -1182,9 +785,9 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- School -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">School *</label>
-                    <select id="school" onchange="fetchDegrees()" class="w-full p-3 border border-gray-300 rounded-md"
-                        <?php echo isset($$application['major_school']) ? '' : 'disabled'; ?>>
+                    <label for="major_school" class="block text-sm font-bold text-gray-700 mb-1">School *</label>
+                    <select id="major_school" name="major_school" onchange="fetchDegrees()" class="w-full p-3 border border-gray-300 rounded-md"
+                        <?php echo isset($application['major_school']) ? '' : 'disabled'; ?>>
                         <option value="">Select a school</option>
                         <?php if (isset($major_schools)): ?>
                             <?php foreach ($major_schools as $school): ?>
@@ -1199,8 +802,8 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- Degree -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
-                    <select id="degree" onchange="fetchPrograms()" class="w-full p-3 border border-gray-300 rounded-md"
+                    <label for="major_degree" class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
+                    <select id="major_degree" name="major_degree" onchange="fetchPrograms()" class="w-full p-3 border border-gray-300 rounded-md"
                         <?php echo isset($application['major_degree']) ? '' : 'disabled'; ?>>
                         <option value="">Select a degree</option>
                         <?php if (isset($major_degrees)): ?>
@@ -1216,8 +819,8 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- Program -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Program *</label>
-                    <select id="program" onchange="showDuration()" class="w-full p-3 border border-gray-300 rounded-md"
+                    <label for="major_program" class="block text-sm font-bold text-gray-700 mb-1">Program *</label>
+                    <select id="major_program" name="major_program" onchange="showDuration()" class="w-full p-3 border border-gray-300 rounded-md"
                         <?php echo isset($application['major_program']) ? '' : 'disabled'; ?>>
                         <option value="">Select a program</option>
                         <?php if (isset($major_programs)): ?>
@@ -1233,8 +836,8 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- Study Duration -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Study Duration *</label>
-                    <input type="text" id="study-duration" class="w-full p-3 border border-gray-300 rounded-md"
+                    <label for="study_duration" class="block text-sm font-bold text-gray-700 mb-1">Study Duration *</label>
+                    <input type="text" id="study_duration" name="study_duration" class="w-full p-3 border border-gray-300 rounded-md"
                         value="<?php echo isset($application['major_program']) ? $major_programs[array_search($application['major_program'], array_column($major_programs, 'program_id'))]['program_duration'] : ''; ?>" readonly />
                 </div>
             </div>
@@ -1246,66 +849,74 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- English Proficiency -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">English Proficiency *</label>
-                    <input type="text" id="english-proficiency"
+                    <label for="english_proficiency" class="block text-sm font-bold text-gray-700 mb-1">English Proficiency *</label>
+                    <input type="text" id="english_proficiency" name="english_proficiency"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['english_proficiency'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
+
                 <!-- English Proficiency Certificate -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">English Proficiency Certificate *</label>
-                    <input type="file" id="english-proficiency-certificate"
+                    <label for="english_proficiency_certificate" class="block text-sm font-bold text-gray-700 mb-1">English Proficiency Certificate *</label>
+                    <input type="file" id="english_proficiency_certificate" name="english_proficiency_certificate"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                 </div>
+
                 <!-- Chinese Proficiency -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Chinese Proficiency *</label>
-                    <input type="text" id="chinese-proficiency"
+                    <label for="chinese_proficiency" class="block text-sm font-bold text-gray-700 mb-1">Chinese Proficiency *</label>
+                    <input type="text" id="chinese_proficiency" name="chinese_proficiency"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['chinese_proficiency'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
+
                 <!-- HSK Level -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">HSK Level *</label>
-                    <input type="text" id="hsk-level"
+                    <label for="hsk_level" class="block text-sm font-bold text-gray-700 mb-1">HSK Level *</label>
+                    <input type="text" id="hsk_level" name="hsk_level"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['hsk_level'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
+
                 <!-- HSK Scores -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">HSK Scores</label>
-                    <input type="text" id="hsk-scores"
+                    <label for="hsk_scores" class="block text-sm font-bold text-gray-700 mb-1">HSK Scores</label>
+                    <input type="text" id="hsk_scores" name="hsk_scores"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['hsk_scores'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
+
                 <!-- HSKK Scores -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">HSKK Scores</label>
-                    <input type="text" id="hskk-scores"
+                    <label for="hskk_scores" class="block text-sm font-bold text-gray-700 mb-1">HSKK Scores</label>
+                    <input type="text" id="hskk_scores" name="hskk_scores"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['hskk_scores'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
+
                 <!-- Time of Chinese language learning -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Time of Chinese language learning *</label>
-                    <input type="text" id="chinese-learning-time"
+                    <label for="time_of_chinese_learning" class="block text-sm font-bold text-gray-700 mb-1">Time of Chinese language learning *</label>
+                    <input type="text" id="time_of_chinese_learning" name="time_of_chinese_learning"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['time_of_chinese_learning'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
-                <!-- Whether the Chinese teacher own a Chinese Nationality -->
+
+                <!-- Whether the Chinese teacher owns a Chinese Nationality -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Chinese Teacher's Nationality *</label>
-                    <select id="teacher-nationality"
+                    <label for="teacher_nationality_chinese" class="block text-sm font-bold text-gray-700 mb-1">Chinese Teacher's Nationality *</label>
+                    <select id="teacher_nationality_chinese" name="teacher_nationality_chinese"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
-                        <option value="" <?php echo !isset($application['teacher_nationlity_chinese']) ? 'selected' : ''; ?>>Select</option>
-                        <option value="yes" <?php echo ($application['teacher_nationlity_chinese'] ?? '') === '1' ? 'selected' : ''; ?>>Yes</option>
-                        <option value="no" <?php echo ($application['teacher_nationlity_chinese'] ?? '') === '0' ? 'selected' : ''; ?>>No</option>
+                        <option value="" <?php echo !isset($application['teacher_nationality_chinese']) ? 'selected' : ''; ?>>Select</option>
+                        <option value="1" <?php echo ($application['teacher_nationality_chinese'] ?? '') === '1' ? 'selected' : ''; ?>>Yes</option>
+                        <option value="0" <?php echo ($application['teacher_nationality_chinese'] ?? '') === '0' ? 'selected' : ''; ?>>No</option>
                     </select>
                 </div>
+
                 <!-- Name of institution for Chinese learning -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Name of institution for Chinese learning *</label>
-                    <input type="text" id="institution-name"
+                    <label for="chinese_learning_institution" class="block text-sm font-bold text-gray-700 mb-1">Name of institution for Chinese learning *</label>
+                    <input type="text" id="chinese_learning_institution" name="chinese_learning_institution"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['chinese_learning_institution'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
@@ -1318,36 +929,40 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Highest Degree -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Highest Degree *</label>
-                    <input type="text" id="highest-degree"
+                    <label for="highest_degree" class="block text-sm font-bold text-gray-700 mb-1">Highest Degree *</label>
+                    <input type="text" id="highest_degree" name="highest_degree"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['highest_degree'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
+
                 <!-- Highest Degree Graduation School -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Highest Degree Graduation School *</label>
-                    <input type="text" id="graduation-school"
+                    <label for="highest_degree_school" class="block text-sm font-bold text-gray-700 mb-1">Highest Degree Graduation School *</label>
+                    <input type="text" id="highest_degree_school" name="highest_degree_school"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['highest_degree_school'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
+
                 <!-- Certificate Type of Highest Degree Level -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Certificate Type of Highest Degree Level *</label>
-                    <input type="text" id="certificate-type"
+                    <label for="highest_degree_certificate_type" class="block text-sm font-bold text-gray-700 mb-1">Certificate Type of Highest Degree Level *</label>
+                    <input type="text" id="highest_degree_certificate_type" name="highest_degree_certificate_type"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['highest_degree_certificate_type'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
+
                 <!-- Mark Range if Full Mark is 100 -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Mark Range if Full Mark is 100 *</label>
-                    <input type="number" id="mark-range"
+                    <label for="best_mark_if_100" class="block text-sm font-bold text-gray-700 mb-1">Mark Range if Full Mark is 100 *</label>
+                    <input type="number" id="best_mark_if_100" name="best_mark_if_100"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['best_mark_if_100'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
+
                 <!-- Any Failure in Highest Degree Marks if Full Mark is 100 -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Any Failure in Highest Degree Marks if Full Mark is 100 *</label>
-                    <input type="text" id="degree-failure"
+                    <label for="worst_mark_if_100" class="block text-sm font-bold text-gray-700 mb-1">Any Failure in Highest Degree Marks if Full Mark is 100 *</label>
+                    <input type="text" id="worst_mark_if_100" name="worst_mark_if_100"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['worst_mark_if_100'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
@@ -1361,56 +976,61 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
             </h3>
             <div id="study-experience-container" class="space-y-4">
                 <?php if (!empty($study_experience)): ?>
-                    <?php foreach ($study_experience as $experience): ?>
+                    <?php foreach ($study_experience as $index => $experience): ?>
                         <!-- Existing Entry -->
                         <div class="study-entry grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
-                                <input type="text" class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                <label for="school_name_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
+                                <input type="text" id="school_name_<?php echo $index; ?>" name="study_experience[<?php echo $index; ?>][school_name]"
+                                    class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($experience['institution']); ?>" />
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
-                                <input type="text" class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                <label for="degree_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
+                                <input type="text" id="degree_<?php echo $index; ?>" name="study_experience[<?php echo $index; ?>][degree]"
+                                    class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($experience['degree']); ?>" />
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">Year of Attendance (From - To) *</label>
-                                <input type="text" class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                <label for="attendance_period_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Year of Attendance (From - To) *</label>
+                                <input type="text" id="attendance_period_<?php echo $index; ?>" name="study_experience[<?php echo $index; ?>][attendance_period]"
+                                    class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($experience['start_date']) . ' - ' . htmlspecialchars($experience['end_date']); ?>" />
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">Contact Person</label>
-                                <input type="text" class="contact-person w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                <label for="contact_person_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Contact Person</label>
+                                <input type="text" id="contact_person_<?php echo $index; ?>" name="study_experience[<?php echo $index; ?>][contact_person]"
+                                    class="contact-person w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($experience['contact_person'] ?? ''); ?>" />
                             </div>
                         </div>
                         <hr class="border border-gray-500">
-                        </hr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <!-- Blank Form for New Entry -->
                     <div class="study-entry grid grid-cols-1 md:grid-cols-2 gap-4">
-
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
-                            <input type="text" class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                            <label for="school_name_0" class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
+                            <input type="text" id="school_name_0" name="study_experience[0][school_name]"
+                                class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
-                            <input type="text" class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                            <label for="degree_0" class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
+                            <input type="text" id="degree_0" name="study_experience[0][degree]"
+                                class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Year of Attendance (From - To) *</label>
-                            <input type="text" class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                            <label for="attendance_period_0" class="block text-sm font-bold text-gray-700 mb-1">Year of Attendance (From - To) *</label>
+                            <input type="text" id="attendance_period_0" name="study_experience[0][attendance_period]"
+                                class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Contact Person</label>
-                            <input type="text" class="contact-person w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                            <label for="contact_person_0" class="block text-sm font-bold text-gray-700 mb-1">Contact Person</label>
+                            <input type="text" id="contact_person_0" name="study_experience[0][contact_person]"
+                                class="contact-person w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                     </div>
                     <hr class="border border-gray-500">
-                    </hr>
                 <?php endif; ?>
             </div>
             <button id="add-study-entry" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">
@@ -1423,85 +1043,83 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
             <h3 class="text-xl font-bold mb-4 text-gray-700">Work History</h3>
             <div id="work-history-container" class="space-y-4">
                 <?php if (!empty($work_history)): ?>
-                    <?php foreach ($work_history as $work): ?>
+                    <?php foreach ($work_history as $index => $work): ?>
                         <!-- Existing Entry -->
                         <div class="work-entry grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">Starting Time</label>
-                                <input type="date"
+                                <label for="work_start_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Starting Time</label>
+                                <input type="date" id="work_start_<?php echo $index; ?>" name="work_history[<?php echo $index; ?>][start_date]"
                                     class="work-start w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($work['start_date']); ?>" />
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">Ending Time</label>
-                                <input type="date"
+                                <label for="work_end_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Ending Time</label>
+                                <input type="date" id="work_end_<?php echo $index; ?>" name="work_history[<?php echo $index; ?>][end_date]"
                                     class="work-end w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($work['end_date']); ?>" />
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">Position</label>
-                                <input type="text"
+                                <label for="position_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Position</label>
+                                <input type="text" id="position_<?php echo $index; ?>" name="work_history[<?php echo $index; ?>][position]"
                                     class="position w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($work['position']); ?>" />
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">Company</label>
-                                <input type="text"
+                                <label for="company_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Company</label>
+                                <input type="text" id="company_<?php echo $index; ?>" name="work_history[<?php echo $index; ?>][company]"
                                     class="company w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($work['company']); ?>" />
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">Company Phone/Mobile</label>
-                                <input type="tel"
+                                <label for="company_phone_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Company Phone/Mobile</label>
+                                <input type="tel" id="company_phone_<?php echo $index; ?>" name="work_history[<?php echo $index; ?>][company_phone]"
                                     class="phone w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($work['company_phone']); ?>" />
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">Company Email</label>
-                                <input type="email"
+                                <label for="company_email_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Company Email</label>
+                                <input type="email" id="company_email_<?php echo $index; ?>" name="work_history[<?php echo $index; ?>][company_email]"
                                     class="email w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($work['company_email']); ?>" />
                             </div>
                         </div>
                         <hr class="border border-gray-500">
-                        </hr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <!-- Blank Form for New Entry -->
                     <div class="work-entry grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Starting Time</label>
-                            <input type="date"
+                            <label for="work_start_0" class="block text-sm font-bold text-gray-700 mb-1">Starting Time</label>
+                            <input type="date" id="work_start_0" name="work_history[0][start_date]"
                                 class="work-start w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Ending Time</label>
-                            <input type="date"
+                            <label for="work_end_0" class="block text-sm font-bold text-gray-700 mb-1">Ending Time</label>
+                            <input type="date" id="work_end_0" name="work_history[0][end_date]"
                                 class="work-end w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Position</label>
-                            <input type="text"
+                            <label for="position_0" class="block text-sm font-bold text-gray-700 mb-1">Position</label>
+                            <input type="text" id="position_0" name="work_history[0][position]"
                                 class="position w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Company</label>
-                            <input type="text"
+                            <label for="company_0" class="block text-sm font-bold text-gray-700 mb-1">Company</label>
+                            <input type="text" id="company_0" name="work_history[0][company]"
                                 class="company w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Company Phone/Mobile</label>
-                            <input type="tel"
+                            <label for="company_phone_0" class="block text-sm font-bold text-gray-700 mb-1">Company Phone/Mobile</label>
+                            <input type="tel" id="company_phone_0" name="work_history[0][company_phone]"
                                 class="company-phone w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Company Email</label>
-                            <input type="email"
+                            <label for="company_email_0" class="block text-sm font-bold text-gray-700 mb-1">Company Email</label>
+                            <input type="email" id="company_email_0" name="work_history[0][company_email]"
                                 class="company-email w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                     </div>
                     <hr class="border border-gray-500">
-                    </hr>
                 <?php endif; ?>
             </div>
             <button id="add-work-entry" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">
@@ -1520,50 +1138,48 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="grid grid-cols-1 gap-4">
                 <!-- Valid passport with visa page -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Valid Passport with Visa Page *</label>
-                    <input type="file"
+                    <label for="valid_passport" class="block text-sm font-bold text-gray-700 mb-1">Valid Passport with Visa Page *</label>
+                    <input type="file" id="valid_passport" name="valid_passport"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
 
                 <!-- Highest academic Diploma/Certificate -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Highest Academic Diploma/Certificate
-                        *</label>
-                    <input type="file"
+                    <label for="highest_academic_diploma" class="block text-sm font-bold text-gray-700 mb-1">Highest Academic Diploma/Certificate *</label>
+                    <input type="file" id="highest_academic_diploma" name="highest_academic_diploma"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
 
                 <!-- Highest academic transcripts -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Highest Academic Transcripts *</label>
-                    <input type="file"
+                    <label for="highest_academic_transcripts" class="block text-sm font-bold text-gray-700 mb-1">Highest Academic Transcripts *</label>
+                    <input type="file" id="highest_academic_transcripts" name="highest_academic_transcripts"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
 
                 <!-- Non-criminal record -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Non-criminal Record/Certificate of
-                        Non-criminal Record *</label>
-                    <input type="file"
+                    <label for="non_criminal_record" class="block text-sm font-bold text-gray-700 mb-1">Non-criminal Record/Certificate of Non-criminal Record *</label>
+                    <input type="file" id="non_criminal_record" name="non_criminal_record"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
 
                 <!-- Bank Statement -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Bank Statement</label>
-                    <input type="file"
+                    <label for="bank_statement" class="block text-sm font-bold text-gray-700 mb-1">Bank Statement</label>
+                    <input type="file" id="bank_statement" name="bank_statement"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
 
                 <!-- Application Fee Receipt -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Application Fee Receipt</label>
-                    <input type="file"
+                    <label for="application_fee_receipt" class="block text-sm font-bold text-gray-700 mb-1">Application Fee Receipt</label>
+                    <input type="file" id="application_fee_receipt" name="application_fee_receipt"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                     <p class="text-sm text-gray-500">
@@ -1573,8 +1189,8 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- Recommendation Letters -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Recommendation Letter(s)</label>
-                    <input type="file"
+                    <label for="recommendation_letters" class="block text-sm font-bold text-gray-700 mb-1">Recommendation Letter(s)</label>
+                    <input type="file" id="recommendation_letters" name="recommendation_letters"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                     <p class="text-sm text-gray-500">
@@ -1584,9 +1200,8 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- Publications, Articles, Thesis -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Publications, Articles, Thesis,
-                        etc.</label>
-                    <input type="file"
+                    <label for="publications_articles_thesis" class="block text-sm font-bold text-gray-700 mb-1">Publications, Articles, Thesis, etc.</label>
+                    <input type="file" id="publications_articles_thesis" name="publications_articles_thesis"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                     <p class="text-sm text-gray-500">(For Masters & PhD only)</p>
@@ -1594,17 +1209,16 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- Foreigner Physical Examination Form -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Foreigner Physical Examination Form
-                        *</label>
-                    <input type="file"
+                    <label for="physical_examination_form" class="block text-sm font-bold text-gray-700 mb-1">Foreigner Physical Examination Form *</label>
+                    <input type="file" id="physical_examination_form" name="physical_examination_form"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
 
                 <!-- Guardian's Letter of Guarantee -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Guardian's Letter of Guarantee</label>
-                    <input type="file"
+                    <label for="guardians_letter_of_guarantee" class="block text-sm font-bold text-gray-700 mb-1">Guardian's Letter of Guarantee</label>
+                    <input type="file" id="guardians_letter_of_guarantee" name="guardians_letter_of_guarantee"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                     <p class="text-sm text-gray-500">
@@ -1614,8 +1228,8 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- English Language Proficiency -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">English Language Proficiency</label>
-                    <input type="file"
+                    <label for="english_language_proficiency" class="block text-sm font-bold text-gray-700 mb-1">English Language Proficiency</label>
+                    <input type="file" id="english_language_proficiency" name="english_language_proficiency"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                     <p class="text-sm text-gray-500">
@@ -1625,17 +1239,16 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- Chinese Language Certificate (HSK Certificate) -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Chinese Language Certificate (HSK
-                        Certificate)</label>
-                    <input type="file"
+                    <label for="chinese_language_certificate" class="block text-sm font-bold text-gray-700 mb-1">Chinese Language Certificate (HSK Certificate)</label>
+                    <input type="file" id="chinese_language_certificate" name="chinese_language_certificate"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
 
                 <!-- Parent's Authorization Letter -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Parent's Authorization Letter</label>
-                    <input type="file"
+                    <label for="parents_authorization_letter" class="block text-sm font-bold text-gray-700 mb-1">Parent's Authorization Letter</label>
+                    <input type="file" id="parents_authorization_letter" name="parents_authorization_letter"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                     <p class="text-sm text-gray-500">
@@ -1645,8 +1258,8 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- Study Plan or Research Proposal -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Study Plan or Research Proposal</label>
-                    <input type="file"
+                    <label for="study_plan_research_proposal" class="block text-sm font-bold text-gray-700 mb-1">Study Plan or Research Proposal</label>
+                    <input type="file" id="study_plan_research_proposal" name="study_plan_research_proposal"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                     <p class="text-sm text-gray-500">For Masters & PhD only</p>
@@ -1654,36 +1267,9 @@ $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- Curriculum Vitae -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Curriculum Vitae</label>
-                    <input type="file"
-                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <label for="curriculum_vitae" class="block text-sm font-bold text-gray-700 mb-1">Curriculum Vitae</label>
+                    <input type="file" id="curriculum_vitae" name="curriculum_vitae" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
-
-                <!-- Additional Documents -->
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Additional Documents</label>
-                    <input type="file"
-                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
-                </div>
-            </div>
-
-            <!-- Admission Notice Collection Method -->
-            <div class="mt-6">
-                <label class="block text-sm font-bold text-gray-700 mb-2">How to Collect the Admission Notice *</label>
-                <select class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
-                    <option value="" disabled selected>Select an option</option>
-                    <option value="home">The same as home address</option>
-                    <option value="current">
-                        The same as the current postal address
-                    </option>
-                    <option value="pickup">Pick Up By Myself</option>
-                </select>
-                <p class="text-sm text-gray-500 mt-2">
-                    Please make sure the postal address you provided is valid for at least
-                    3 months to receive admission documents successfully.
-                </p>
             </div>
         </div>
     </form>
