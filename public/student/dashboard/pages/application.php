@@ -39,6 +39,21 @@ $majorProgramStmt = $conn->prepare("SELECT program_id, program_name, program_dur
 $majorProgramStmt->execute();
 $major_programs = $majorProgramStmt->fetchAll(PDO::FETCH_ASSOC);
 
+$stdtFileStmt = $conn->prepare("SELECT * FROM student_files WHERE application_id= ?");
+$stdtFileStmt->execute([$_SESSION['application_id']]);
+$student_files = $stdtFileStmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Get the file URL for a specific type
+function getFileUrl($files, $fileType)
+{
+    foreach ($files as $file) {
+        if ($file['file_type'] === $fileType) {
+            return $file['file_path'];
+        }
+    }
+    return null;
+}
+
 $countries = [
     "Afghanistan",
     "Albania",
@@ -268,15 +283,15 @@ $countries = [
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Family Name -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1" for="lname">Family Name *</label>
-                    <input type="text" id="family-name" name="lname"
+                    <label class="block text-sm font-bold text-gray-700 mb-1" for="lastname">Family Name *</label>
+                    <input type="text" id="family-name" name="lastname"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value='<?php echo $application['lastname'] ?>' />
                 </div>
                 <!-- Given Name -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1" for="fname">Given Name *</label>
-                    <input type="text" id="given-name" name="fname"
+                    <label class="block text-sm font-bold text-gray-700 mb-1" for="firstname">Given Name *</label>
+                    <input type="text" id="given-name" name="firstname"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
 
                         value="<?php echo $application['firstname'] ?>" />
@@ -295,7 +310,28 @@ $countries = [
                 <!-- Passport Size Photo -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1" for="passport">Upload Passport Size Photo *</label>
-                    <input type="file" id="passport-photo" name="passport" accept="image" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+
+                    <!-- Check if a file exists for 'passport' -->
+                    <?php $passportFileUrl = getFileUrl($student_files, 'passport'); ?>
+
+                    <!-- File input -->
+                    <input
+                        type="file"
+                        onchange="handleFileUpload(event)"
+                        id="passport-photo"
+                        name="passport"
+                        accept="image/*"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+
+                    <?php if ($passportFileUrl): ?>
+                        <!-- Show the file URL -->
+                        <p class="mt-2 text-sm text-gray-500">
+                            Current File:
+                            <a href="<?= './../'. htmlspecialchars($passportFileUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                View Uploaded Passport Photo
+                            </a>
+                        </p>
+                    <?php endif; ?>
                 </div>
                 <!-- Nationality -->
                 <div>
@@ -305,14 +341,14 @@ $countries = [
                 </div>
                 <!-- Marital Status -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1" for="marital-status">Marital Status *</label>
-                    <select id="marital-status" name="marital-status"
+                    <label class="block text-sm font-bold text-gray-700 mb-1" for="marital_status">Marital Status *</label>
+                    <select id="mmarital_status" name="marital_status"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400">
                         <option value="">Select</option>
-                        <option value="single" <?php echo isset($application['marital_status']) && $application['marital_status'] == 'Single' ? 'selected' : ''; ?>>Single</option>
-                        <option value="married" <?php echo isset($application['marital_status']) && $application['marital_status'] == 'Married' ? 'selected' : ''; ?>>Married</option>
-                        <option value="divorced" <?php echo isset($application['marital_status']) && $application['marital_status'] == 'Divorced' ? 'selected' : ''; ?>>Divorced</option>
-                        <option value="widowed" <?php echo isset($application['marital_status']) && $application['marital_status'] == 'Widowed' ? 'selected' : ''; ?>>Widowed</option>
+                        <option value="Single" <?php echo isset($application['marital_status']) && $application['marital_status'] == 'Single' ? 'selected' : ''; ?>>Single</option>
+                        <option value="Married" <?php echo isset($application['marital_status']) && $application['marital_status'] == 'Married' ? 'selected' : ''; ?>>Married</option>
+                        <option value="Divorced" <?php echo isset($application['marital_status']) && $application['marital_status'] == 'Divorced' ? 'selected' : ''; ?>>Divorced</option>
+                        <option value="Widowed" <?php echo isset($application['marital_status']) && $application['marital_status'] == 'Widowed' ? 'selected' : ''; ?>>Widowed</option>
                     </select>
                 </div>
                 <!-- Date of Birth -->
@@ -372,8 +408,8 @@ $countries = [
 
                 <!-- Employer or Institution Affiliated -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1" for="employer">Employer or Institution Affiliated to *</label>
-                    <input type="text" id="employer" name="employer"
+                    <label class="block text-sm font-bold text-gray-700 mb-1" for="affiliated_institution">Employer or Institution Affiliated to *</label>
+                    <input type="text" id="affiliated_institution" name="affiliated_institution"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['affiliated_institution'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
@@ -618,43 +654,43 @@ $countries = [
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Sponsor Name -->
                 <div>
-                    <label for="sponsor_name" class="block text-sm font-bold text-gray-700 mb-1">Name *</label>
-                    <input type="text" id="sponsor_name" name="sponsor_name"
+                    <label for="fin_sponsor_name" class="block text-sm font-bold text-gray-700 mb-1">Name *</label>
+                    <input type="text" id="fin_sponsor_name" name="fin_sponsor_name"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['fin_sponsor_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Sponsor Relationship -->
                 <div>
-                    <label for="sponsor_relationship" class="block text-sm font-bold text-gray-700 mb-1">Relationship *</label>
-                    <input type="text" id="sponsor_relationship" name="sponsor_relationship"
+                    <label for="fin_sponsor_relationship" class="block text-sm font-bold text-gray-700 mb-1">Relationship *</label>
+                    <input type="text" id="fin_sponsor_relationship" name="fin_sponsor_relationship"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['fin_sponsor_relationship'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Sponsor Work Place -->
                 <div>
-                    <label for="sponsor_workplace" class="block text-sm font-bold text-gray-700 mb-1">Work Place *</label>
-                    <input type="text" id="sponsor_workplace" name="sponsor_workplace"
+                    <label for="fin_sponsor_work_place" class="block text-sm font-bold text-gray-700 mb-1">Work Place *</label>
+                    <input type="text" id="fin_sponsor_work_place" name="fin_sponsor_work_place"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['fin_sponsor_work_place'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Sponsor Occupation -->
                 <div>
-                    <label for="sponsor_occupation" class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
-                    <input type="text" id="sponsor_occupation" name="sponsor_occupation"
+                    <label for="fin_sponsor_occupation" class="block text-sm font-bold text-gray-700 mb-1">Occupation *</label>
+                    <input type="text" id="fin_sponsor_occupation" name="fin_sponsor_occupation"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['fin_sponsor_occupation'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Sponsor Email -->
                 <div>
-                    <label for="sponsor_email" class="block text-sm font-bold text-gray-700 mb-1">Email *</label>
-                    <input type="email" id="sponsor_email" name="sponsor_email"
+                    <label for="fin_sponsor_email" class="block text-sm font-bold text-gray-700 mb-1">Email *</label>
+                    <input type="email" id="fin_sponsor_email" name="fin_sponsor_email"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['fin_sponsor_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
                 <!-- Sponsor Phone/Mobile -->
                 <div>
-                    <label for="sponsor_phone" class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile *</label>
-                    <input type="tel" id="sponsor_phone" name="sponsor_phone"
+                    <label for="fin_sponsor_phone" class="block text-sm font-bold text-gray-700 mb-1">Phone/Mobile *</label>
+                    <input type="tel" id="fin_sponsor_phone" name="fin_sponsor_phone"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         value="<?php echo htmlspecialchars($application['fin_sponsor_phone'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
                 </div>
@@ -858,7 +894,7 @@ $countries = [
                 <!-- English Proficiency Certificate -->
                 <div>
                     <label for="english_proficiency_certificate" class="block text-sm font-bold text-gray-700 mb-1">English Proficiency Certificate *</label>
-                    <input type="file" id="english_proficiency_certificate" name="english_proficiency_certificate"
+                    <input type="file" onchange="handleFileUpload(event)" id="english_proficiency_certificate" name="english_proficiency_certificate"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                 </div>
 
@@ -1132,14 +1168,14 @@ $countries = [
             <h3 class="text-xl font-bold mb-4 text-gray-700">Upload Documents</h3>
             <p class="text-gray-600 mb-4">
                 The uploaded file type needs to be
-                <strong>.jpg, .jpeg, .png, .bmp, .doc, .docx, .pdf, .xls, .xlsx</strong>. Maximum file size is 5MB.
+                <strong>.jpg, .jpeg, .png, .bmp, .doc, .docx, .pdf, .xls, .xlsx</strong>. Maximum file size is payments.php.
             </p>
 
             <div class="grid grid-cols-1 gap-4">
                 <!-- Valid passport with visa page -->
                 <div>
                     <label for="valid_passport" class="block text-sm font-bold text-gray-700 mb-1">Valid Passport with Visa Page *</label>
-                    <input type="file" id="valid_passport" name="valid_passport"
+                    <input type="file" onchange="handleFileUpload(event)" id="valid_passport" name="valid_passport"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
@@ -1147,7 +1183,7 @@ $countries = [
                 <!-- Highest academic Diploma/Certificate -->
                 <div>
                     <label for="highest_academic_diploma" class="block text-sm font-bold text-gray-700 mb-1">Highest Academic Diploma/Certificate *</label>
-                    <input type="file" id="highest_academic_diploma" name="highest_academic_diploma"
+                    <input type="file" onchange="handleFileUpload(event)" id="highest_academic_diploma" name="highest_academic_diploma"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
@@ -1155,7 +1191,7 @@ $countries = [
                 <!-- Highest academic transcripts -->
                 <div>
                     <label for="highest_academic_transcripts" class="block text-sm font-bold text-gray-700 mb-1">Highest Academic Transcripts *</label>
-                    <input type="file" id="highest_academic_transcripts" name="highest_academic_transcripts"
+                    <input type="file" onchange="handleFileUpload(event)" id="highest_academic_transcripts" name="highest_academic_transcripts"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
@@ -1163,7 +1199,7 @@ $countries = [
                 <!-- Non-criminal record -->
                 <div>
                     <label for="non_criminal_record" class="block text-sm font-bold text-gray-700 mb-1">Non-criminal Record/Certificate of Non-criminal Record *</label>
-                    <input type="file" id="non_criminal_record" name="non_criminal_record"
+                    <input type="file" onchange="handleFileUpload(event)" id="non_criminal_record" name="non_criminal_record"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
@@ -1171,7 +1207,7 @@ $countries = [
                 <!-- Bank Statement -->
                 <div>
                     <label for="bank_statement" class="block text-sm font-bold text-gray-700 mb-1">Bank Statement</label>
-                    <input type="file" id="bank_statement" name="bank_statement"
+                    <input type="file" onchange="handleFileUpload(event)" " id=" bank_statement" name="bank_statement"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
@@ -1179,7 +1215,7 @@ $countries = [
                 <!-- Application Fee Receipt -->
                 <div>
                     <label for="application_fee_receipt" class="block text-sm font-bold text-gray-700 mb-1">Application Fee Receipt</label>
-                    <input type="file" id="application_fee_receipt" name="application_fee_receipt"
+                    <input type="file" onchange="handleFileUpload(event)" id="application_fee_receipt" name="application_fee_receipt"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                     <p class="text-sm text-gray-500">
@@ -1190,7 +1226,7 @@ $countries = [
                 <!-- Recommendation Letters -->
                 <div>
                     <label for="recommendation_letters" class="block text-sm font-bold text-gray-700 mb-1">Recommendation Letter(s)</label>
-                    <input type="file" id="recommendation_letters" name="recommendation_letters"
+                    <input type="file" onchange="handleFileUpload(event)" id="recommendation_letters" name="recommendation_letters"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                     <p class="text-sm text-gray-500">
@@ -1201,7 +1237,7 @@ $countries = [
                 <!-- Publications, Articles, Thesis -->
                 <div>
                     <label for="publications_articles_thesis" class="block text-sm font-bold text-gray-700 mb-1">Publications, Articles, Thesis, etc.</label>
-                    <input type="file" id="publications_articles_thesis" name="publications_articles_thesis"
+                    <input type="file" onchange="handleFileUpload(event)" id="publications_articles_thesis" name="publications_articles_thesis"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                     <p class="text-sm text-gray-500">(For Masters & PhD only)</p>
@@ -1210,7 +1246,7 @@ $countries = [
                 <!-- Foreigner Physical Examination Form -->
                 <div>
                     <label for="physical_examination_form" class="block text-sm font-bold text-gray-700 mb-1">Foreigner Physical Examination Form *</label>
-                    <input type="file" id="physical_examination_form" name="physical_examination_form"
+                    <input type="file" onchange="handleFileUpload(event)" id="physical_examination_form" name="physical_examination_form"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
@@ -1218,7 +1254,7 @@ $countries = [
                 <!-- Guardian's Letter of Guarantee -->
                 <div>
                     <label for="guardians_letter_of_guarantee" class="block text-sm font-bold text-gray-700 mb-1">Guardian's Letter of Guarantee</label>
-                    <input type="file" id="guardians_letter_of_guarantee" name="guardians_letter_of_guarantee"
+                    <input type="file" onchange="handleFileUpload(event)" id="guardians_letter_of_guarantee" name="guardians_letter_of_guarantee"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                     <p class="text-sm text-gray-500">
@@ -1229,7 +1265,7 @@ $countries = [
                 <!-- English Language Proficiency -->
                 <div>
                     <label for="english_language_proficiency" class="block text-sm font-bold text-gray-700 mb-1">English Language Proficiency</label>
-                    <input type="file" id="english_language_proficiency" name="english_language_proficiency"
+                    <input type="file" onchange="handleFileUpload(event)" id="english_language_proficiency" name="english_language_proficiency"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                     <p class="text-sm text-gray-500">
@@ -1240,7 +1276,7 @@ $countries = [
                 <!-- Chinese Language Certificate (HSK Certificate) -->
                 <div>
                     <label for="chinese_language_certificate" class="block text-sm font-bold text-gray-700 mb-1">Chinese Language Certificate (HSK Certificate)</label>
-                    <input type="file" id="chinese_language_certificate" name="chinese_language_certificate"
+                    <input type="file" onchange="handleFileUpload(event)" id="chinese_language_certificate" name="chinese_language_certificate"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
@@ -1248,7 +1284,7 @@ $countries = [
                 <!-- Parent's Authorization Letter -->
                 <div>
                     <label for="parents_authorization_letter" class="block text-sm font-bold text-gray-700 mb-1">Parent's Authorization Letter</label>
-                    <input type="file" id="parents_authorization_letter" name="parents_authorization_letter"
+                    <input type="file" onchange="handleFileUpload(event)" id="parents_authorization_letter" name="parents_authorization_letter"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                     <p class="text-sm text-gray-500">
@@ -1259,7 +1295,7 @@ $countries = [
                 <!-- Study Plan or Research Proposal -->
                 <div>
                     <label for="study_plan_research_proposal" class="block text-sm font-bold text-gray-700 mb-1">Study Plan or Research Proposal</label>
-                    <input type="file" id="study_plan_research_proposal" name="study_plan_research_proposal"
+                    <input type="file" onchange="handleFileUpload(event)" id="study_plan_research_proposal" name="study_plan_research_proposal"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                     <p class="text-sm text-gray-500">For Masters & PhD only</p>
@@ -1268,7 +1304,7 @@ $countries = [
                 <!-- Curriculum Vitae -->
                 <div>
                     <label for="curriculum_vitae" class="block text-sm font-bold text-gray-700 mb-1">Curriculum Vitae</label>
-                    <input type="file" id="curriculum_vitae" name="curriculum_vitae" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <input type="file" onchange="handleFileUpload(event)" id="curriculum_vitae" name="curriculum_vitae" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
                 </div>
             </div>
         </div>

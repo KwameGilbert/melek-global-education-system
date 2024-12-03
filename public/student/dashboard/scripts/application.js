@@ -172,7 +172,7 @@ function saveApplication(event) {
         formDataObj[key] = value;
     });
 
-    console.log(JSON.stringify(formDataObj));
+   // console.log(JSON.stringify(formDataObj));
 
     fetch('../../../api/application_form/save_application.php', {
         method: 'POST',
@@ -180,7 +180,7 @@ function saveApplication(event) {
     })
         .then(response => response.json())
         .then(data => {
-            if (data.status === 'success') {
+            if (data.success) {
                 Swal.fire({
                     icon: 'success',
                     title: 'Application submitted successfully',
@@ -196,5 +196,77 @@ function saveApplication(event) {
         })
 
 }
+
+async function handleFileUpload(event) {
+    const input = event.target;
+    const file = input.files[0];
+
+    const toastMixin = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+    });
+
+    if (!file) {
+        toastMixin.fire({
+            icon: 'warning',
+            title: 'Warning',
+            text: 'No file selected for upload.',
+        });
+        return;
+    }
+
+    // Show progress notification
+    let progressAlert = Swal.fire({
+        title: 'Uploading...',
+        text: `Uploading ${input.name}. Please wait.`,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+            Swal.showLoading();
+        },
+    });
+
+    // Create form data to send to the server
+    const formData = new FormData();
+    formData.append(input.name, file); // Use the input's `name` as the key
+
+    try {
+        const response = await fetch('../../../api/student/documents/upload.php', {
+            method: 'POST',
+            body: formData, // FormData automatically sets the correct headers
+        });
+
+        const data = await response.json();
+
+        Swal.close(); // Close the loading alert
+
+        if (data.success) {
+            toastMixin.fire({
+                icon: 'success',
+                title: 'Success',
+                text: `${input.name} uploaded successfully!`,
+            });
+        } else {
+            toastMixin.fire({
+                icon: 'error',
+                title: 'Upload Failed',
+                text: data.message || `An error occurred while uploading ${input.name}.`,
+            });
+        }
+    } catch (error) {
+        Swal.close(); // Close the loading alert
+
+        toastMixin.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `An unexpected error occurred: ${error.message}`,
+        });
+    }
+}
+
+
 
 // //0246814884
