@@ -59,11 +59,11 @@ function loadApplications() {
 
 // Fetch schools by country
 async function fetchSchools() {
-    const countryId = document.getElementById('country').value;
-    const schoolDropdown = document.getElementById('school');
-    const degreeDropdown = document.getElementById('degree');
-    const programDropdown = document.getElementById('program');
-    const studyDuration = document.getElementById('study-duration');
+    const countryId = document.getElementById('major_country').value;
+    const schoolDropdown = document.getElementById('major_school');
+    const degreeDropdown = document.getElementById('major_degree');
+    const programDropdown = document.getElementById('major_program');
+    const studyDuration = document.getElementById('study_duration');
 
     // Reset dependent fields
     schoolDropdown.innerHTML = '<option value="">Select a school</option>';
@@ -92,10 +92,10 @@ async function fetchSchools() {
 
 //Fetch Degrees By school
 async function fetchDegrees() {
-    const schoolId = document.getElementById('school').value;
-    const degreeDropdown = document.getElementById('degree');
-    const programDropdown = document.getElementById('program');
-    const studyDuration = document.getElementById('study-duration');
+    const schoolId = document.getElementById('major_school').value;
+    const degreeDropdown = document.getElementById('major_degree');
+    const programDropdown = document.getElementById('major_program');
+    const studyDuration = document.getElementById('study_duration');
 
     // Reset dependent fields
     degreeDropdown.innerHTML = '<option value="">Select a degree</option>';
@@ -122,10 +122,10 @@ async function fetchDegrees() {
 
 // Fetch programes based on school
 async function fetchPrograms() {
-    const schoolId = document.getElementById('school').value;
-    const degree = document.getElementById('degree').value;
-    const programDropdown = document.getElementById('program');
-    const studyDuration = document.getElementById('study-duration');
+    const schoolId = document.getElementById('major_school').value;
+    const degree = document.getElementById('major_degree').value;
+    const programDropdown = document.getElementById('major_program');
+    const studyDuration = document.getElementById('study_duration');
 
     // Reset dependent fields
     programDropdown.innerHTML = '<option value="">Select a program</option>';
@@ -151,8 +151,8 @@ async function fetchPrograms() {
 
 // Show program duration
 function showDuration() {
-    const programDropdown = document.getElementById('program');
-    const studyDuration = document.getElementById('study-duration');
+    const programDropdown = document.getElementById('major_program');
+    const studyDuration = document.getElementById('study_duration');
     const selectedOption = programDropdown.options[programDropdown.selectedIndex];
 
     if (selectedOption.dataset.duration) {
@@ -161,7 +161,6 @@ function showDuration() {
         studyDuration.value = '';
     }
 }
-
 
 function saveApplication(event) {
     event.preventDefault();
@@ -172,7 +171,7 @@ function saveApplication(event) {
         formDataObj[key] = value;
     });
 
-   // console.log(JSON.stringify(formDataObj));
+    // console.log(JSON.stringify(formDataObj));
 
     fetch('../../../api/application_form/save_application.php', {
         method: 'POST',
@@ -180,7 +179,8 @@ function saveApplication(event) {
     })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
+            const work_study = work_study_history();
+            if (data.success && work_study) {
                 Swal.fire({
                     icon: 'success',
                     title: 'Application submitted successfully',
@@ -267,6 +267,66 @@ async function handleFileUpload(event) {
     }
 }
 
+function work_study_history() {
+    let studyExperienceData = [];
+    let workHistoryData = [];
+
+    // Collecting Study Experience
+    const studyEntries = document.querySelectorAll('.study-entry');
+    studyEntries.forEach((entry, index) => {
+        const schoolName = entry.querySelector(`[name="study_experience[${index}][school_name]"]`).value;
+        const degree = entry.querySelector(`[name="study_experience[${index}][degree]"]`).value;
+        const attendancePeriod = entry.querySelector(`[name="study_experience[${index}][attendance_period]"]`).value;
+        const contactPerson = entry.querySelector(`[name="study_experience[${index}][contact_person]"]`).value;
 
 
-// //0246814884
+        studyExperienceData.push({
+            school_name: schoolName,
+            degree: degree,
+            attendance_period: attendancePeriod,
+            contact_person: contactPerson
+        });
+    });
+
+    // Collecting Work History
+    const workEntries = document.querySelectorAll('.work-entry');
+    workEntries.forEach((entry, index) => {
+        const startDate = entry.querySelector(`[name="work_history[${index}][start_date]"]`).value;
+        const endDate = entry.querySelector(`[name="work_history[${index}][end_date]"]`).value;
+        const position = entry.querySelector(`[name="work_history[${index}][position]"]`).value;
+        const company = entry.querySelector(`[name="work_history[${index}][company]"]`).value;
+        const companyPhone = entry.querySelector(`[name="work_history[${index}][company_phone]"]`).value;
+        const companyEmail = entry.querySelector(`[name="work_history[${index}][company_email]"]`).value;
+
+        workHistoryData.push({
+            start_date: startDate,
+            end_date: endDate,
+            position: position,
+            company: company,
+            company_phone: companyPhone,
+            company_email: companyEmail
+        });
+    });
+
+    // Sending Data to PHP Backend
+    const formData = new FormData();
+    formData.append('study_experience', JSON.stringify(studyExperienceData));
+    formData.append('work_history', JSON.stringify(workHistoryData));
+
+    fetch('../../../api/application_form/work-study-experience.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                return true;
+            } else {
+                return false;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('There was an error with the request');
+        });
+}

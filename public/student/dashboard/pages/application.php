@@ -327,7 +327,7 @@ $countries = [
                         <!-- Show the file URL -->
                         <p class="mt-2 text-sm text-gray-500">
                             Current File:
-                            <a href="<?= './../'. htmlspecialchars($passportFileUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
+                            <a href="<?= './../' . htmlspecialchars($passportFileUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
                                 View Uploaded Passport Photo
                             </a>
                         </p>
@@ -893,9 +893,31 @@ $countries = [
 
                 <!-- English Proficiency Certificate -->
                 <div>
-                    <label for="english_proficiency_certificate" class="block text-sm font-bold text-gray-700 mb-1">English Proficiency Certificate *</label>
-                    <input type="file" onchange="handleFileUpload(event)" id="english_proficiency_certificate" name="english_proficiency_certificate"
+                    <label for="english_proficiency_certificate" class="block text-sm font-bold text-gray-700 mb-1">
+                        English Proficiency Certificate *
+                    </label>
+
+                    <?php
+                    // Check if a file exists for 'english_proficiency_certificate'
+                    $englishProficiencyFileUrl = getFileUrl($student_files, 'english_proficiency_certificate');
+                    ?>
+
+                    <!-- File input -->
+                    <input
+                        type="file" onchange="handleFileUpload(event)" id="english_proficiency_certificate"
+                        name="english_proficiency_certificate"
+                        accept="image/*,application/pdf"
                         class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+
+                    <?php if ($englishProficiencyFileUrl): ?>
+                        <!-- Show the file URL -->
+                        <p class="mt-2 text-sm text-gray-500">
+                            Current File:
+                            <a href="<?= './../' . htmlspecialchars($englishProficiencyFileUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                View Uploaded English Proficiency Certificate
+                            </a>
+                        </p>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Chinese Proficiency -->
@@ -1019,7 +1041,7 @@ $countries = [
                                 <label for="school_name_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
                                 <input type="text" id="school_name_<?php echo $index; ?>" name="study_experience[<?php echo $index; ?>][school_name]"
                                     class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                                    value="<?php echo htmlspecialchars($experience['institution']); ?>" />
+                                    value="<?php echo htmlspecialchars($experience['school_name']); ?>" />
                             </div>
                             <div>
                                 <label for="degree_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
@@ -1031,7 +1053,7 @@ $countries = [
                                 <label for="attendance_period_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Year of Attendance (From - To) *</label>
                                 <input type="text" id="attendance_period_<?php echo $index; ?>" name="study_experience[<?php echo $index; ?>][attendance_period]"
                                     class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                                    value="<?php echo htmlspecialchars($experience['start_date']) . ' - ' . htmlspecialchars($experience['end_date']); ?>" />
+                                    value="<?php echo htmlspecialchars($experience['attendance_period']) ?>" />
                             </div>
                             <div>
                                 <label for="contact_person_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Contact Person</label>
@@ -1175,137 +1197,267 @@ $countries = [
                 <!-- Valid passport with visa page -->
                 <div>
                     <label for="valid_passport" class="block text-sm font-bold text-gray-700 mb-1">Valid Passport with Visa Page *</label>
+                    <?php $validPassportUrl = getFileUrl($student_files, 'valid_passport'); ?>
                     <input type="file" onchange="handleFileUpload(event)" id="valid_passport" name="valid_passport"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <?php if ($validPassportUrl): ?>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Current File:
+                            <a href="<?= './../' . htmlspecialchars($validPassportUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                View Uploaded Passport with Visa Page
+                            </a>
+                        </p>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Highest academic Diploma/Certificate -->
                 <div>
                     <label for="highest_academic_diploma" class="block text-sm font-bold text-gray-700 mb-1">Highest Academic Diploma/Certificate *</label>
+                    <?php $academicDiplomaUrl = getFileUrl($student_files, 'highest_academic_diploma'); ?>
                     <input type="file" onchange="handleFileUpload(event)" id="highest_academic_diploma" name="highest_academic_diploma"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <?php if ($academicDiplomaUrl): ?>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Current File:
+                            <a href="<?= './../' . htmlspecialchars($academicDiplomaUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                View Uploaded Diploma/Certificate
+                            </a>
+                        </p>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Highest academic transcripts -->
                 <div>
                     <label for="highest_academic_transcripts" class="block text-sm font-bold text-gray-700 mb-1">Highest Academic Transcripts *</label>
+                    <?php $academicTranscriptsUrl = getFileUrl($student_files, 'highest_academic_transcripts'); ?>
                     <input type="file" onchange="handleFileUpload(event)" id="highest_academic_transcripts" name="highest_academic_transcripts"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <?php if ($academicTranscriptsUrl): ?>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Current File:
+                            <a href="<?= './../' . htmlspecialchars($academicTranscriptsUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                View Uploaded Academic Transcripts
+                            </a>
+                        </p>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Non-criminal record -->
                 <div>
-                    <label for="non_criminal_record" class="block text-sm font-bold text-gray-700 mb-1">Non-criminal Record/Certificate of Non-criminal Record *</label>
+                    <label for="non_criminal_record" class="block text-sm font-bold text-gray-700 mb-1">Non-criminal Record *</label>
+                    <?php $nonCriminalRecordUrl = getFileUrl($student_files, 'non_criminal_record'); ?>
                     <input type="file" onchange="handleFileUpload(event)" id="non_criminal_record" name="non_criminal_record"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <?php if ($nonCriminalRecordUrl): ?>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Current File:
+                            <a href="<?= './../' . htmlspecialchars($nonCriminalRecordUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                View Uploaded Non-criminal Record
+                            </a>
+                        </p>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Bank Statement -->
                 <div>
                     <label for="bank_statement" class="block text-sm font-bold text-gray-700 mb-1">Bank Statement</label>
-                    <input type="file" onchange="handleFileUpload(event)" " id=" bank_statement" name="bank_statement"
+                    <?php $bankStatementUrl = getFileUrl($student_files, 'bank_statement'); ?>
+                    <input type="file" onchange="handleFileUpload(event)" id="bank_statement" name="bank_statement"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <?php if ($bankStatementUrl): ?>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Current File:
+                            <a href="<?= './../' . htmlspecialchars($bankStatementUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                View Uploaded Bank Statement
+                            </a>
+                        </p>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Application Fee Receipt -->
                 <div>
                     <label for="application_fee_receipt" class="block text-sm font-bold text-gray-700 mb-1">Application Fee Receipt</label>
+                    <?php $applicationFeeReceiptUrl = getFileUrl($student_files, 'application_fee_receipt'); ?>
                     <input type="file" onchange="handleFileUpload(event)" id="application_fee_receipt" name="application_fee_receipt"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
-                    <p class="text-sm text-gray-500">
-                        Please note this application fee is non-refundable.
-                    </p>
+                    <?php if ($applicationFeeReceiptUrl): ?>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Current File:
+                            <a href="<?= './../' . htmlspecialchars($applicationFeeReceiptUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                View Uploaded Application Fee Receipt
+                            </a>
+                        </p>
+                    <?php endif; ?>
+                    <p class="text-sm text-gray-500">Please note this application fee is non-refundable.</p>
                 </div>
 
                 <!-- Recommendation Letters -->
                 <div>
                     <label for="recommendation_letters" class="block text-sm font-bold text-gray-700 mb-1">Recommendation Letter(s)</label>
+                    <?php $recommendationLettersUrl = getFileUrl($student_files, 'recommendation_letters'); ?>
                     <input type="file" onchange="handleFileUpload(event)" id="recommendation_letters" name="recommendation_letters"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
-                    <p class="text-sm text-gray-500">
-                        Provide 2 recommendation letters (for Masters & PhD only).
-                    </p>
+                    <?php if ($recommendationLettersUrl): ?>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Current File:
+                            <a href="<?= './../' . htmlspecialchars($recommendationLettersUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                View Uploaded Recommendation Letter(s)
+                            </a>
+                        </p>
+                    <?php endif; ?>
+                    <p class="text-sm text-gray-500">Provide 2 recommendation letters (for Masters & PhD only).</p>
                 </div>
 
                 <!-- Publications, Articles, Thesis -->
                 <div>
                     <label for="publications_articles_thesis" class="block text-sm font-bold text-gray-700 mb-1">Publications, Articles, Thesis, etc.</label>
+                    <?php $publicationsUrl = getFileUrl($student_files, 'publications_articles_thesis'); ?>
                     <input type="file" onchange="handleFileUpload(event)" id="publications_articles_thesis" name="publications_articles_thesis"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <?php if ($publicationsUrl): ?>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Current File:
+                            <a href="<?= './../' . htmlspecialchars($publicationsUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                View Uploaded Publications, Articles, or Thesis
+                            </a>
+                        </p>
+                    <?php endif; ?>
                     <p class="text-sm text-gray-500">(For Masters & PhD only)</p>
                 </div>
+
 
                 <!-- Foreigner Physical Examination Form -->
                 <div>
                     <label for="physical_examination_form" class="block text-sm font-bold text-gray-700 mb-1">Foreigner Physical Examination Form *</label>
+                    <?php $physicalExamFormUrl = getFileUrl($student_files, 'physical_examination_form'); ?>
                     <input type="file" onchange="handleFileUpload(event)" id="physical_examination_form" name="physical_examination_form"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <?php if ($physicalExamFormUrl): ?>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Current File:
+                            <a href="<?= './../' . htmlspecialchars($physicalExamFormUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                View Uploaded Physical Examination Form
+                            </a>
+                        </p>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Guardian's Letter of Guarantee -->
                 <div>
                     <label for="guardians_letter_of_guarantee" class="block text-sm font-bold text-gray-700 mb-1">Guardian's Letter of Guarantee</label>
+                    <?php $guardiansLetterUrl = getFileUrl($student_files, 'guardians_letter_of_guarantee'); ?>
                     <input type="file" onchange="handleFileUpload(event)" id="guardians_letter_of_guarantee" name="guardians_letter_of_guarantee"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
-                    <p class="text-sm text-gray-500">
-                        Applicants under 18 should submit this document.
-                    </p>
+                    <?php if ($guardiansLetterUrl): ?>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Current File:
+                            <a href="<?= './../' . htmlspecialchars($guardiansLetterUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                View Uploaded Guardian's Letter of Guarantee
+                            </a>
+                        </p>
+                    <?php endif; ?>
+                    <p class="text-sm text-gray-500">Applicants under 18 should submit this document.</p>
                 </div>
 
                 <!-- English Language Proficiency -->
                 <div>
                     <label for="english_language_proficiency" class="block text-sm font-bold text-gray-700 mb-1">English Language Proficiency</label>
+                    <?php $englishProficiencyUrl = getFileUrl($student_files, 'english_language_proficiency'); ?>
                     <input type="file" onchange="handleFileUpload(event)" id="english_language_proficiency" name="english_language_proficiency"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
-                    <p class="text-sm text-gray-500">
-                        Students from English-speaking countries are exempted.
-                    </p>
+                    <?php if ($englishProficiencyUrl): ?>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Current File:
+                            <a href="<?= './../' . htmlspecialchars($englishProficiencyUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                View Uploaded English Language Proficiency Document
+                            </a>
+                        </p>
+                    <?php endif; ?>
+                    <p class="text-sm text-gray-500">Students from English-speaking countries are exempted.</p>
                 </div>
 
                 <!-- Chinese Language Certificate (HSK Certificate) -->
                 <div>
                     <label for="chinese_language_certificate" class="block text-sm font-bold text-gray-700 mb-1">Chinese Language Certificate (HSK Certificate)</label>
+                    <?php $chineseCertificateUrl = getFileUrl($student_files, 'chinese_language_certificate'); ?>
                     <input type="file" onchange="handleFileUpload(event)" id="chinese_language_certificate" name="chinese_language_certificate"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <?php if ($chineseCertificateUrl): ?>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Current File:
+                            <a href="<?= './../' . htmlspecialchars($chineseCertificateUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                View Uploaded Chinese Language Certificate
+                            </a>
+                        </p>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Parent's Authorization Letter -->
                 <div>
                     <label for="parents_authorization_letter" class="block text-sm font-bold text-gray-700 mb-1">Parent's Authorization Letter</label>
+                    <?php $parentsAuthorizationUrl = getFileUrl($student_files, 'parents_authorization_letter'); ?>
                     <input type="file" onchange="handleFileUpload(event)" id="parents_authorization_letter" name="parents_authorization_letter"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
-                    <p class="text-sm text-gray-500">
-                        Applicants under 18 should submit this document.
-                    </p>
+                    <?php if ($parentsAuthorizationUrl): ?>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Current File:
+                            <a href="<?= './../' . htmlspecialchars($parentsAuthorizationUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                View Uploaded Parent's Authorization Letter
+                            </a>
+                        </p>
+                    <?php endif; ?>
+                    <p class="text-sm text-gray-500">Applicants under 18 should submit this document.</p>
                 </div>
+
 
                 <!-- Study Plan or Research Proposal -->
                 <div>
                     <label for="study_plan_research_proposal" class="block text-sm font-bold text-gray-700 mb-1">Study Plan or Research Proposal</label>
+                    <?php $studyPlanUrl = getFileUrl($student_files, 'study_plan_research_proposal'); ?>
                     <input type="file" onchange="handleFileUpload(event)" id="study_plan_research_proposal" name="study_plan_research_proposal"
                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                         accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <?php if ($studyPlanUrl): ?>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Current File:
+                            <a href="<?= './../' . htmlspecialchars($studyPlanUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                View Uploaded Study Plan or Research Proposal
+                            </a>
+                        </p>
+                    <?php endif; ?>
                     <p class="text-sm text-gray-500">For Masters & PhD only</p>
                 </div>
 
                 <!-- Curriculum Vitae -->
                 <div>
                     <label for="curriculum_vitae" class="block text-sm font-bold text-gray-700 mb-1">Curriculum Vitae</label>
-                    <input type="file" onchange="handleFileUpload(event)" id="curriculum_vitae" name="curriculum_vitae" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <?php $curriculumVitaeUrl = getFileUrl($student_files, 'curriculum_vitae'); ?>
+                    <input type="file" onchange="handleFileUpload(event)" id="curriculum_vitae" name="curriculum_vitae"
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                        accept=".jpg,.jpeg,.png,.bmp,.doc,.docx,.pdf,.xls,.xlsx" />
+                    <?php if ($curriculumVitaeUrl): ?>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Current File:
+                            <a href="<?= './../' . htmlspecialchars($curriculumVitaeUrl) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                View Uploaded Curriculum Vitae
+                            </a>
+                        </p>
+                    <?php endif; ?>
                 </div>
+
             </div>
         </div>
     </form>

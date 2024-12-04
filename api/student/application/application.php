@@ -28,11 +28,11 @@ try {
     $studentId = $_SESSION['student_id'];
 
     // Get database connection
-    $database = new Database();
-    $db = $database->getConnection();
+    $db = new Database();
+    $conn = $database->getConnection();
 
     // Get application details with joins
-    $stmt = $db->prepare("SELECT 
+    $stmt = $conn->prepare("SELECT 
         a.application_id,
         a.status as application_status,
         p.payment_status,
