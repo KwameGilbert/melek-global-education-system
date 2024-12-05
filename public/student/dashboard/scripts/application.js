@@ -180,6 +180,8 @@ function saveApplication(event) {
         .then(response => response.json())
         .then(data => {
             const work_study = work_study_history();
+            console.log(`Application Update: ${data.success}`)
+            console.log(`Work and Study: ${work_study}`)
             if (data.success && work_study) {
                 Swal.fire({
                     icon: 'success',
@@ -194,7 +196,6 @@ function saveApplication(event) {
                 });
             }
         })
-
 }
 
 async function handleFileUpload(event) {
@@ -238,9 +239,7 @@ async function handleFileUpload(event) {
             method: 'POST',
             body: formData, // FormData automatically sets the correct headers
         });
-
         const data = await response.json();
-
         Swal.close(); // Close the loading alert
 
         if (data.success) {
@@ -273,12 +272,13 @@ function work_study_history() {
 
     // Collecting Study Experience
     const studyEntries = document.querySelectorAll('.study-entry');
-    studyEntries.forEach((entry, index) => {
-        const schoolName = entry.querySelector(`[name="study_experience[${index}][school_name]"]`).value;
-        const degree = entry.querySelector(`[name="study_experience[${index}][degree]"]`).value;
-        const attendancePeriod = entry.querySelector(`[name="study_experience[${index}][attendance_period]"]`).value;
-        const contactPerson = entry.querySelector(`[name="study_experience[${index}][contact_person]"]`).value;
-
+    
+    // Loop through each study entry to collect study experience data
+    studyEntries.forEach((entry) => {
+        const schoolName = entry.querySelector('.school-name').value;
+        const degree = entry.querySelector('.degree').value;
+        const attendancePeriod = entry.querySelector('.attendance-period').value;
+        const contactPerson = entry.querySelector('.contact-person').value;
 
         studyExperienceData.push({
             school_name: schoolName,
@@ -290,13 +290,13 @@ function work_study_history() {
 
     // Collecting Work History
     const workEntries = document.querySelectorAll('.work-entry');
-    workEntries.forEach((entry, index) => {
-        const startDate = entry.querySelector(`[name="work_history[${index}][start_date]"]`).value;
-        const endDate = entry.querySelector(`[name="work_history[${index}][end_date]"]`).value;
-        const position = entry.querySelector(`[name="work_history[${index}][position]"]`).value;
-        const company = entry.querySelector(`[name="work_history[${index}][company]"]`).value;
-        const companyPhone = entry.querySelector(`[name="work_history[${index}][company_phone]"]`).value;
-        const companyEmail = entry.querySelector(`[name="work_history[${index}][company_email]"]`).value;
+    workEntries.forEach((entry) => {
+        const startDate = entry.querySelector('[name="start_date"]').value;
+        const endDate = entry.querySelector('[name="end_date"]').value;
+        const position = entry.querySelector('[name="position"]').value;
+        const company = entry.querySelector('[name="company"]').value;
+        const companyPhone = entry.querySelector('[name="company_phone"]').value;
+        const companyEmail = entry.querySelector('[name="company_email"]').value;
 
         workHistoryData.push({
             start_date: startDate,
@@ -307,26 +307,22 @@ function work_study_history() {
             company_email: companyEmail
         });
     });
-
+ 
+    
     // Sending Data to PHP Backend
     const formData = new FormData();
     formData.append('study_experience', JSON.stringify(studyExperienceData));
     formData.append('work_history', JSON.stringify(workHistoryData));
 
-    fetch('../../../api/application_form/work-study-experience.php', {
+    return fetch('../../../api/application_form/work-study-experience.php', {
         method: 'POST',
         body: formData
-    })
-        .then(response => response.json())
+    }).then(response => response.json())
         .then(data => {
-            if (data.success) {
-                return true;
-            } else {
-                return false;
-            }
+            return data.success ? true : false;
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('There was an error with the request');
+            return false;
         });
 }

@@ -874,7 +874,7 @@ $countries = [
                 <div>
                     <label for="study_duration" class="block text-sm font-bold text-gray-700 mb-1">Study Duration *</label>
                     <input type="text" id="study_duration" name="study_duration" class="w-full p-3 border border-gray-300 rounded-md"
-                        value="<?php echo isset($application['major_program']) ? $major_programs[array_search($application['major_program'], array_column($major_programs, 'program_id'))]['program_duration'] : ''; ?>" readonly />
+                        value="<?php echo isset($application['major_program']) ? $major_programs[array_search($application['major_program'], array_column($major_programs, 'program_id'))]['program_duration'] : ''; ?>" "" />
                 </div>
             </div>
         </div>
@@ -1034,31 +1034,27 @@ $countries = [
             </h3>
             <div id="study-experience-container" class="space-y-4">
                 <?php if (!empty($study_experience)): ?>
-                    <?php foreach ($study_experience as $index => $experience): ?>
-                        <!-- Existing Entry -->
+                    <?php foreach ($study_experience as $experience): ?>
+                        <!-- Display Entry -->
                         <div class="study-entry grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label for="school_name_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
-                                <input type="text" id="school_name_<?php echo $index; ?>" name="study_experience[<?php echo $index; ?>][school_name]"
-                                    class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                <label class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
+                                <input type="text" class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($experience['school_name']); ?>" />
                             </div>
                             <div>
-                                <label for="degree_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
-                                <input type="text" id="degree_<?php echo $index; ?>" name="study_experience[<?php echo $index; ?>][degree]"
-                                    class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
+                                <input type="text" class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($experience['degree']); ?>" />
                             </div>
                             <div>
-                                <label for="attendance_period_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Year of Attendance (From - To) *</label>
-                                <input type="text" id="attendance_period_<?php echo $index; ?>" name="study_experience[<?php echo $index; ?>][attendance_period]"
-                                    class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
-                                    value="<?php echo htmlspecialchars($experience['attendance_period']) ?>" />
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Year of Attendance (From - To) *</label>
+                                <input type="text" class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                    value="<?php echo htmlspecialchars($experience['attendance_period']); ?>" />
                             </div>
                             <div>
-                                <label for="contact_person_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Contact Person</label>
-                                <input type="text" id="contact_person_<?php echo $index; ?>" name="study_experience[<?php echo $index; ?>][contact_person]"
-                                    class="contact-person w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Contact Person</label>
+                                <input type="text" class="contact-person w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($experience['contact_person'] ?? ''); ?>" />
                             </div>
                         </div>
@@ -1068,24 +1064,20 @@ $countries = [
                     <!-- Blank Form for New Entry -->
                     <div class="study-entry grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="school_name_0" class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
-                            <input type="text" id="school_name_0" name="study_experience[0][school_name]"
-                                class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                            <label class="block text-sm font-bold text-gray-700 mb-1">School Name *</label>
+                            <input type="text" class="school-name w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label for="degree_0" class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
-                            <input type="text" id="degree_0" name="study_experience[0][degree]"
-                                class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Degree *</label>
+                            <input type="text" class="degree w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label for="attendance_period_0" class="block text-sm font-bold text-gray-700 mb-1">Year of Attendance (From - To) *</label>
-                            <input type="text" id="attendance_period_0" name="study_experience[0][attendance_period]"
-                                class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Year of Attendance (From - To) *</label>
+                            <input type="text" class="attendance-period w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label for="contact_person_0" class="block text-sm font-bold text-gray-700 mb-1">Contact Person</label>
-                            <input type="text" id="contact_person_0" name="study_experience[0][contact_person]"
-                                class="contact-person w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Contact Person</label>
+                            <input type="text" class="contact-person w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                     </div>
                     <hr class="border border-gray-500">
@@ -1101,42 +1093,42 @@ $countries = [
             <h3 class="text-xl font-bold mb-4 text-gray-700">Work History</h3>
             <div id="work-history-container" class="space-y-4">
                 <?php if (!empty($work_history)): ?>
-                    <?php foreach ($work_history as $index => $work): ?>
+                    <?php foreach ($work_history as $work): ?>
                         <!-- Existing Entry -->
                         <div class="work-entry grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label for="work_start_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Starting Time</label>
-                                <input type="date" id="work_start_<?php echo $index; ?>" name="work_history[<?php echo $index; ?>][start_date]"
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Starting Time</label>
+                                <input type="date" name="start_date"
                                     class="work-start w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($work['start_date']); ?>" />
                             </div>
                             <div>
-                                <label for="work_end_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Ending Time</label>
-                                <input type="date" id="work_end_<?php echo $index; ?>" name="work_history[<?php echo $index; ?>][end_date]"
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Ending Time</label>
+                                <input type="date" name="end_date"
                                     class="work-end w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($work['end_date']); ?>" />
                             </div>
                             <div>
-                                <label for="position_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Position</label>
-                                <input type="text" id="position_<?php echo $index; ?>" name="work_history[<?php echo $index; ?>][position]"
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Position</label>
+                                <input type="text" name="position"
                                     class="position w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($work['position']); ?>" />
                             </div>
                             <div>
-                                <label for="company_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Company</label>
-                                <input type="text" id="company_<?php echo $index; ?>" name="work_history[<?php echo $index; ?>][company]"
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Company</label>
+                                <input type="text" name="company"
                                     class="company w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($work['company']); ?>" />
                             </div>
                             <div>
-                                <label for="company_phone_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Company Phone/Mobile</label>
-                                <input type="tel" id="company_phone_<?php echo $index; ?>" name="work_history[<?php echo $index; ?>][company_phone]"
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Company Phone/Mobile</label>
+                                <input type="tel" name="company_phone"
                                     class="phone w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($work['company_phone']); ?>" />
                             </div>
                             <div>
-                                <label for="company_email_<?php echo $index; ?>" class="block text-sm font-bold text-gray-700 mb-1">Company Email</label>
-                                <input type="email" id="company_email_<?php echo $index; ?>" name="work_history[<?php echo $index; ?>][company_email]"
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Company Email</label>
+                                <input type="email" name="company_email"
                                     class="email w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
                                     value="<?php echo htmlspecialchars($work['company_email']); ?>" />
                             </div>
@@ -1147,34 +1139,34 @@ $countries = [
                     <!-- Blank Form for New Entry -->
                     <div class="work-entry grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="work_start_0" class="block text-sm font-bold text-gray-700 mb-1">Starting Time</label>
-                            <input type="date" id="work_start_0" name="work_history[0][start_date]"
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Starting Time</label>
+                            <input type="date" name="start_date"
                                 class="work-start w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label for="work_end_0" class="block text-sm font-bold text-gray-700 mb-1">Ending Time</label>
-                            <input type="date" id="work_end_0" name="work_history[0][end_date]"
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Ending Time</label>
+                            <input type="date" name="end_date"
                                 class="work-end w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label for="position_0" class="block text-sm font-bold text-gray-700 mb-1">Position</label>
-                            <input type="text" id="position_0" name="work_history[0][position]"
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Position</label>
+                            <input type="text" name="position"
                                 class="position w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label for="company_0" class="block text-sm font-bold text-gray-700 mb-1">Company</label>
-                            <input type="text" id="company_0" name="work_history[0][company]"
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Company</label>
+                            <input type="text" name="company"
                                 class="company w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label for="company_phone_0" class="block text-sm font-bold text-gray-700 mb-1">Company Phone/Mobile</label>
-                            <input type="tel" id="company_phone_0" name="work_history[0][company_phone]"
-                                class="company-phone w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Company Phone/Mobile</label>
+                            <input type="tel" name="company_phone"
+                                class="phone w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                         <div>
-                            <label for="company_email_0" class="block text-sm font-bold text-gray-700 mb-1">Company Email</label>
-                            <input type="email" id="company_email_0" name="work_history[0][company_email]"
-                                class="company-email w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Company Email</label>
+                            <input type="email" name="company_email"
+                                class="email w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400" />
                         </div>
                     </div>
                     <hr class="border border-gray-500">

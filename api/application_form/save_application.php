@@ -1,7 +1,7 @@
 <?php
 // Start session to access the application ID from session
 session_start();
-
+header('Content-Type: application/json');
 // Ensure the application_id is set
 if (!isset($_SESSION['application_id'])) {
     die('Error: Application ID not found.');
