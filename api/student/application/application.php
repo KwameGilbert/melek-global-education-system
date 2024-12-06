@@ -29,7 +29,7 @@ try {
 
     // Get database connection
     $db = new Database();
-    $conn = $database->getConnection();
+    $conn = $db->getConnection();
 
     // Get application details with joins
     $stmt = $conn->prepare("SELECT 

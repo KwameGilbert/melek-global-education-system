@@ -148,10 +148,14 @@ try {
     $stmt->bindParam(':emergency_contact_occupation', $_POST['emergency_contact_occupation']);
     $stmt->bindParam(':emergency_contact_email', $_POST['emergency_contact_email']);
     $stmt->bindParam(':emergency_contact_phone', $_POST['emergency_contact_phone']);
-    $stmt->bindParam(':major_country', $_POST['major_country']);
-    $stmt->bindParam(':major_school', $_POST['major_school']);
-    $stmt->bindParam(':major_degree', $_POST['major_degree']);
-    $stmt->bindParam(':major_program', $_POST['major_program']);
+    $major_country = (empty($_POST['major_country']) ? NULL : $_POST['major_country']);
+    $major_school = (empty($_POST['major_school']) ? NULL : $_POST['major_school']);
+    $major_degree = (empty($_POST['major_degree']) ? NULL : $_POST['major_degree']);
+    $major_program = (empty($_POST['major_program']) ? NULL : $_POST['major_program']);
+    $stmt->bindParam(':major_country', $major_country);
+    $stmt->bindParam(':major_school', $major_school);
+    $stmt->bindParam(':major_degree', $major_degree);
+    $stmt->bindParam(':major_program', $major_program);
     $stmt->bindParam(':english_proficiency', $_POST['english_proficiency']);
     $stmt->bindParam(':chinese_proficiency', $_POST['chinese_proficiency']);
     $stmt->bindParam(':hsk_level', $_POST['hsk_level']);

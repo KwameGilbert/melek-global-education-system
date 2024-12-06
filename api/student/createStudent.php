@@ -86,6 +86,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hashedPassword
         ]);
 
+        $std_id = $db->lastInsertId();
+        $addApplication = $db->prepare('INSERT INTO application(application_id, student_id, status, date_applied) VALUES(?,?,?, NOW())')->execute([$std_id, $std_id, 'Pending Processing']);
+
+
+        $addApplicationDetails = $db->prepare('INSERT INTO application_details(application_id, firstname, lastname, gender, nationality, dob) VALUES(?,?,?,?,?,?)')->execute([$std_id, $firstname, $lastname, $gender, $nationality, $dob]);
+        
         // Set success response
         $response['status'] = true;
         $response['message'] = 'Account created successfully! Please login to continue.';

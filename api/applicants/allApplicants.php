@@ -24,10 +24,10 @@ $query = "
         application a ON ad.application_id = a.application_id
     JOIN 
         student s ON a.student_id = s.student_id
-    JOIN 
-        school sc ON ad.school_id = sc.school_id
-    JOIN 
-        program p ON ad.program_id = p.program_id
+    LEFT JOIN 
+        school sc ON ad.major_school = sc.school_id
+    LEFT JOIN 
+        program p ON ad.major_program = p.program_id
 ";
 
 

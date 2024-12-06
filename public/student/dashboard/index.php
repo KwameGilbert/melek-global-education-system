@@ -6,7 +6,6 @@ session_start();
 
 // Check if the user is logged in by verifying session variables
 if (isset($_SESSION['student_id'])) {
-    
 } else {
     // Redirect to login if session is not set
     header('Location: ../login/');
@@ -23,10 +22,10 @@ if (isset($_SESSION['student_id'])) {
     <title>Dashboard - Melek Global Education</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="../../../imports/sweetalert/sweetalert2@11.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- FontAwesome Icons -->
-    <link href="../../../imports/fontawesome/css/all.min.css" rel="stylesheet">
-    <link href="../../../imports/tailwind/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
     <style>
         .hidden {
             display: none;

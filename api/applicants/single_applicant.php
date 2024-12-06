@@ -27,7 +27,7 @@ if (isset($_GET['id'])) {
     $studyQuery = 'SELECT * FROM `study_experience` WHERE application_id = :id';
     $workQuery = 'SELECT * FROM `work_history` WHERE application_id = :id';
     $updateQuery = 'SELECT * FROM `update` WHERE application_id = :id';
-    $documentQuery = 'SELECT * FROM `document` WHERE application_id = :id';
+    $documentQuery = 'SELECT * FROM `student_files` WHERE application_id = :id';
 
     try {
         $stmt = $conn->prepare($sql);

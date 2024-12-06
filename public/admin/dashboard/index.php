@@ -22,9 +22,9 @@ if (isset($_SESSION['admin_id'])) {
     <title>Admin Dashboard - Melek Global Education</title>
     <!-- Tailwind CSS -->
     <script src="../../../imports/chart/chart.js"></script>
-    <link rel="stylesheet" href="../../../imports/tailwind/tailwind.min.css">
-    <link href="../../../imports/fontawesome/css/all.min.css" rel="stylesheet">
-    <script src="../../../imports/sweetalert/sweetalert2@11.js"></script>
+    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="h-screen overflow-hidden flex bg-gray-50">
