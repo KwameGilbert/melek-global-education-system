@@ -34,8 +34,11 @@ function processPaystackPayment() {
                 }
             },
             onClose: function() {
-                // Callback function to handle when the payment modal is closed
-                alert('Payment process was cancelled.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Payment Canceled',
+                    text: 'Your payment has been canceled',
+                });
             }
         });
 
@@ -44,12 +47,12 @@ function processPaystackPayment() {
 
 function recordPayment(reference, paymentStatus) {
     // Record Payment for user
-    
+
     const studentEmail = document.querySelector('#studentEmail').innerText;
     const applicationCost = parseFloat((document.querySelector('#applicationCost').innerText).replace(/,/g, ''));
     const applicationId = document.querySelector('#application_id').innerText;
 
-    fetch('/student/dashboard/payment', {
+    fetch('../../../api/student/payment/pay.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -62,7 +65,28 @@ function recordPayment(reference, paymentStatus) {
             applicationId
         })
     })
-
-
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Payment Successful',
+                    text: 'Your payment has been recorded successfully!',
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Payment Failed',
+                    text: data.message || 'An error occurred while processing your payment.',
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Something went wrong. Please try again.',
+            });
+        });
 }
-    

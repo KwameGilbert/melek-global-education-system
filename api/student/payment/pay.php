@@ -17,13 +17,47 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $email = $data->studentEmail;
     $status = $data->paymentStatus;
     $application_id = $data->applicationId;
-    $payment_date = date('Y-m-d H:i:s');
+
+    //Verify payment with paystack verifcation then record payment
+    $url = 'https://api.paystack.co/transaction/verify/' . $reference;
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => array(
+            "Authorization: Bearer sk_test_ae5ab09697628564aec4e64c64d20e96ec385ab0",
+            "Content-Type: application/json",
+            "Cache-Control: no-cache",
+        ),
+    ));
+
+    $response = curl_exec($curl);
+    $error = curl_errno($curl);
+    curl_close($curl);
+
+    if ($error) {
+        echo json_encode(['message' => 'Curl Error: ' . $error]);
+        exit();
+    }else{
+        $result = json_decode($response);
+        if (!$result->status) {
+            echo json_encode(['message' => 'Payment verification failed']);
+            exit();
+        }
+    }
 
     $query = "
         INSERT INTO 
-            payments (reference, amount, email, status, application_id, payment_date)
+            payment (payment_status, payment_amount, reference, application_id, payment_email, ip_address, payment_date)
         VALUES 
-            (:reference, :amount, :email, :status, :application_id, :payment_date)
+            (:status, :amount, :reference, :application_id, :email, :ip_address, :payment_date)
     ";
 
     $stmt = $conn->prepare($query);
@@ -33,15 +67,17 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') {
         'email' => $email,
         'status' => $status,
         'application_id' => $application_id,
-        'payment_date' => $payment_date
+        'payment_date' => $result->data->paid_at,
+        'ip_address' => $result->data->ip_address
     ]);
 
     if ($stmt->rowCount() > 0) {
-        echo json_encode(['message' => 'Payment recorded successfully']);
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Payment recorded successfully']);
     } else {
         echo json_encode(['message' => 'Payment recording failed']);
     }
 }
 
-}
 ?>
