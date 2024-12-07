@@ -247,8 +247,8 @@ function loadPage(page) {
                 case 'application.php':
                     loadApplications();
                     break;
-                case 'payments.html':
-                    loadPayments();
+                case 'payments.php':
+                    initiatePayment();
                     break;
                 case 'profile.php':
                     loadProfile();

@@ -103,6 +103,7 @@ if (isset($_SESSION['student_id'])) {
     <script src="./scripts/index.js"></script>
     <script src="./scripts/profile.js"></script>
     <script src="./scripts/application.js"></script>
+    <script src="./scripts/payment.js"></script>
     <script>
         // Toggle sidebar visibility
         function toggleSidebar() {
@@ -129,6 +130,8 @@ if (isset($_SESSION['student_id'])) {
             loadPage(activePage);
         };
     </script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 </body>
 
 </html>
