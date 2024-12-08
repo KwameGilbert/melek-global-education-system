@@ -65,13 +65,16 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') {
         'reference' => $reference,
         'amount' => $amount,
         'email' => $email,
-        'status' => $status,
+        'status' => 'Completed',
         'application_id' => $application_id,
         'payment_date' => $result->data->paid_at,
         'ip_address' => $result->data->ip_address
     ]);
 
-    if ($stmt->rowCount() > 0) {
+    $applicationStatusUpdate = $conn->prepare('UPDATE `application` SET `status` = :status')->execute([ 'status' => 'processing']);
+
+  
+    if (($stmt->rowCount() > 0) && ($applicationStatutUpdate)) {
         echo json_encode([
             'status' => 'success',
             'message' => 'Payment recorded successfully']);

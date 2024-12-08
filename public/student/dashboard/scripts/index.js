@@ -166,7 +166,7 @@ loadingToast.fire({
     // Fetch notices from JSON
     async function loadNotices() {
         try {
-            const response = await fetch('./api/notices.json');
+            const response = await fetch('../../../api/student/notice/notices.php');
             const notices = await response.json();
             // Display notices
             displayNotices(notices);
