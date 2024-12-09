@@ -3,22 +3,25 @@ header('Content-Type: application/json');
 // Verify Paystack payment and record payment
 require_once __DIR__ . '/../../../config/database.php';
 
-if($_SERVER['REQUEST_METHOD'] !== 'POST') {
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['message' => 'Invalid request method']);
     exit();
-}else{
-
-    $db = new Database();
-    $conn = $db->getConnection();
+$db = new Database();
+$conn = $db->getConnection();
 
     $data = json_decode(file_get_contents('php://input'));
+    $reference = $data->reference;
+    $amount = $data->applicationCost;
+    if (!isset($data->reference, $data->applicationCost, $data->studentEmail, $data->paymentStatus, $data->applicationId)) {
+        echo json_encode(['message' => 'Invalid input data']);
+        exit();
+    }
+
     $reference = $data->reference;
     $amount = $data->applicationCost;
     $email = $data->studentEmail;
     $status = $data->paymentStatus;
     $application_id = $data->applicationId;
-
-    //Verify payment with paystack verifcation then record payment
     $url = 'https://api.paystack.co/transaction/verify/' . $reference;
 
     $curl = curl_init();
