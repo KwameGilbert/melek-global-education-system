@@ -127,12 +127,12 @@ if (isset($_SESSION['admin_id'])) {
             loadPage(activePage);
         };
     </script>
-    <script src="./scripts/schools.js"></script>
-    <script src="./scripts/settings.js"></script>
-    <script src="./scripts/security.js"></script>
+    <script src="./scripts/schools.min.js"></script>
+    <script src="./scripts/settings.min.js"></script>
+    <script src="./scripts/security.min.js"></script>
     <script src="../../../imports/html2pdf/html2pdf.bundle.min.js"></script>
-    <script src="./scripts/view-applicant.js"></script>
-    <script src="./scripts/index.js"></script>
+    <script src="./scripts/view-applicant.min.js"></script>
+    <script src="./scripts/index.min.js"></script>
 </body>
 
 </html>

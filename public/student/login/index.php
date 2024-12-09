@@ -183,7 +183,7 @@ if (isset($_SESSION['student_id'])) {
             </div>
         </div>
     </div>
-    <script src="./login.js"></script>
+    <script src="./login.min.js"></script>
 </body>
 
 </html>

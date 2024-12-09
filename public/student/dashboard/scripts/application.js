@@ -9,7 +9,6 @@ function loadApplications() {
             toast.addEventListener('mouseleave', Swal.resumeTimer);
         }
     });
-
     loadingToast.fire({
         title: 'Loading your application form...',
         timer: 3000,

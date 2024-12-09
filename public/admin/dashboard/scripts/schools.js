@@ -22,10 +22,11 @@ function fetchAllData() {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Something went wrong while fetching data!',
+                text: 'Something went wrong while fetching data !',
             });
         });
 }
+
 
 // Render functions for each list
 function renderCountryList() {
@@ -68,7 +69,6 @@ function renderSchoolList() {
     `;
     }).join('');
 }
-
 
 function renderProgramList() {
     const list = document.getElementById('programList');
@@ -180,7 +180,7 @@ function addSchool() {
     const cityInput = document.getElementById('schoolCity');
     const applicationCostInput = document.getElementById('applicationCost');
     const countrySelect = document.getElementById('selectCountry');
-    
+
     const name = nameInput.value.trim();
     const city = cityInput.value.trim();
     const applicationCost = parseFloat(applicationCostInput.value);
@@ -198,8 +198,8 @@ function addSchool() {
     fetch('../../../api/school/addSchool.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-            name, 
+        body: JSON.stringify({
+            name,
             city,
             applicationCost,
             country_id

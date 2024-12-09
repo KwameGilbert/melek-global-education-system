@@ -99,10 +99,10 @@ if (isset($_SESSION['student_id'])) {
         </main>
     </div>
 
-    <script src="./scripts/index.js"></script>
-    <script src="./scripts/profile.js"></script>
-    <script src="./scripts/application.js"></script>
-    <script src="./scripts/payment.js"></script>
+    <script src="./scripts/index.min.js"></script>
+    <script src="./scripts/profile.min.js"></script>
+    <script src="./scripts/application.min.js"></script>
+    <script src="./scripts/payment.min.js"></script>
     <script>
         // Toggle sidebar visibility
         function toggleSidebar() {
