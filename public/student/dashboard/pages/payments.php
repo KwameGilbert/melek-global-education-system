@@ -5,7 +5,6 @@ $conn = $db->getConnection();
 session_start();
 
 $application_id = $_SESSION['application_id'];
-
 // Check if the applicant has already paid
 $paymentQuery = "
     SELECT 
@@ -56,8 +55,8 @@ if (!$paymentData) {
         $application_cost = '0.00';
     }
 }
-?>
 
+?>
 <div class="bg-gray-100 flex items-center justify-center h-full my-auto mx-auto">
     <div class="container mx-auto p-6 max-w-lg bg-white rounded-lg shadow-lg">
         <?php if ($paymentData): ?>
@@ -68,7 +67,7 @@ if (!$paymentData) {
                 <p class="text-sm text-gray-500">Payment Reference: <?php echo htmlspecialchars($paymentData['reference']); ?></p>
             </div>
             <div class="w-36 h-36 mx-auto mb-6 bg-green-500 rounded-full flex items-center justify-center">
-                <span class="text-white text-3xl font-bold">✔</span>
+                <span class="text-white text-3xl font-bold">✔✔</span>
             </div>
         <?php else: ?>
             <!-- Payment Form -->
