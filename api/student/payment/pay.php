@@ -74,7 +74,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $applicationStatusUpdate = $conn->prepare('UPDATE `application` SET `status` = :status')->execute([ 'status' => 'processing']);
 
   
-    if (($stmt->rowCount() > 0) && ($applicationStatutUpdate)) {
+    if (($stmt->rowCount() > 0) && ($applicationStatusUpdate)) {
         echo json_encode([
             'status' => 'success',
             'message' => 'Payment recorded successfully']);
