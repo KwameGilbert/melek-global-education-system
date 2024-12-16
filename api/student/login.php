@@ -1,5 +1,5 @@
 <?php
-// login.php
+// Login.php
 require_once __DIR__ . '/../../config/database.php';
 
 // Start PHP session
@@ -7,7 +7,7 @@ session_start();
 
 // Response array
 $response = [
-    'status' => 'error',
+    'status' => false,
     'message' => '',
     'data' => null
 ];
@@ -30,8 +30,9 @@ try {
 
     // Validate email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        throw new Exception('Please enter a valid email address');
+       throw new Exception('Please enter a valid email address');
     }
+
 
     if (empty($password)) {
         throw new Exception('Password is required');
@@ -63,11 +64,9 @@ try {
     $student = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$student) {
-        throw new Exception('Student email not found');
-    }
-
-    if (!password_verify($password, $student['password'])) {
-        throw new Exception('Invalid password');
+        throw new Exception('Student not found');
+    }else if (!password_verify($password, $student['password'])) {
+        throw new Exception('Wrong passoword');
     }
 
     // Start session and store student info
@@ -93,11 +92,8 @@ try {
             $cookieParams["secure"],
             $cookieParams["httponly"]
         );
-    }
+    };
 
-    // Update last login
-    $updateStmt = $db->prepare("UPDATE student SET update_at = NOW() WHERE student_id = ?");
-    $updateStmt->execute([$student['student_id']]);
 
     // Prepare success response
     $response['status'] = 'success';
@@ -107,9 +103,11 @@ try {
 
 } catch (Exception $e) {
     http_response_code(500);
-    $response['message'] = 'Error:' . $e->getMessage();
-    error_log("Login error: " . $e->getMessage());
+    $response['message'] = 'Error: ' . $e->getMessage();
+  
 }
+
+
 // Clear sensitive data
 unset($password, $student);
 

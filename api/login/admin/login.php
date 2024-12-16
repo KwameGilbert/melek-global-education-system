@@ -1,6 +1,5 @@
 <?php
 // login.php
-require __DIR__ . '/../../../vendor/autoload.php';
 require_once __DIR__ . '/../../../config/database.php';
 
 // Start PHP session
@@ -23,6 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Validate email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new Exception('Please enter a valid email address');
+        }
+
+        if(empty($password)){
+            throw new Exception('Password is required');
         }
 
         // Database connection
@@ -89,10 +92,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $response['icon'] = 'success';
         $response['redirect'] = '../dashboard/';
     } catch (Exception $e) {
+        http_response_code(500);
         // In production, consider using a generic error message
         $response['message'] = 'Error '. $e->getMessage();
-        // Log the actual error for debugging purposes
-        error_log($e->getMessage());
+       
     }
 } else {
     $response['message'] = 'Invalid request method';

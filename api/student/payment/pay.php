@@ -57,10 +57,8 @@ $conn = $db->getConnection();
     }
 
     $query = "
-        INSERT INTO 
-            payment (payment_status, payment_amount, reference, application_id, payment_email, ip_address, payment_date)
-        VALUES 
-            (:status, :amount, :reference, :application_id, :email, :ip_address, :payment_date)
+        INSERT INTO payment (payment_status, payment_amount, reference, application_id, payment_email, ip_address, payment_date)
+        VALUES (:status, :amount, :reference, :application_id, :email, :ip_address, :payment_date)
     ";
 
     $stmt = $conn->prepare($query);

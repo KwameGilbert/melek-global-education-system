@@ -119,7 +119,13 @@ if (isset($_SESSION['admin_id'])) {
             </div>
         </main>
     </div>
-
+    
+    <script src="./scripts/schools.min.js"></script>
+    <script src="./scripts/settings.min.js"></script>
+    <script src="./scripts/security.min.js"></script>
+    <script src="../../../imports/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="./scripts/view-applicant.min.js"></script>
+    <script src="./scripts/index.min.js"></script>
     <script>
         // Toggle sidebar visibility
         function toggleSidebar() {
@@ -147,12 +153,7 @@ if (isset($_SESSION['admin_id'])) {
             loadPage(activePage);
         };
     </script>
-    <script src="./scripts/schools.min.js"></script>
-    <script src="./scripts/settings.min.js"></script>
-    <script src="./scripts/security.min.js"></script>
-    <script src="../../../imports/html2pdf/html2pdf.bundle.min.js"></script>
-    <script src="./scripts/view-applicant.min.js"></script>
-    <script src="./scripts/index.min.js"></script>
+
 </body>
 
 </html>
