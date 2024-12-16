@@ -7,12 +7,87 @@
     <title>Melek Global Consult - Your Educational Journey Partner</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        .partners-slider {
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+            user-select: none;
+        }
+
+        .partners-track {
+            display: flex;
+            animation: slide 20s linear infinite;
+        }
+
+        .partners-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .mobile-scroll {
+            overflow-x: scroll;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .mobile-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scroll-item {
+            scroll-snap-align: center;
+            flex-shrink: 0;
+        }
+
+        /* WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        .whatsapp-float .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
 </head>
 
 <body class="bg-white text-gray-800 font-sans leading-normal">
     <!-- Navigation -->
     <nav class="sticky top-0 bg-white shadow-md z-50">
-        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center">
+        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center align-center">
             <div class="w-full flex justify-between items-center mb-4 md:mb-0">
                 <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/malik-global1.png" alt="Melek Global Consult Logo" class="h-12">
                 <button class="md:hidden" onclick="toggleMobileMenu()">
@@ -20,11 +95,11 @@
                 </button>
             </div>
             <div id="mobileMenu" class="hidden md:block w-full md:w-auto">
-                <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
+                <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 items-center justify-center md:justify-end">
                     <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold">Home</a>
                     <a href="#services" class="text-blue-600 hover:text-blue-800 font-semibold">Services</a>
                     <a href="#about" class="text-blue-600 hover:text-blue-800 font-semibold">About</a>
-                    <a href="#contact" class="bg-blue-600 text-white px-7 py-2 rounded-full hover:bg-blue-700 transition">Contact Us</a>
+                    <a href="#contact" class="bg-blue-600 text-white px-7 py-2 rounded-full hover:bg-blue-700 transition whitespace-nowrap">Contact Us</a>
                 </div>
             </div>
         </div>
@@ -36,9 +111,9 @@
             <div class="w-full md:w-1/2 md:pr-10 text-center md:text-left mb-8 md:mb-0">
                 <h1 class="text-3xl md:text-5xl font-bold mb-6">Your Global Education Journey Starts Here</h1>
                 <p class="text-lg md:text-xl mb-8">Confused about your next study destination? We're on a mission to help you make the best out of your life. Your bright future is our priority.</p>
-                <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 justify-center md:justify-start">
-                    <a href="#services" class="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-blue-50 transition">Explore Services</a>
-                    <a href="#contact" class="border-2 border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-blue-600 transition">Book Consultation</a>
+                <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 justify-center md:justify-start flex-wrap md:flex-nowrap">
+                    <a href="#services" class="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-blue-50 transition whitespace-nowrap"> Services</a>
+                    <a href="#contact" class="border-2 border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-blue-600 transition whitespace-nowrap">Book Consultation</a>
                 </div>
             </div>
             <div class="w-full md:w-1/2">
@@ -88,6 +163,58 @@
         </div>
     </section>
 
+    <!-- Partners -->
+    <section class="py-16 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Our Partners</h2>
+            <!-- Desktop Slider (Automatic) -->
+            <div class="hidden md:block partners-slider">
+                <div class="partners-track">
+                    <!-- Duplicate the track for seamless looping -->
+                    <div class="flex items-center justify-around w-full">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Mobile Slider (Touch Scroll) -->
+            <div class="md:hidden mobile-scroll flex overflow-x-scroll no-scrollbar">
+                <div class="scroll-item flex-shrink-0 flex items-center justify-center mx-4">
+                    <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="h-32  transition-all duration-300">
+                </div>
+                <div class="scroll-item flex-shrink-0 flex items-center justify-center mx-4">
+                    <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1562580080407-1-150x150.png" alt="Partner Logo" class="h-32  transition-all duration-300">
+                </div>
+                <div class="scroll-item flex-shrink-0 flex items-center justify-center mx-4">
+                    <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="h-32  transition-all duration-300">
+                </div>
+                <div class="scroll-item flex-shrink-0 flex items-center justify-center mx-4">
+                    <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="h-32  transition-all duration-300">
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Testimonials -->
     <section class="bg-gray-100 py-20">
         <div class="container mx-auto px-4">
@@ -100,7 +227,7 @@
                     <p class="italic mb-4">"Never knew studying abroad could be so easy and stress-free until I met Melek Global Consult."</p>
                     <div class="flex items-center">
                         <div class="mr-4">
-                            <img src="/api/placeholder/50/50" alt="Client" class="rounded-full">
+                            <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/mm.jpg" alt="Client" class="rounded-full" style="border-radius: 50%;">
                         </div>
                         <div>
                             <h4 class="font-semibold">Chiedozie David Okoye</h4>
@@ -112,7 +239,7 @@
                     <p class="italic mb-4">"They helped me secure a partial scholarship to study Communication Engineering in China."</p>
                     <div class="flex items-center">
                         <div class="mr-4">
-                            <img src="/api/placeholder/50/50" alt="Client" class="rounded-full">
+                            <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/kk.jpg" alt="Client" class="rounded-full">
                         </div>
                         <div>
                             <h4 class="font-semibold">Osei Tutu Louis</h4>
@@ -124,7 +251,7 @@
                     <p class="italic mb-4">"Helped me secure admission to study Polish Language in Poland. Made the process so simple."</p>
                     <div class="flex items-center">
                         <div class="mr-4">
-                            <img src="/api/placeholder/50/50" alt="Client" class="rounded-full">
+                            <img src="https://melekglobalconsult.com/wp-content/uploads/2021/09/imagepdf-18_Page_1.png" alt="Client" class="rounded-full">
                         </div>
                         <div>
                             <h4 class="font-semibold">Zac Armand Mbombe</h4>
@@ -149,7 +276,7 @@
                     </div>
                     <div class="flex items-center space-x-4">
                         <i data-feather="mail" class="text-white" width="32" height="32"></i>
-                        <span class="text-lg md:text-xl">teterestral@gmail.com</span>
+                        <span class="text-lg md:text-xl">melekglobalconsult@gmail.com</span>
                     </div>
                 </div>
             </div>
@@ -173,6 +300,16 @@
             </div>
         </div>
     </section>
+
+    <!-- WhatsApp Float Icon -->
+    <a href="https://wa.me/8618864506806"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="whatsapp-float">
+        <div class="bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl pulse">
+            <i class="fab fa-whatsapp text-4xl"></i>
+        </div>
+    </a>
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-12">
@@ -209,7 +346,79 @@
         </div>
     </footer>
 
+
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileSlider = document.querySelector('.mobile-scroll');
+            const scrollItems = document.querySelectorAll('.scroll-item');
+
+            // Clone items to create an infinite loop effect
+            scrollItems.forEach(item => {
+                const clone = item.cloneNode(true);
+                mobileSlider.appendChild(clone);
+            });
+
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            mobileSlider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - mobileSlider.offsetLeft;
+                scrollLeft = mobileSlider.scrollLeft;
+            });
+
+            mobileSlider.addEventListener('mouseleave', () => {
+                isDown = false;
+            });
+
+            mobileSlider.addEventListener('mouseup', () => {
+                isDown = false;
+            });
+
+            mobileSlider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - mobileSlider.offsetLeft;
+                const walk = (x - startX) * 2; // Adjust speed
+                mobileSlider.scrollLeft = scrollLeft - walk;
+
+                // Seamless looping logic
+                if (mobileSlider.scrollLeft >= mobileSlider.scrollWidth / 2) {
+                    mobileSlider.scrollLeft = 0; // Reset to start
+                } else if (mobileSlider.scrollLeft <= 0) {
+                    mobileSlider.scrollLeft = mobileSlider.scrollWidth / 2; // Jump to end
+                }
+            });
+
+            // Optional: Add touch interaction for mobile
+            let touchStartX;
+            mobileSlider.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].pageX;
+                scrollLeft = mobileSlider.scrollLeft;
+            });
+
+            mobileSlider.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                const touchX = e.touches[0].pageX;
+                const walk = (touchX - touchStartX) * 2;
+                mobileSlider.scrollLeft = scrollLeft - walk;
+
+                // Seamless looping logic
+                if (mobileSlider.scrollLeft >= mobileSlider.scrollWidth / 2) {
+                    mobileSlider.scrollLeft = 0;
+                } else if (mobileSlider.scrollLeft <= 0) {
+                    mobileSlider.scrollLeft = mobileSlider.scrollWidth / 2;
+                }
+            });
+        });
+
+
+
+
+
+
+
         // Achievements Data with Web3-inspired Metadata
         const achievements = [{
                 label: 'Years Of Experience',
@@ -282,7 +491,8 @@
                         'shadow-xl',
                         'transform',
                         'transition-all',
-                        'duration-200',
+                        'duration-500',
+                        'ease-out',
                         'hover:scale-105',
                         'hover:shadow-2xl',
                         'opacity-0',
@@ -306,18 +516,25 @@
                 </div>
             `;
 
-                    card.style.transitionDelay = `${index * 100}ms`;
+                    card.style.transitionDelay = `${index * 300}ms`;
                     this.grid.appendChild(card);
                 });
             }
 
             // Smooth counter animation with easing
             animateCounters() {
+                const cards = document.querySelectorAll('.achievement-card');
                 const counters = document.querySelectorAll('.achievement-value');
+
+                cards.forEach((card, index) => {
+                    // Immediately remove initial opacity and translation
+                    card.classList.remove('opacity-0', 'translate-y-10');
+                    card.classList.add('opacity-100', 'translate-y-0');
+                });
 
                 counters.forEach((counter, index) => {
                     const target = parseInt(counter.getAttribute('data-target'));
-                    const duration = 2500;
+                    const duration = 5000; // Reduced duration for quicker animation
                     let startTimestamp = null;
 
                     const easeOutQuad = (t) => t * (2 - t);
@@ -333,37 +550,36 @@
                             window.requestAnimationFrame(step);
                         } else {
                             counter.textContent = `${target}+`;
-
-                            // Reveal card with staggered animation
-                            const card = counter.closest('.achievement-card');
-                            card.classList.remove('opacity-0', 'translate-y-10');
-                            card.classList.add('opacity-100', 'translate-y-0');
                         }
                     };
 
-                    // Stagger start of animations
+                    // Start animation immediately with minimal stagger
                     setTimeout(() => {
                         window.requestAnimationFrame(step);
-                    }, index * 200);
+                    }, index * 50); // Reduced stagger time
                 });
             }
 
             // Intersection Observer for triggering animations
             setupIntersectionObserver() {
                 const options = {
-                    threshold: 0.1
+                    threshold: 0.1,
                 };
 
                 this.observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
-                            this.animateCounters();
+                            // Trigger animation immediately with high priority
+                            requestAnimationFrame(() => {
+                                this.animateCounters();
+                            });
                             this.observer.unobserve(entry.target);
                         }
                     });
                 }, options);
 
-                this.observer.observe(this.grid);
+                const achiev = document.querySelector('#achievementGrid');
+                this.observer.observe(achiev);
             }
 
             // Initialize the entire rendering process
@@ -385,9 +601,12 @@
                 console.warn('Feather Icons library not loaded');
             }
         });
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        }
     </script>
-
-
 </body>
 
 </html>
