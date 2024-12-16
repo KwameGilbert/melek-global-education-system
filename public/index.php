@@ -57,7 +57,10 @@
             <div class="grid grid-cols-2 md:grid-cols-3 gap-8" id="achievementGrid">
                 <!-- Achievement items will be dynamically populated -->
             </div>
+
         </div>
+
+
     </section>
 
     <!-- Services Section -->
@@ -207,112 +210,184 @@
     </footer>
 
     <script>
-        // Mobile Menu Toggle
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobileMenu');
-            mobileMenu.classList.toggle('hidden');
-        }
-
-        // Initialize Feather Icons
-        feather.replace();
-
-        // Achievements data
+        // Achievements Data with Web3-inspired Metadata
         const achievements = [{
                 label: 'Years Of Experience',
-                value: 5
+                value: 5,
+                icon: 'clock',
+                gradient: 'from-blue-500 to-purple-600',
+                description: 'Verified Expertise'
             },
             {
                 label: 'Partner Schools',
-                value: 50
+                value: 50,
+                icon: 'globe',
+                gradient: 'from-green-400 to-blue-500',
+                description: 'Global Network'
             },
             {
                 label: 'Admitted Students',
-                value: 500
+                value: 500,
+                icon: 'users',
+                gradient: 'from-pink-500 to-red-500',
+                description: 'Successful Journeys'
             },
             {
                 label: 'Partner Agents',
-                value: 50
+                value: 50,
+                icon: 'briefcase',
+                gradient: 'from-yellow-400 to-orange-500',
+                description: 'Strategic Partnerships'
             },
             {
                 label: 'Travelers Helped',
-                value: 100
+                value: 100,
+                icon: 'map-pin',
+                gradient: 'from-teal-400 to-blue-500',
+                description: 'Borderless Connections'
             },
             {
                 label: 'Jobs Secured',
-                value: 45
+                value: 45,
+                icon: 'trending-up',
+                gradient: 'from-purple-500 to-indigo-600',
+                description: 'Career Acceleration'
             }
         ];
 
-        // Function to create achievement items
-        function createAchievementItems() {
-            const grid = document.getElementById('achievementGrid');
-            achievements.forEach((achievement, index) => {
-                const achievementElement = document.createElement('div');
-                achievementElement.classList.add(
-                    'bg-white', 'rounded-xl', 'shadow-lg', 'p-8', 'text-center',
-                    'hover:shadow-xl', 'transition', 'opacity-0', 'transform', 'translate-y-10'
-                );
-                achievementElement.innerHTML = `
-                    <div class="achievement-value text-4xl md:text-5xl font-bold text-blue-600 mb-4" data-target="${achievement.value}">0+</div>
-                    <div class="text-lg md:text-xl text-gray-700">${achievement.label}</div>
-                `;
-                grid.appendChild(achievementElement);
-            });
-        }
+        // Advanced Achievement Renderer
+        class AchievementsRenderer {
+            constructor(achievements, gridSelector) {
+                this.achievements = achievements;
+                this.grid = document.querySelector(gridSelector);
+                this.observer = null;
+            }
 
-        // Counter animation function
-        function animateCounters() {
-            const counters = document.querySelectorAll('.achievement-value');
+            // Create glowing, animated achievement cards
+            createAchievementCards() {
+                if (!this.grid) {
+                    console.error('Achievement grid not found');
+                    return;
+                }
 
-            counters.forEach((counter, index) => {
-                const target = parseInt(counter.getAttribute('data-target'));
-                const duration = 2000; // Total animation duration
-                const increment = target / (duration / 16);
+                this.grid.innerHTML = ''; // Clear existing content
 
-                let currentCount = 0;
-                const updateCounter = () => {
-                    currentCount += increment;
-                    if (currentCount < target) {
-                        counter.textContent = `${Math.round(currentCount)}+`;
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.textContent = `${target}+`;
-                        // Add fade-in and slide-up effect
-                        counter.closest('div').classList.remove('opacity-0', 'translate-y-10');
-                        counter.closest('div').classList.add('opacity-100', 'translate-y-0');
-                    }
+                this.achievements.forEach((achievement, index) => {
+                    const card = document.createElement('div');
+                    card.classList.add(
+                        'achievement-card',
+                        'relative',
+                        'overflow-hidden',
+                        'rounded-2xl',
+                        'shadow-xl',
+                        'transform',
+                        'transition-all',
+                        'duration-200',
+                        'hover:scale-105',
+                        'hover:shadow-2xl',
+                        'opacity-0',
+                        'translate-y-10',
+                        'bg-white',
+                        'p-6',
+                        'text-center'
+                    );
+
+                    card.innerHTML = `
+                <div class="absolute inset-0 bg-gradient-to-br ${achievement.gradient} opacity-10"></div>
+                <div class="relative z-10">
+                    <div class="mb-4 flex justify-center items-center">
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-br ${achievement.gradient} flex items-center justify-center shadow-lg">
+                            <i data-feather="${achievement.icon}" class="text-white w-8 h-8"></i>
+                        </div>
+                    </div>
+                    <div class="achievement-value text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-br ${achievement.gradient} mb-2" data-target="${achievement.value}">0+</div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-1">${achievement.label}</h3>
+                    <p class="text-sm text-gray-600 opacity-75">${achievement.description}</p>
+                </div>
+            `;
+
+                    card.style.transitionDelay = `${index * 100}ms`;
+                    this.grid.appendChild(card);
+                });
+            }
+
+            // Smooth counter animation with easing
+            animateCounters() {
+                const counters = document.querySelectorAll('.achievement-value');
+
+                counters.forEach((counter, index) => {
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    const duration = 2500;
+                    let startTimestamp = null;
+
+                    const easeOutQuad = (t) => t * (2 - t);
+
+                    const step = (timestamp) => {
+                        if (!startTimestamp) startTimestamp = timestamp;
+                        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+
+                        const currentValue = Math.floor(easeOutQuad(progress) * target);
+                        counter.textContent = `${currentValue}+`;
+
+                        if (progress < 1) {
+                            window.requestAnimationFrame(step);
+                        } else {
+                            counter.textContent = `${target}+`;
+
+                            // Reveal card with staggered animation
+                            const card = counter.closest('.achievement-card');
+                            card.classList.remove('opacity-0', 'translate-y-10');
+                            card.classList.add('opacity-100', 'translate-y-0');
+                        }
+                    };
+
+                    // Stagger start of animations
+                    setTimeout(() => {
+                        window.requestAnimationFrame(step);
+                    }, index * 200);
+                });
+            }
+
+            // Intersection Observer for triggering animations
+            setupIntersectionObserver() {
+                const options = {
+                    threshold: 0.1
                 };
 
-                // Stagger animation
-                setTimeout(updateCounter, index * 200);
-            });
+                this.observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            this.animateCounters();
+                            this.observer.unobserve(entry.target);
+                        }
+                    });
+                }, options);
+
+                this.observer.observe(this.grid);
+            }
+
+            // Initialize the entire rendering process
+            init() {
+                this.createAchievementCards();
+                this.setupIntersectionObserver();
+            }
         }
 
-        // Intersection Observer to trigger animation
-        function setupIntersectionObserver() {
-            const section = document.getElementById('achievements');
-            const options = {
-                threshold: 0.2 // Trigger when 20% of section is visible
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        animateCounters();
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, options);
-
-            observer.observe(section);
-        }
-
-        // Initialize on page load
+        // Initialize on DOM load
         document.addEventListener('DOMContentLoaded', () => {
-            createAchievementItems();
-            setupIntersectionObserver();
+            const renderer = new AchievementsRenderer(achievements, '#achievementGrid');
+            renderer.init();
+
+            // Safe Feather Icons initialization
+            if (typeof feather !== 'undefined') {
+                feather.replace();
+            } else {
+                console.warn('Feather Icons library not loaded');
+            }
         });
     </script>
+
+
 </body>
 
 </html>
