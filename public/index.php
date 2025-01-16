@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Melek Global Consult - Your Educational Journey Partner</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src=""></script>
+        <link rel="stylesheet" href="../imports/tailwind/tailwind.min.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 

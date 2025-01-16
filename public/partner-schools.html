@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner Schools</title>
+    <link href="../imports/tailwind/tailwind.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-100">
+     <!-- Navigation -->
+    <nav class="sticky top-0 bg-white shadow-md z-50">
+        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center align-center">
+            <div class="w-full flex justify-between items-center mb-4 md:mb-0">
+                <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/malik-global1.png" alt="Melek Global Consult Logo" class="h-12">
+                <button class="md:hidden" onclick="toggleMobileMenu()">
+                    <i data-feather="menu" class="text-blue-600"></i>
+                </button>
+            </div>
+            <div id="mobileMenu" class="hidden md:block w-full md:w-auto">
+                <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 items-center justify-center md:justify-end">
+                    <a href="./index.php#" class="text-blue-600 hover:text-blue-800 font-semibold">Home</a>
+                    <a href="./index.php#services" class="text-blue-600 hover:text-blue-800 font-semibold">Services</a>
+                    <a href="./index.php#about" class="text-blue-600 hover:text-blue-800 font-semibold">About</a>
+                    <a href="./index.php#contact" class="bg-blue-600 text-white px-7 py-2 rounded-full hover:bg-blue-700 transition whitespace-nowrap">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto py-10">
+        <h1 class="text-2xl font-bold text-center mb-6">Partner Schools</h1>
+
+        <!-- Search Box -->
+        <div class="mb-4 flex justify-center">
+            <input 
+                type="text" 
+                id="search-input" 
+                class="border-2 border-gray-300 p-2 w-full max-w-lg rounded-lg" 
+                placeholder="Search by school name or program..."
+                oninput="searchTable()"
+            />
+        </div>
+
+        <!-- Table -->
+        <div class="overflow-x-auto">
+            <table id="schools-table" class="table-auto w-full bg-white shadow rounded-lg">
+                <thead>
+                    <tr class="bg-gray-800 text-white">
+                        <th class="px-4 py-2">School Name</th>
+                        <th class="px-4 py-2">Country</th>
+                        <th class="px-4 py-2">Degree</th>
+                        <th class="px-4 py-2">Program</th>
+                        <th class="px-4 py-2">Application Fee</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body" class="text-center"></tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div id="pagination" class="flex justify-center items-center mt-6 space-x-2"></div>
+    </div>
+
+    <script>
+        let schoolsData = [];
+        let currentPage = 1;
+        const rowsPerPage = 10;
+
+        // Fetch data from the server
+        async function fetchSchools() {
+            const response = await fetch('./../api/partner-schools/schools.php');
+            schoolsData = await response.json();
+            displayTable();
+        }
+
+        // Display table data
+        function displayTable() {
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const filteredData = schoolsData.slice(start, end);
+
+            const tableBody = document.getElementById('table-body');
+            tableBody.innerHTML = '';
+
+            filteredData.forEach(school => {
+                const row = `
+                    <tr class="hover:bg-gray-200">
+                        <td class="border px-4 py-2">${school.school_name}</td>
+                        <td class="border px-4 py-2">${school.country_name}</td>
+                        <td class="border px-4 py-2">${school.degree_name}</td>
+                        <td class="border px-4 py-2">${school.program_name}</td>
+                        <td class="border px-4 py-2">${school.application_cost}</td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+
+            displayPagination();
+        }
+
+        // Search functionality
+        function searchTable() {
+            const searchValue = document.querySelector('#search-input').value.toUpperCase();
+            const filteredData = schoolsData.filter(school =>
+                school.school_name.toUpperCase().includes(searchValue) ||
+                school.program_name.toUpperCase().includes(searchValue)
+            );
+
+            schoolsData = filteredData;
+            currentPage = 1;
+            displayTable();
+        }
+
+        // Pagination
+        function displayPagination() {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            const totalPages = Math.ceil(schoolsData.length / rowsPerPage);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.innerText = i;
+                button.classList.add(
+                    'px-4', 
+                    'py-2', 
+                    'rounded-lg', 
+                    currentPage === i ? 'bg-blue-500' : 'bg-gray-300'
+                );
+
+                button.addEventListener('click', () => {
+                    currentPage = i;
+                    displayTable();
+                });
+
+                pagination.appendChild(button);
+            }
+        }
+
+          function toggleMobileMenu() {
+                const mobileMenu = document.getElementById('mobileMenu');
+                mobileMenu.classList.toggle('hidden');
+            }
+        // Initial load
+        fetchSchools();
+    </script>
+</body>
+</html>
