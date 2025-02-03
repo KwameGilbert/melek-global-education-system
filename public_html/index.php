@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Melek Global Consult - Your Educational Journey Partner</title>
     <script src=""></script>
-        <link rel="stylesheet" href="../imports/tailwind/tailwind.min.css">
+    <link rel="stylesheet" href="./imports/tailwind/tailwind.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -91,7 +91,7 @@
     <nav class="sticky top-0 bg-white shadow-md z-50">
         <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center align-center">
             <div class="w-full flex justify-between items-center mb-4 md:mb-0">
-                <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/malik-global1.png" alt="Melek Global Consult Logo" class="h-12">
+                <img src="./uploads/malik-global1.png" alt="Melek Global Consult Logo" class="h-12">
                 <button class="md:hidden" onclick="toggleMobileMenu()">
                     <i data-feather="menu" class="text-blue-600"></i>
                 </button>
@@ -119,7 +119,7 @@
                 </div>
             </div>
             <div class="w-full md:w-1/2">
-                <img src="https://img.freepik.com/free-photo/young-student-working-assignment_23-2149257177.jpg?t=st=1734312110~exp=1734315710~hmac=30294f23749b426d086cbb521d218d9550e02154472712740483c54c031fc83a&w=740" alt="Student Studying" class="rounded-xl shadow-2xl w-full">
+                <img src="./uploads/young-student-working-assignment_23-2149257177.jpg" alt="Student Studying" class="rounded-xl shadow-2xl w-full">
             </div>
         </div>
     </header>
@@ -174,44 +174,56 @@
                 <div class="partners-track">
                     <!-- Duplicate the track for seamless looping -->
                     <div class="flex items-center justify-around w-full">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
+                        <img src="./uploads/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
                     </div>
-
                 </div>
-            </div>
+             </div>
 
             <!-- Mobile Slider (Touch Scroll) -->
             <div class="md:hidden mobile-scroll flex overflow-x-scroll no-scrollbar">
                 <div class="scroll-item flex-shrink-0 flex items-center justify-center mx-4">
-                    <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="h-32  transition-all duration-300">
+                    <img src="./uploads/1519950915656-1-150x150.png" alt="Partner Logo" class="h-32  transition-all duration-300">
                 </div>
                 <div class="scroll-item flex-shrink-0 flex items-center justify-center mx-4">
-                    <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1562580080407-1-150x150.png" alt="Partner Logo" class="h-32  transition-all duration-300">
+                    <img src="./uploads/1562580080407-1-150x150.png" alt="Partner Logo" class="h-32  transition-all duration-300">
                 </div>
                 <div class="scroll-item flex-shrink-0 flex items-center justify-center mx-4">
-                    <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="h-32  transition-all duration-300">
+                    <img src="./uploads/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="h-32  transition-all duration-300">
                 </div>
                 <div class="scroll-item flex-shrink-0 flex items-center justify-center mx-4">
-                    <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="h-32  transition-all duration-300">
+                    <img src="./uploads/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="h-32  transition-all duration-300">
+                </div>
+                <div class="scroll-item flex-shrink-0 flex items-center justify-center mx-4">
+                    <img src="./uploads/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="h-32  transition-all duration-300">
                 </div>
             </div>
         </div>
@@ -229,7 +241,7 @@
                     <p class="italic mb-4">"Never knew studying abroad could be so easy and stress-free until I met Melek Global Consult."</p>
                     <div class="flex items-center">
                         <div class="mr-4">
-                            <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/mm.jpg" alt="Client" class="rounded-full" style="border-radius: 50%;">
+                            <img src="./uploads/mm.jpg" alt="Client" class="rounded-full" style="border-radius: 50%;">
                         </div>
                         <div>
                             <h4 class="font-semibold">Chiedozie David Okoye</h4>
@@ -241,7 +253,7 @@
                     <p class="italic mb-4">"They helped me secure a partial scholarship to study Communication Engineering in China."</p>
                     <div class="flex items-center">
                         <div class="mr-4">
-                            <img src="https://melekglobalconsult.com/wp-content/uploads/2021/08/kk.jpg" alt="Client" class="rounded-full">
+                            <img src="./uploads/kk.jpg" alt="Client" class="rounded-full">
                         </div>
                         <div>
                             <h4 class="font-semibold">Osei Tutu Louis</h4>
@@ -253,7 +265,7 @@
                     <p class="italic mb-4">"Helped me secure admission to study Polish Language in Poland. Made the process so simple."</p>
                     <div class="flex items-center">
                         <div class="mr-4">
-                            <img src="https://melekglobalconsult.com/wp-content/uploads/2021/09/imagepdf-18_Page_1.png" alt="Client" class="rounded-full">
+                            <img src="./uploads/imagepdf-18_Page_1.png" alt="Client" class="rounded-full">
                         </div>
                         <div>
                             <h4 class="font-semibold">Zac Armand Mbombe</h4>
@@ -266,8 +278,8 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="container mx-auto py-20 px-4">
-        <div class="bg-blue-600 text-white rounded-xl p-8 md:p-16 flex flex-col md:flex-row items-center">
+    <section id="contact" class="container mx-auto text-white py-20 px-4">
+        <div class="bg-blue-600 text-gray rounded-xl p-8 md:p-16 flex flex-col md:flex-row items-center">
             <div class="w-full md:w-1/2 md:pr-10 text-center md:text-left mb-8 md:mb-0">
                 <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Start Your Journey?</h2>
                 <p class="text-lg md:text-xl mb-8">Book a free consultation with our expert counselors and take the first step towards your global education dream.</p>
@@ -287,15 +299,15 @@
                     <h3 class="text-xl md:text-2xl font-semibold mb-6 text-gray-800">Schedule Your Consultation</h3>
                     <div class="mb-4">
                         <label class="block text-gray-700 mb-2">Full Name</label>
-                        <input type="text" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your name">
+                        <input type="text" name="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your name">
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 mb-2">Email Address</label>
-                        <input type="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your email">
+                        <input type="email" name="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your email">
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 mb-2">Your Message</label>
-                        <textarea class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4" placeholder="Tell us about your educational goals"></textarea>
+                        <textarea name="message" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4" placeholder="Tell us about your educational goals"></textarea>
                     </div>
                     <button class="w-full bg-blue-600 text-white py-3 rounded-full hover:bg-blue-700 transition">Schedule Consultation</button>
                 </form>
@@ -339,14 +351,42 @@
             </div>
             <div class="col-span-2 md:col-span-1">
                 <h4 class="text-xl font-semibold mb-4">Contact Info</h4>
-                <p class="text-gray-400 mb-2">+86 188 64506806</p>
-                <p class="text-gray-400">teterestral@gmail.com</p>
+                <p class="text-gray-400 mb-2">Phone: +86 188 64506806</p>
+                <p class="text-gray-400 mb-4">Email: melekglobalconsult@gmail.com</p>
+
+                <h4 class="text-xl font-semibold mb-2">UK Branch</h4>
+                <p class="text-gray-400 mb-4">128 City Road, London, United Kingdom, EC1V 2NX</p>
+
+                <h4 class="text-xl font-semibold mb-2">Zambia Branch</h4>
+                <p class="text-gray-400">
+                    Unit 12 on Sub 1/A/L1691/M, First Floor, Ibex Hub Shopping Centre, 1st Street, Ibex Hill, Lusaka
+                </p>
             </div>
         </div>
         <div class="container mx-auto px-4 mt-8 pt-4 border-t border-gray-800 text-center">
             <p class="text-gray-500">© 2024 Melek Global Consult. All Rights Reserved.</p>
         </div>
     </footer>
+
+    <script>
+        document.querySelector("form").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            let formData = new FormData(this);
+
+            fetch("send-email.php", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+        });
+    </script>
 
 
     <script>

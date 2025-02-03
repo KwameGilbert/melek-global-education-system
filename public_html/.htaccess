@@ -9,7 +9,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ /$1 [L,R=301]
 
 # Redirect root to admin dashboard
-RewriteRule ^$ /public/admin/dashboard/index.php [L,R=301]
+# RewriteRule ^$ /public/admin/dashboard/index.php [L,R=301]
 
 # Handle other URLs normally
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -20,9 +20,9 @@ RewriteRule ^(.*)$ index.php/$1 [L]
 Options +Indexes
 
 # Handle errors
-ErrorDocument 404 /public/errors/404.php
-ErrorDocument 403 /public/errors/403.php
-ErrorDocument 500 /public/errors/500.php
+ErrorDocument 404 /public_html/errors/404.php
+ErrorDocument 403 /public_html/errors/403.php
+ErrorDocument 500 /public_html/errors/500.php
 
 # Security headers
 <IfModule mod_headers.c>
