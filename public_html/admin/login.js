@@ -2,7 +2,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     
     try {
-        const response = await fetch('../../../api/login/admin/login.php', {
+        const response = await fetch('../api/login/admin/login.php', {
             method: 'POST',
             body: new FormData(e.target)
         });

@@ -1,7 +1,0 @@
-RewriteEngine On
-
-# Redirect /admin to /admin/login
-RewriteCond %{REQUEST_URI} ^/admin$ [NC]
-RewriteRule ^admin$ /admin/login [R=302,L]
-
-# Allow everything else inside /admin/ to proceed normally

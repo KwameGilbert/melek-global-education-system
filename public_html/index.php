@@ -87,233 +87,20 @@
 </head>
 
 <body class="bg-white text-gray-800 font-sans leading-normal">
-    <!-- Navigation -->
-    <nav class="sticky top-0 bg-white shadow-md z-50">
-        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center align-center">
-            <div class="w-full flex justify-between items-center mb-4 md:mb-0">
-                <img src="./uploads/malik-global1.png" alt="Melek Global Consult Logo" class="h-12">
-                <button class="md:hidden" onclick="toggleMobileMenu()">
-                    <i data-feather="menu" class="text-blue-600"></i>
-                </button>
-            </div>
-            <div id="mobileMenu" class="hidden md:block w-full md:w-auto">
-                <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 items-center justify-center md:justify-end">
-                    <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold">Home</a>
-                    <a href="#services" class="text-blue-600 hover:text-blue-800 font-semibold">Services</a>
-                    <a href="#about" class="text-blue-600 hover:text-blue-800 font-semibold">About</a>
-                    <a href="#contact" class="bg-blue-600 text-white px-7 py-2 rounded-full hover:bg-blue-700 transition whitespace-nowrap">Contact Us</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php require_once __DIR__ . '/components/nav.php'; ?>
 
-    <!-- Hero Section -->
-    <header class="bg-gradient-to-br from-blue-500 to-blue-700 text-white py-20">
-        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
-            <div class="w-full md:w-1/2 md:pr-10 text-center md:text-left mb-8 md:mb-0">
-                <h1 class="text-3xl md:text-5xl font-bold mb-6">Your Global Education Journey Starts Here</h1>
-                <p class="text-lg md:text-xl mb-8">Confused about your next study destination? We're on a mission to help you make the best out of your life. Your bright future is our priority.</p>
-                <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 justify-center md:justify-start flex-wrap md:flex-nowrap">
-                    <a href="#services" class="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-blue-50 transition whitespace-nowrap"> Services</a>
-                    <a href="#contact" class="border-2 border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-blue-600 transition whitespace-nowrap">Book Consultation</a>
-                </div>
-            </div>
-            <div class="w-full md:w-1/2">
-                <img src="./uploads/young-student-working-assignment_23-2149257177.jpg" alt="Student Studying" class="rounded-xl shadow-2xl w-full">
-            </div>
-        </div>
-    </header>
+    <?php require_once __DIR__ . '/components/hero.php'; ?>
 
-    <!-- Achievements Section (previously in the original script) -->
-    <section id="achievements" class="bg-blue-50 py-16">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-blue-800">Our Achievements</h2>
-                <p class="text-lg md:text-xl text-gray-600 mt-4">A testament to our commitment and success</p>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-8" id="achievementGrid">
-                <!-- Achievement items will be dynamically populated -->
-            </div>
+    <?php require_once __DIR__ . '/components/achievement.php'; ?>
 
-        </div>
-
-
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="container mx-auto py-20 px-4">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Educational Services</h2>
-            <p class="text-lg md:text-xl text-gray-600">Comprehensive support for your global education journey</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-white shadow-lg rounded-xl p-8 text-center hover:shadow-2xl transition">
-                <i data-feather="globe" class="mx-auto mb-6 text-blue-600" stroke-width="1.5" width="64" height="64"></i>
-                <h3 class="text-xl md:text-2xl font-semibold mb-4">Study Abroad</h3>
-                <p>We help students apply to top international universities, handling documentation and admission processes.</p>
-            </div>
-            <div class="bg-white shadow-lg rounded-xl p-8 text-center hover:shadow-2xl transition">
-                <i data-feather="file-text" class="mx-auto mb-6 text-blue-600" stroke-width="1.5" width="64" height="64"></i>
-                <h3 class="text-xl md:text-2xl font-semibold mb-4">Visa Assistance</h3>
-                <p>Complete support for visa applications, interview preparations, and residence permit documentation.</p>
-            </div>
-            <div class="bg-white shadow-lg rounded-xl p-8 text-center hover:shadow-2xl transition">
-                <i data-feather="home" class="mx-auto mb-6 text-blue-600" stroke-width="1.5" width="64" height="64"></i>
-                <h3 class="text-xl md:text-2xl font-semibold mb-4">Accommodation</h3>
-                <p>Secure and comfortable housing arrangements before your arrival at international campuses.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Partners -->
-    <section class="py-16 px-4">
-        <div class="container mx-auto">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Our Partners</h2>
-            <!-- Desktop Slider (Automatic) -->
-            <div class="hidden md:block partners-slider">
-                <div class="partners-track">
-                    <!-- Duplicate the track for seamless looping -->
-                    <div class="flex items-center justify-around w-full">
-                        <img src="./uploads/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/1519950915656-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/1562580080407-1-150x150.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                        <img src="./uploads/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="mx-8 h-32  transition-all duration-300">
-                    </div>
-                </div>
-             </div>
-
-            <!-- Mobile Slider (Touch Scroll) -->
-            <div class="md:hidden mobile-scroll flex overflow-x-scroll no-scrollbar">
-                <div class="scroll-item flex-shrink-0 flex items-center justify-center mx-4">
-                    <img src="./uploads/1519950915656-1-150x150.png" alt="Partner Logo" class="h-32  transition-all duration-300">
-                </div>
-                <div class="scroll-item flex-shrink-0 flex items-center justify-center mx-4">
-                    <img src="./uploads/1562580080407-1-150x150.png" alt="Partner Logo" class="h-32  transition-all duration-300">
-                </div>
-                <div class="scroll-item flex-shrink-0 flex items-center justify-center mx-4">
-                    <img src="./uploads/eventlogo-90-1586871559-1-150x150.jpg" alt="Partner Logo" class="h-32  transition-all duration-300">
-                </div>
-                <div class="scroll-item flex-shrink-0 flex items-center justify-center mx-4">
-                    <img src="./uploads/1569598209020-1-150x150.jpeg" alt="Partner Logo" class="h-32  transition-all duration-300">
-                </div>
-                <div class="scroll-item flex-shrink-0 flex items-center justify-center mx-4">
-                    <img src="./uploads/sf_asia_logo-1-150x123.png" alt="Partner Logo" class="h-32  transition-all duration-300">
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php require_once __DIR__ . '/components/services.php'; ?>
 
     <!-- Testimonials -->
-    <section class="bg-gray-100 py-20">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Success Stories</h2>
-                <p class="text-lg md:text-xl text-gray-600">Students who transformed their futures with us</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-xl shadow-md">
-                    <p class="italic mb-4">"Never knew studying abroad could be so easy and stress-free until I met Melek Global Consult."</p>
-                    <div class="flex items-center">
-                        <div class="mr-4">
-                            <img src="./uploads/mm.jpg" alt="Client" class="rounded-full" style="border-radius: 50%;">
-                        </div>
-                        <div>
-                            <h4 class="font-semibold">Chiedozie David Okoye</h4>
-                            <p class="text-gray-600">Student</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white p-8 rounded-xl shadow-md">
-                    <p class="italic mb-4">"They helped me secure a partial scholarship to study Communication Engineering in China."</p>
-                    <div class="flex items-center">
-                        <div class="mr-4">
-                            <img src="./uploads/kk.jpg" alt="Client" class="rounded-full">
-                        </div>
-                        <div>
-                            <h4 class="font-semibold">Osei Tutu Louis</h4>
-                            <p class="text-gray-600">Scholarship Recipient</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white p-8 rounded-xl shadow-md">
-                    <p class="italic mb-4">"Helped me secure admission to study Polish Language in Poland. Made the process so simple."</p>
-                    <div class="flex items-center">
-                        <div class="mr-4">
-                            <img src="./uploads/imagepdf-18_Page_1.png" alt="Client" class="rounded-full">
-                        </div>
-                        <div>
-                            <h4 class="font-semibold">Zac Armand Mbombe</h4>
-                            <p class="text-gray-600">International Student</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="container mx-auto text-white py-20 px-4">
-        <div class="bg-blue-600 text-gray rounded-xl p-8 md:p-16 flex flex-col md:flex-row items-center">
-            <div class="w-full md:w-1/2 md:pr-10 text-center md:text-left mb-8 md:mb-0">
-                <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Start Your Journey?</h2>
-                <p class="text-lg md:text-xl mb-8">Book a free consultation with our expert counselors and take the first step towards your global education dream.</p>
-                <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
-                    <div class="flex items-center space-x-4">
-                        <i data-feather="phone" class="text-white" width="32" height="32"></i>
-                        <span class="text-xl md:text-2xl font-semibold">+86 188 64506806</span>
-                    </div>
-                    <div class="flex items-center space-x-4">
-                        <i data-feather="mail" class="text-white" width="32" height="32"></i>
-                        <span class="text-lg md:text-xl">melekglobalconsult@gmail.com</span>
-                    </div>
-                </div>
-            </div>
-            <div class="w-full md:w-1/2">
-                <form class="bg-white p-8 rounded-xl shadow-2xl">
-                    <h3 class="text-xl md:text-2xl font-semibold mb-6 text-gray-800">Schedule Your Consultation</h3>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 mb-2">Full Name</label>
-                        <input type="text" name="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your name">
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 mb-2">Email Address</label>
-                        <input type="email" name="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your email">
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 mb-2">Your Message</label>
-                        <textarea name="message" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4" placeholder="Tell us about your educational goals"></textarea>
-                    </div>
-                    <button class="w-full bg-blue-600 text-white py-3 rounded-full hover:bg-blue-700 transition">Schedule Consultation</button>
-                </form>
-            </div>
-        </div>
-    </section>
+    <?php require_once __DIR__ . '/components/testimonials.php';?>
+    
+    <!-- contact us -->
+    <?php require_once __DIR__ . '/components/contact-us.php';?>
+        
 
     <!-- WhatsApp Float Icon -->
     <a href="https://wa.me/8618864506806"
@@ -325,48 +112,7 @@
         </div>
     </a>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div class="col-span-2 md:col-span-1">
-                <h4 class="text-xl font-semibold mb-4">Melek Global Consult</h4>
-                <p class="text-gray-400">Your trusted partner in global education and travel solutions.</p>
-            </div>
-            <div>
-                <h4 class="text-xl font-semibold mb-4">Quick Links</h4>
-                <ul class="space-y-2">
-                    <li><a href="#" class="text-gray-400 hover:text-white">Home</a></li>
-                    <li><a href="#services" class="text-gray-400 hover:text-white">Services</a></li>
-                    <li><a href="#about" class="text-gray-400 hover:text-white">About Us</a></li>
-                    <li><a href="#contact" class="text-gray-400 hover:text-white">Contact</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-xl font-semibold mb-4">Connect With Us</h4>
-                <div class="flex space-x-4">
-                    <a href="#" class="text-gray-400 hover:text-white"><i data-feather="facebook" width="24" height="24"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><i data-feather="instagram" width="24" height="24"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><i data-feather="youtube" width="24" height="24"></i></a>
-                </div>
-            </div>
-            <div class="col-span-2 md:col-span-1">
-                <h4 class="text-xl font-semibold mb-4">Contact Info</h4>
-                <p class="text-gray-400 mb-2">Phone: +86 188 64506806</p>
-                <p class="text-gray-400 mb-4">Email: melekglobalconsult@gmail.com</p>
-
-                <h4 class="text-xl font-semibold mb-2">UK Branch</h4>
-                <p class="text-gray-400 mb-4">128 City Road, London, United Kingdom, EC1V 2NX</p>
-
-                <h4 class="text-xl font-semibold mb-2">Zambia Branch</h4>
-                <p class="text-gray-400">
-                    Unit 12 on Sub 1/A/L1691/M, First Floor, Ibex Hub Shopping Centre, 1st Street, Ibex Hill, Lusaka
-                </p>
-            </div>
-        </div>
-        <div class="container mx-auto px-4 mt-8 pt-4 border-t border-gray-800 text-center">
-            <p class="text-gray-500">© 2024 Melek Global Consult. All Rights Reserved.</p>
-        </div>
-    </footer>
+    <?php require_once __DIR__ . '/components/footer.php'; ?>
 
     <script>
         document.querySelector("form").addEventListener("submit", function(e) {
@@ -385,6 +131,28 @@
                 .catch(error => {
                     console.error("Error:", error);
                 });
+        });
+
+        document.getElementById('scheduleButton').addEventListener('click', function() {
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Check if all fields are filled
+            if (!name || !email || !message) {
+                alert('Please fill in all fields before submitting.');
+                return;
+            }
+
+            // Create the WhatsApp message
+            const whatsappMessage = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nMessage: ${message}`);
+
+            // WhatsApp API link with the message
+            const whatsappLink = `https://wa.me/8618864506806?text=${whatsappMessage}`;
+
+            // Open WhatsApp with the message
+            window.open(whatsappLink, '_blank');
         });
     </script>
 
