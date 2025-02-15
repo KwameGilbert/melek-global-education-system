@@ -87,6 +87,7 @@
 </head>
 
 <body class="bg-white text-gray-800 font-sans leading-normal">
+
     <?php require_once __DIR__ . '/components/nav.php'; ?>
 
     <?php require_once __DIR__ . '/components/hero.php'; ?>
@@ -98,10 +99,9 @@
     <!-- Testimonials -->
     <?php require_once __DIR__ . '/components/testimonials.php';?>
     
-    <!-- contact us -->
+    <!-- Contact Us -->
     <?php require_once __DIR__ . '/components/contact-us.php';?>
         
-
     <!-- WhatsApp Float Icon -->
     <a href="https://wa.me/8618864506806"
         target="_blank"
