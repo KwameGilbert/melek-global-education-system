@@ -14,14 +14,14 @@
     <?php require_once __DIR__ . '/../components/nav.php'; ?>
 
     <!-- Hero Section -->
-    <section class="bg-cover bg-center h-72" style="background-image: url('https://via.placeholder.com/1200x500?text=Our+Portfolio');">
+    <section class="bg-cover bg-center h-72" style="background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80');">
         <div class="bg-black bg-opacity-50 h-full flex items-center justify-center">
             <h1 class="text-white text-5xl font-bold">Our Portfolio</h1>
         </div>
     </section>
 
     <!-- Main Content Container -->
-    <main class="container mx-auto px-4 py-12 space-y-16" id="portfolioContainer">
+    <main class="container mx-auto mt-8 px-4 py-12 space-y-16" id="portfolioContainer">
         <!-- Dynamic content will be injected here -->
     </main>
 
