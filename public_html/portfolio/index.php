@@ -11,7 +11,7 @@
 
 <body class="bg-gray-100 text-gray-900">
     <!-- Header -->
-    <?php require_once __DIR__ . '/../components/nav.php' ?>
+    <?php require_once __DIR__ . '/../components/nav.php'; ?>
 
     <!-- Hero Section -->
     <section class="bg-cover bg-center h-72" style="background-image: url('https://via.placeholder.com/1200x500?text=Our+Portfolio');">
@@ -20,52 +20,57 @@
         </div>
     </section>
 
-    <!-- Main Content -->
+    <!-- Main Content Container -->
     <main class="container mx-auto px-4 py-12 space-y-16" id="portfolioContainer">
-        <!-- The dynamic portfolio sections will be injected here by JavaScript -->
+        <!-- Dynamic content will be injected here -->
     </main>
 
     <!-- Modal for Enlarged Image -->
-    <div id="imageModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden">
+    <div id="imageModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden" role="dialog" aria-modal="true">
         <div class="relative">
             <img id="modalImage" src="" alt="Enlarged view" class="max-w-full max-h-screen rounded shadow-lg">
-            <button id="closeModal" class="absolute top-2 right-2 text-white text-3xl bg-gray-800 bg-opacity-75 rounded-full w-10 h-10 flex items-center justify-center">&times;</button>
+            <button id="closeModal" aria-label="Close modal" class="absolute top-2 right-2 text-white text-3xl bg-gray-800 bg-opacity-75 rounded-full w-10 h-10 flex items-center justify-center">&times;</button>
         </div>
     </div>
 
     <!-- JavaScript to load portfolio images dynamically and enable modal view -->
     <script>
-    <?php
-        // Define the base portfolio directory
-        $portfolioDir = __DIR__ . '/documents';
-        
-        // Categories to look for (matching folder names)
-        $categories = ['scholarship', 'visa', 'others'];
-        
+        <?php
+        // Define the base portfolio directory using the file system path.
+        // Adjust the path if needed. For example, if your documents folder is inside the current folder:
+        $portfolioDir = './documents';
+
+        // Define the base URL for the portfolio images (publicly accessible path)
+        $baseUrl = './documents';
+
+        // Auto-detect all subdirectories (categories) in the portfolio directory
+        $allItems = scandir($portfolioDir);
+        $categories = array_filter($allItems, function ($item) use ($portfolioDir) {
+            return is_dir($portfolioDir . '/' . $item) && !in_array($item, ['.', '..']);
+        });
+
         // Initialize the portfolio data array
         $portfolioData = [];
-        
-        // Loop through each category and get images
+
+        // Loop through each detected category and get image files
         foreach ($categories as $category) {
             $categoryPath = $portfolioDir . '/' . $category;
-            
-            if (is_dir($categoryPath)) {
-                // Get all image files from the directory
-                $images = glob($categoryPath . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
-                
-                // Convert file paths to web-friendly URLs and add to portfolio data
-                $webImages = array_map(function($image) {
-                    return 'portfolio/' . basename(dirname($image)) . '/' . basename($image);
+            // Get image files (case-insensitive matching for common image extensions)
+            $images = glob($categoryPath . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+            // Only add category if there are images available
+            if (!empty($images)) {
+                // Convert file paths to web-friendly URLs using the base URL and category name
+                $webImages = array_map(function ($image) use ($category, $baseUrl) {
+                    return $baseUrl . '/' . $category . '/' . basename($image);
                 }, $images);
-                
-                // Add to portfolio data with proper category name
+                // Use a nicely formatted category name
                 $categoryName = ucwords(str_replace('_', ' ', $category));
                 $portfolioData[$categoryName] = $webImages;
             }
         }
-    ?>
-    // Pass PHP array to JavaScript
-    const portfolioData = <?php echo json_encode($portfolioData, JSON_PRETTY_PRINT); ?>;
+        ?>
+        // Pass PHP array to JavaScript
+        const portfolioData = <?php echo json_encode($portfolioData, JSON_PRETTY_PRINT); ?>;
 
         // Function to dynamically create portfolio sections
         function loadPortfolio() {
@@ -87,7 +92,7 @@
                 const section = document.createElement('section');
                 section.className = "mb-12";
 
-                // Category title and description (customize the description as needed)
+                // Category title and description
                 section.innerHTML = `
           <h2 class="text-3xl font-semibold mb-4">${category}</h2>
           <p class="text-gray-700 mb-6">
@@ -100,17 +105,21 @@
 
                 // Populate the grid with images
                 const grid = section.querySelector('div');
-                images.forEach(imgSrc => {
-                    const card = document.createElement('div');
-                    card.className = "bg-white p-4 rounded shadow cursor-pointer";
-                    card.innerHTML = `
-            <img src="${imgSrc}" alt="${category} Document" class="w-full h-auto rounded">
-            <p class="text-center mt-2 text-sm text-gray-500">Personal info blurred</p>
-          `;
-                    // When an image is clicked, open it in the modal
-                    card.addEventListener('click', () => openModal(imgSrc));
-                    grid.appendChild(card);
-                });
+                if (images.length === 0) {
+                    grid.innerHTML = `<p class="text-gray-500">No images available in this category.</p>`;
+                } else {
+                    images.forEach(imgSrc => {
+                        const card = document.createElement('div');
+                        card.className = "bg-white p-4 rounded shadow cursor-pointer";
+                        card.innerHTML = `
+              <img src="${imgSrc}" alt="${category} Document" class="w-full h-auto rounded">
+              <p class="text-center mt-2 text-sm text-gray-500">Personal info blurred</p>
+            `;
+                        // Open modal on image click
+                        card.addEventListener('click', () => openModal(imgSrc));
+                        grid.appendChild(card);
+                    });
+                }
             }
         }
 
@@ -122,6 +131,8 @@
         function openModal(src) {
             modalImg.src = src;
             modal.classList.remove('hidden');
+            // Optionally, set focus to the close button for accessibility
+            closeModalBtn.focus();
         }
 
         function closeModal() {
@@ -131,14 +142,14 @@
 
         closeModalBtn.addEventListener('click', closeModal);
 
-        // Close modal when clicking outside the modal image
+        // Close modal when clicking outside the modal content
         modal.addEventListener('click', function(e) {
             if (e.target === modal) {
                 closeModal();
             }
         });
 
-        // Load portfolio data when the document is ready
+        // Load portfolio data once the document is ready
         document.addEventListener('DOMContentLoaded', loadPortfolio);
     </script>
 
