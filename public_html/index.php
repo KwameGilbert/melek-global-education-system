@@ -115,49 +115,6 @@
     <?php require_once __DIR__ . '/components/footer.php'; ?>
 
     <script>
-        document.querySelector("form").addEventListener("submit", function(e) {
-            e.preventDefault();
-
-            let formData = new FormData(this);
-
-            fetch("send-email.php", {
-                    method: "POST",
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    alert(data.message);
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                });
-        });
-
-        document.getElementById('scheduleButton').addEventListener('click', function() {
-            // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-
-            // Check if all fields are filled
-            if (!name || !email || !message) {
-                alert('Please fill in all fields before submitting.');
-                return;
-            }
-
-            // Create the WhatsApp message
-            const whatsappMessage = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nMessage: ${message}`);
-
-            // WhatsApp API link with the message
-            const whatsappLink = `https://wa.me/8618864506806?text=${whatsappMessage}`;
-
-            // Open WhatsApp with the message
-            window.open(whatsappLink, '_blank');
-        });
-    </script>
-
-
-    <script>
         document.addEventListener('DOMContentLoaded', () => {
             const mobileSlider = document.querySelector('.mobile-scroll');
             const scrollItems = document.querySelectorAll('.scroll-item');

@@ -5,10 +5,10 @@
              <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Start Your Journey?</h2>
              <p class="text-lg md:text-xl mb-8">Book a free consultation with our expert counselors and take the first step towards your global education dream.</p>
              <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
-                <div class="flex items-center space-x-4">
-                                     <i data-feather="phone" class="text-white" width="32" height="32"></i>
-                                     <a href="tel:+447441476843" class="text-xl md:text-2xl font-semibold hover:underline">+44 7441 476843</a>
-                                 </div>
+                 <div class="flex items-center space-x-4">
+                     <i data-feather="phone" class="text-white" width="32" height="32"></i>
+                     <a href="tel:+447441476843" class="text-xl md:text-2xl font-semibold hover:underline">+44 7441 476843</a>
+                 </div>
                  <div class="flex items-center space-x-4">
                      <i data-feather="mail" class="text-white" width="32" height="32"></i>
                      <span class="text-lg md:text-xl">melekglobalconsult@gmail.com</span>
@@ -16,7 +16,7 @@
              </div>
          </div>
          <div class="w-full md:w-1/2">
-             <form class="bg-white p-8 rounded-xl shadow-2xl" id="consultationForm">
+             <form action="/send_email.php" method="POST" class="text-black bg-white p-8 rounded-xl shadow-2xl" id="consultationForm">
                  <h3 class="text-xl md:text-2xl font-semibold mb-6 text-gray-800">Schedule Your Consultation</h3>
                  <div class="mb-4">
                      <label class="block text-gray-700 mb-2">Full Name</label>
@@ -30,7 +30,7 @@
                      <label class="block text-gray-700 mb-2">Your Message</label>
                      <textarea name="message" id="message" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4" placeholder="Tell us about your educational goals"></textarea>
                  </div>
-                 <button type="button" id="scheduleButton" class="w-full bg-blue-600 text-white py-3 rounded-full hover:bg-blue-700 transition">Schedule Consultation</button>
+                 <button type="submit" id="scheduleButton" class="w-full bg-blue-600 text-white py-3 rounded-full hover:bg-blue-700 transition">Schedule Consultation</button>
              </form>
 
          </div>

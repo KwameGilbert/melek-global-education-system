@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $response['status'] = true;
         $response['message'] = 'Welcome back, ' . htmlspecialchars($user['firstname'] . ' ' . $user['lastname']) . '!';
         $response['icon'] = 'success';
-        $response['redirect'] = '/dashboard/';
+        $response['redirect'] = './dashboard/';
     } catch (Exception $e) {
         http_response_code(500);
         // In production, consider using a generic error message

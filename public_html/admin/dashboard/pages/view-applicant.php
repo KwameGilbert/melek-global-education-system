@@ -1,5 +1,9 @@
 <?php
-require_once __DIR__ . '/../../../../api/applicants/single_applicant.php';
+$applicantFile = __DIR__ . '/../../../api/applicants/single_applicant.php';
+if (!file_exists($applicantFile)) {
+    die('Error: Required file not found. Please check the path to single_applicant.php');
+}
+require_once $applicantFile;
 ?>
 
 <div id="applicant" class="flex flex-col md:flex-row max-w-full mx-0 top-0 applicant">
