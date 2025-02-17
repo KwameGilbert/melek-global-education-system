@@ -25,7 +25,7 @@ if (isset($_SESSION['admin_id'])) {
     <link href="https://cdn.tailwindcss.com" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="../../../imports/tailwind/tailwind.min.css">
+    <link rel="stylesheet" href="<?php 'http://' . $_SERVER['HTTP_HOST']. '/imports/tailwind/tailwind.min.css'?> >
 
     <style>
         /* Custom scrollbar */

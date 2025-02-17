@@ -7,6 +7,8 @@
     <title>Gallery - Melek Global Consult</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body class="bg-gray-100 text-gray-900">
@@ -14,7 +16,7 @@
     <?php require_once __DIR__ . '/../components/nav.php'; ?>
 
     <!-- Hero Section -->
-    <section class="bg-cover bg-center h-72" style="background-image: url('https://source.unsplash.com/1600x900/?conference');">
+    <section class="bg-cover bg-center h-72" style="background-image: url('https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80');">
         <div class="bg-black bg-opacity-60 h-full flex items-center justify-center">
             <h1 class="text-white text-5xl font-bold">Gallery</h1>
         </div>
@@ -112,7 +114,7 @@
                         card.className = "bg-white p-4 rounded shadow cursor-pointer";
                         card.innerHTML = `
               <img src="${imgSrc}" alt="${category} Image" class="w-full h-64 object-cover rounded">
-              <p class="text-center mt-2 text-sm text-gray-500">View Image</p>
+           
             `;
                         // Open modal on image click
                         card.addEventListener('click', () => openModal(imgSrc));
