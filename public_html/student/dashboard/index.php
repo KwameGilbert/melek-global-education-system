@@ -1,5 +1,9 @@
 <?php
-require __DIR__ . '/../../../config/database.php';
+$databaseFile = __DIR__ . '/../../config/database.php';
+if (!file_exists($databaseFile)) {
+    die('Database configuration file not found');
+}
+require $databaseFile;
 
 // Start PHP session
 session_start();
@@ -8,7 +12,7 @@ session_start();
 if (isset($_SESSION['student_id'])) {
 } else {
     // Redirect to login if session is not set
-    header('Location: ../login/');
+    header('Location: ' . __DIR__ . '/../login/');
     exit();
 }
 ?>
