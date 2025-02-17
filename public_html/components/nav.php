@@ -12,11 +12,11 @@
         <div id="mobileMenu" class="hidden md:block w-full md:w-auto">
             <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 items-center justify-center md:justify-end">
                 <a href="<?php echo 'http://' . $_SERVER['HTTP_HOST']; ?>" class="text-blue-600 hover:text-blue-800 font-semibold">Home</a>
-                <a href="/services" class="text-blue-600 hover:text-blue-800 font-semibold">Services</a>
-                <a href="/about" class="text-blue-600 hover:text-blue-800 font-semibold">About</a>
-                <a href="/portfolio" class="text-blue-600 hover:text-blue-800 font-semibold">Portfolio</a>
-                <a href="/contact" class="text-blue-600 hover:text-blue-800 font-semibold">Contact</a>
-                <a href="/cooperate" class="bg-blue-600 text-white px-7 py-2 rounded-full hover:bg-blue-700 transition whitespace-nowrap">Cooperate With Us</a>
+                <a href="/services/" class="text-blue-600 hover:text-blue-800 font-semibold">Services</a>
+                <a href="/about/" class="text-blue-600 hover:text-blue-800 font-semibold">About</a>
+                <a href="/portfolio/" class="text-blue-600 hover:text-blue-800 font-semibold">Portfolio</a>
+                <a href="/contact/" class="text-blue-600 hover:text-blue-800 font-semibold">Contact</a>
+                <a href="/cooperate/" class="bg-blue-600 text-white px-7 py-2 rounded-full hover:bg-blue-700 transition whitespace-nowrap">Cooperate With Us</a>
             </div>
         </div>
     </div>

@@ -26,7 +26,7 @@
     </main>
 
     <!-- Modal for Enlarged Image -->
-    <div id="imageModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden" role="dialog" aria-modal="true">
+    <div id="imageModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden z-[9999]" role="dialog" aria-modal="true">
         <div class="relative">
             <img id="modalImage" src="" alt="Enlarged view" class="max-w-full max-h-screen rounded shadow-lg">
             <button id="closeModal" aria-label="Close modal" class="absolute top-2 right-2 text-white text-3xl bg-gray-800 bg-opacity-75 rounded-full w-10 h-10 flex items-center justify-center">&times;</button>
@@ -79,9 +79,9 @@
             // Create an introduction section
             const introSection = document.createElement('section');
             introSection.innerHTML = `
-        <h2 class="text-3xl font-semibold mb-4">Showcasing Our Success</h2>
-        <p class="text-gray-700 leading-relaxed">
-          At Melek Global Consult, our portfolio reflects our proven track record in securing scholarships, visa approvals, and other important documents for our clients. All personal information has been blurred out to ensure our clients’ privacy while demonstrating our expertise.
+        <h2 class="text-3xl font-semibold mb-4 text-center text-blue-600">Showcasing Our Success</h2>
+        <p class="text-gray-700 leading-relaxed text-center max-w-3xl mx-auto">
+          At Melek Global Consult, our portfolio reflects our proven track record in securing scholarships, visa approvals, and other important documents for our clients. All personal information has been blurred out to ensure our clients' privacy while demonstrating our expertise.
         </p>
       `;
             container.appendChild(introSection);
@@ -94,11 +94,11 @@
 
                 // Category title and description
                 section.innerHTML = `
-          <h2 class="text-3xl font-semibold mb-4">${category}</h2>
-          <p class="text-gray-700 mb-6">
+          <h2 class="text-3xl font-semibold text-center text-blue-600 mb-4">${category}</h2>
+          <p class="text-gray-700 text-center mb-6">
             Explore our successful cases in <strong>${category.toLowerCase()}</strong>.
           </p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="${category.replace(/\s+/g, '')}">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="${category.replace(/\s+/g, '')}">
           </div>
         `;
                 container.appendChild(section);
@@ -113,7 +113,6 @@
                         card.className = "bg-white p-4 rounded shadow cursor-pointer";
                         card.innerHTML = `
               <img src="${imgSrc}" alt="${category} Document" class="w-full h-auto rounded">
-              <p class="text-center mt-2 text-sm text-gray-500">Personal info blurred</p>
             `;
                         // Open modal on image click
                         card.addEventListener('click', () => openModal(imgSrc));

@@ -24,7 +24,7 @@
     <main class="container mx-auto px-4 py-12 space-y-16">
         <!-- Our Story -->
         <section>
-            <h2 class="text-3xl font-semibold mb-4">Our Story</h2>
+            <h2 class="text-3xl font-semibold text-center text-blue-600 mb-4">Our Story</h2>
             <p class="text-gray-700 leading-relaxed">
                 Melek Global Consult was founded with a single vision—to provide a guiding light for students, professionals, and travelers seeking opportunities abroad. Our journey began with a passion for bridging gaps between aspirations and reality. Owned and led by Mr. Bright Asamoah Gyapong and Mr. Fredrick Asamoah Gyapong, we have grown into a trusted consultancy that helps clients secure admissions in top educational institutions, gain employment opportunities overseas, and experience seamless travel.
             </p>
@@ -32,7 +32,7 @@
 
         <!-- Our Mission -->
         <section>
-            <h2 class="text-3xl font-semibold mb-4">Our Mission</h2>
+            <h2 class="text-3xl font-semibold text-center text-blue-600 mb-4">Our Mission</h2>
             <p class="text-gray-700 leading-relaxed">
                 Our mission is to empower you with the resources and expert guidance you need to achieve your international dreams. Whether you are looking to study abroad, book your flight, secure a job overseas, or find comfortable accommodations, Melek Global Consult is dedicated to ensuring that every step of your journey is smooth and successful. We strive to be the light at the end of the tunnel, offering personalized solutions tailored to your unique needs.
             </p>
@@ -40,7 +40,7 @@
 
         <!-- What We Do -->
         <section>
-            <h2 class="text-3xl font-semibold mb-4">What We Do</h2>
+            <h2 class="text-3xl font-semibold text-center text-blue-600 mb-4">What We Do</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="bg-white p-6 rounded shadow">
                     <h3 class="text-2xl font-semibold mb-2">Education Consulting</h3>
@@ -77,7 +77,7 @@
 
         <!-- Our Values -->
         <section>
-            <h2 class="text-3xl font-semibold mb-4">Our Values</h2>
+            <h2 class="text-3xl font-semibold text-center text-blue-600 mb-4">Our Values</h2>
             <ul class="list-disc pl-6 text-gray-700 space-y-2">
                 <li><strong>Integrity:</strong> We conduct our business with honesty and transparency.</li>
                 <li><strong>Excellence:</strong> We are committed to providing high-quality services and exceptional support.</li>
@@ -88,7 +88,7 @@
 
         <!-- Meet the Team -->
         <section>
-            <h2 class="text-3xl font-semibold mb-4">Meet the Team</h2>
+            <h2 class="text-3xl font-semibold text-center text-blue-600 mb-4">Meet the Team</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                 <!-- Team Member 1 -->
                 <div class="bg-white p-6 rounded shadow text-center">
