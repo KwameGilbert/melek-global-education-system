@@ -83,7 +83,7 @@
             // Create an introduction section
             const introSection = document.createElement('section');
             introSection.innerHTML = `
-        <h2 class="text-3xl font-semibold mb-4">Our Conference & Event Highlights</h2>
+        <h2 class="text-3xl font-semibold text-center text-blue-600 mb-4">Our Conference & Event Highlights</h2>
         <p class="text-gray-700 leading-relaxed">
           Explore our gallery showcasing conferences, workshops, and other events that highlight our commitment to international collaboration and excellence.
         </p>
@@ -98,7 +98,7 @@
 
                 // Category title and grid container
                 section.innerHTML = `
-          <h2 class="text-3xl font-semibold mb-4">${category}</h2>
+          <h2 class="text-3xl font-semibold text-center text-blue-600 mb-4">${category}</h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="${category.replace(/\s+/g, '')}">
           </div>
         `;

@@ -84,9 +84,15 @@
                 <div class="mt-8">
                     <h3 class="font-semibold">Follow Us</h3>
                     <div class="flex space-x-4">
-                        <a href="https://m.facebook.com" target="_blank" class="text-blue-600 hover:underline">Facebook</a>
-                        <a href="https://www.instagram.com" target="_blank" class="text-pink-600 hover:underline">Instagram</a>
-                        <a href="https://www.youtube.com" target="_blank" class="text-red-600 hover:underline">YouTube</a>
+                        <a href="https://m.facebook.com" target="_blank" class="text-blue-600 hover:text-blue-800">
+                            <i class="fab fa-facebook fa-2x"></i>
+                        </a>
+                        <a href="https://www.instagram.com" target="_blank" class="text-pink-600 hover:text-pink-800">
+                            <i class="fab fa-instagram fa-2x"></i>
+                        </a>
+                        <a href="https://www.youtube.com" target="_blank" class="text-red-600 hover:text-red-800">
+                            <i class="fab fa-youtube fa-2x"></i>
+                        </a>
                     </div>
                 </div>
             </div>

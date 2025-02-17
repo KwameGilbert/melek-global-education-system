@@ -28,7 +28,7 @@
 
         <!-- Why Be Our Agent -->
         <section class="bg-white p-8 rounded shadow">
-            <h2 class="text-3xl font-bold mb-6 text-center">Why Be Our Agent</h2>
+            <h2 class="text-3xl font-bold mb-6 text-center text-blue-600">Why Be Our Agent</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 <div>
                     <ul class="list-disc list-inside text-gray-700 space-y-3">
@@ -45,7 +45,7 @@
 
         <!-- How to Make Profit -->
         <section class="bg-gray-50 p-8 rounded shadow">
-            <h2 class="text-3xl font-bold mb-6 text-center">How to Make Profit</h2>
+            <h2 class="text-3xl font-bold mb-6 text-center text-blue-600">How to Make Profit</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Individuals Section -->
                 <div class="p-4 border rounded">
@@ -72,7 +72,7 @@
 
         <!-- How to Apply as an Agent -->
         <section class="bg-white p-8 rounded shadow">
-            <h2 class="text-3xl font-bold mb-6 text-center">How to Apply for Your Student as an Agent</h2>
+            <h2 class="text-3xl font-bold mb-6 text-center text-blue-600">How to Apply for Your Student as an Agent</h2>
             <div class="space-y-6">
                 <div>
                     <h3 class="text-2xl font-semibold mb-2">1. Register on Our Platform</h3>
@@ -103,7 +103,7 @@
 
          <!-- Agent Registration Form -->
         <section class="bg-white p-8 rounded shadow">
-            <h2 class="text-3xl font-bold mb-6 text-center">Become Our Agent</h2>
+            <h2 class="text-3xl font-bold mb-6 text-center text-blue-600">Become Our Agent</h2>
             <form action="submit_cooperation.php" method="POST" enctype="multipart/form-data" class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- What Are You -->
@@ -188,7 +188,7 @@
 
         <!-- Newsletter Subscription -->
         <section class="bg-gray-50 p-8 rounded shadow text-center">
-            <h2 class="text-3xl font-bold mb-4">Subscribe To Our Newsletter</h2>
+            <h2 class="text-3xl font-bold mb-4 text-blue-600">Subscribe To Our Newsletter</h2>
             <form action="subscribe.php" method="POST" class="max-w-md mx-auto space-y-4">
                 <div>
                     <input type="text" name="subscriber_name" placeholder="Your Name *" required class="w-full p-3 border rounded" />
