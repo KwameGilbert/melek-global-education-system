@@ -1,4 +1,4 @@
-<!-- Modal for Enlarged Image -->
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -26,9 +26,13 @@
     </main>
 
     <!-- Modal for Enlarged Image -->
-    <div id="imageModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden" role="dialog" aria-modal="true">
+    <div id="imageModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden z-50" role="dialog" aria-modal="true">
         <div class="relative">
-            <img id="modalImage" src="" alt="Enlarged view" class="max-w-full max-h-screen rounded shadow-lg">
+            <!-- Loading spinner shown until image loads -->
+            <div id="loadingSpinner" class="absolute inset-0 flex items-center justify-center">
+                <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+            <img id="modalImage" src="" alt="Enlarged view" class="max-w-full max-h-screen rounded shadow-lg object-contain" />
             <button id="closeModal" aria-label="Close modal" class="absolute top-2 right-2 text-white text-3xl bg-gray-800 bg-opacity-75 rounded-full w-10 h-10 flex items-center justify-center">&times;</button>
         </div>
     </div>
@@ -53,15 +57,15 @@
         // Loop through each detected category and get image files
         foreach ($categories as $category) {
             $categoryPath = $galleryDir . '/' . $category;
-            // Get image files (case-insensitive for common image extensions)
+            // Get image files (case-insensitive matching for common image extensions)
             $images = glob($categoryPath . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
             // Only add category if there are images available
             if (!empty($images)) {
-                // Convert file paths to web-friendly URLs using the base URL and category
+                // Convert file paths to web-friendly URLs using the base URL and category name
                 $webImages = array_map(function ($image) use ($category, $baseUrl) {
                     return $baseUrl . '/' . $category . '/' . basename($image);
                 }, $images);
-                // Format category name (e.g. "conferences" => "Conferences")
+                // Format the category name (e.g. "conferences" → "Conferences")
                 $categoryName = ucwords(str_replace('_', ' ', $category));
                 $galleryData[$categoryName] = $webImages;
             }
@@ -90,7 +94,7 @@
                 const section = document.createElement('section');
                 section.className = "mb-12";
 
-                // Category title and description
+                // Category title and grid container
                 section.innerHTML = `
           <h2 class="text-3xl font-semibold mb-4">${category}</h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="${category.replace(/\s+/g, '')}">
@@ -107,7 +111,7 @@
                         const card = document.createElement('div');
                         card.className = "bg-white p-4 rounded shadow cursor-pointer";
                         card.innerHTML = `
-              <img src="${imgSrc}" alt="${category} Image" class="w-full h-auto rounded">
+              <img src="${imgSrc}" alt="${category} Image" class="w-full h-64 object-cover rounded">
               <p class="text-center mt-2 text-sm text-gray-500">View Image</p>
             `;
                         // Open modal on image click
@@ -122,13 +126,21 @@
         const modal = document.getElementById('imageModal');
         const modalImg = document.getElementById('modalImage');
         const closeModalBtn = document.getElementById('closeModal');
+        const loadingSpinner = document.getElementById('loadingSpinner');
 
         function openModal(src) {
+            // Show the spinner until the image loads
+            loadingSpinner.classList.remove('hidden');
             modalImg.src = src;
             modal.classList.remove('hidden');
-            // Set focus on the close button for accessibility
+            // Set focus to the close button for accessibility
             closeModalBtn.focus();
         }
+
+        // When the modal image loads, hide the spinner
+        modalImg.addEventListener('load', () => {
+            loadingSpinner.classList.add('hidden');
+        });
 
         function closeModal() {
             modal.classList.add('hidden');
