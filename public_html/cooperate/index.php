@@ -10,106 +10,191 @@
 </head>
 
 <body class="bg-gray-100 text-gray-900">
-    <!-- Header (Assuming nav.php contains your navigation) -->
+    <!-- Navigation -->
     <?php require_once __DIR__ . '/../components/nav.php'; ?>
 
     <!-- Hero Section -->
-    <section class="bg-cover bg-center h-72" style="background-image: url('https://via.placeholder.com/1200x500?text=Cooperate+With+Us');">
-        <div class="bg-black bg-opacity-50 h-full flex items-center justify-center">
-            <h1 class="text-white text-5xl font-bold">Cooperate With Us</h1>
+    <section class="bg-cover bg-center h-72" style="background-image: url('https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');">
+        <div class="bg-black bg-opacity-60 h-full flex items-center justify-center">
+            <h1 class="text-white text-center text-5xl font-bold">Cooperate With Us</h1>
         </div>
     </section>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-12 space-y-12">
-        <!-- Introduction Section -->
-        <section class="text-center">
-            <h2 class="text-4xl font-bold mb-4">Partner with a Leader in Global Consulting</h2>
-            <p class="text-gray-700 text-lg">
-                At Melek Global Consult, we build strong partnerships that drive mutual success. Whether you're in the education, travel, or corporate sectors, we invite you to join forces with us to create impactful international opportunities.
-            </p>
-        </section>
+    <main class="container mx-auto px-4 py-12 space-y-16">
+       
 
-        <!-- Why Partner With Us -->
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-                <h3 class="text-3xl font-semibold mb-4">Why Partner With Us?</h3>
-                <ul class="list-disc list-inside text-gray-700 space-y-2">
-                    <li><strong>Proven Track Record:</strong> We have a history of securing scholarships, visa approvals, and travel documents for our clients.</li>
-                    <li><strong>Expert Guidance:</strong> Our experienced team expertly navigates the complexities of international education, travel, and work.</li>
-                    <li><strong>Global Network:</strong> Leverage our extensive connections with partner institutions and industry leaders worldwide.</li>
-                    <li><strong>Innovative Solutions:</strong> We continually innovate to provide tailored solutions that meet your unique needs.</li>
-                </ul>
-            </div>
-            <div>
-                <img src="https://images.unsplash.com/photo-1553484771-047a44eee27a?auto=format&fit=crop&q=80" alt="Business partnership handshake" class="w-full h-full object-cover rounded shadow">
-            </div>
-        </section>
-
-        <!-- Our Partnership Model -->
+        <!-- Why Be Our Agent -->
         <section class="bg-white p-8 rounded shadow">
-            <h3 class="text-3xl font-semibold mb-4">Our Partnership Model</h3>
-            <p class="text-gray-700 mb-4">
-                We offer a flexible and dynamic partnership model tailored to various industries. Explore the collaboration opportunities below:
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <h2 class="text-3xl font-bold mb-6 text-center">Why Be Our Agent</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <ul class="list-disc list-inside text-gray-700 space-y-3">
+                        <li><strong>Service Fee Discount:</strong> Enjoy higher discounts on service fees as your star status increases.</li>
+                        <li><strong>Agent Development:</strong> Benefit from our 4-level agent platform with progressive support and policies to help you reach the highest status.</li>
+                        <li><strong>Comprehensive Support:</strong> Beyond our online application system, we invite you to exclusive educational conferences and partner events.</li>
+                    </ul>
+                </div>
+                <div>
+                    <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600&q=80" alt="Business People Working Together" class="w-full rounded shadow">
+                </div>
+            </div>
+        </section>
+
+        <!-- How to Make Profit -->
+        <section class="bg-gray-50 p-8 rounded shadow">
+            <h2 class="text-3xl font-bold mb-6 text-center">How to Make Profit</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Individuals Section -->
                 <div class="p-4 border rounded">
-                    <h4 class="text-xl font-bold mb-2">Educational Institutions</h4>
-                    <p class="text-gray-600">
-                        Join us to offer your students international opportunities—from securing admissions and scholarships to pre-departure guidance.
+                    <h3 class="text-2xl font-semibold mb-3">Individuals</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li><strong>Open To All:</strong> Registration is free—no matter who you are, you can be our agent.</li>
+                        <li><strong>Flexible Working Time:</strong> Promote programs at your own pace using social media platforms like Instagram, Twitter, Facebook, WhatsApp, and WeChat.</li>
+                        <li><strong>Good Profit and Support:</strong> Earn through charging reasonable application and service fees while receiving continuous professional training.</li>
+                        <li><strong>Upgraded Status Privileges:</strong> Achieve higher status with more applications submitted, earning privileges like authorization letters, service fee discounts, and scholarship seats.</li>
+                    </ul>
+                </div>
+                <!-- Company Agent Section -->
+                <div class="p-4 border rounded">
+                    <h3 class="text-2xl font-semibold mb-3">Company Agent</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li><strong>Abundant Resources:</strong> Gain access to 100+ universities, 10,000+ scholarship seats, and self-financed programs.</li>
+                        <li><strong>Cost-Effective Workflow:</strong> Our online system and professional consultants ensure your applications are processed efficiently.</li>
+                        <li><strong>Develop Your Company:</strong> Enjoy deepened cooperation with marketing support and institutional connections.</li>
+                        <li><strong>Upgraded Status Privileges:</strong> Reach Platinum Status for exclusive benefits such as authorization letters, discounts, and scholarship access.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- How to Apply as an Agent -->
+        <section class="bg-white p-8 rounded shadow">
+            <h2 class="text-3xl font-bold mb-6 text-center">How to Apply for Your Student as an Agent</h2>
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-2">1. Register on Our Platform</h3>
+                    <p class="text-gray-700">
+                        Choose to register as an individual or as a company. After registration, wait for verification. Feedback is provided via email or phone within one workday.
                     </p>
                 </div>
-                <div class="p-4 border rounded">
-                    <h4 class="text-xl font-bold mb-2">Travel & Tourism Agencies</h4>
-                    <p class="text-gray-600">
-                        Enhance your travel packages with our comprehensive services, including flight bookings, accommodation, and visa assistance.
+                <div>
+                    <h3 class="text-2xl font-semibold mb-2">2. Upload the Application</h3>
+                    <p class="text-gray-700">
+                        Submit your student's documents through our online system. Your consultant will then review and match the documents with a suitable program.
                     </p>
                 </div>
-                <div class="p-4 border rounded">
-                    <h4 class="text-xl font-bold mb-2">Corporate Partners</h4>
-                    <p class="text-gray-600">
-                        Collaborate with us to facilitate work abroad and business travel solutions that empower your global growth.
+                <div>
+                    <h3 class="text-2xl font-semibold mb-2">3. Pay the Application Fee</h3>
+                    <p class="text-gray-700">
+                        Once the fee is paid, your consultant will submit the application to the school. The school will then process and release the result.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-2">4. Get Admission and Pay the Service Fee</h3>
+                    <p class="text-gray-700">
+                        After admission is secured, pay the service fee. We will then send the original visa documents to you.
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- How to Get Started -->
-        <section class="text-center">
-            <h3 class="text-3xl font-semibold mb-4">How to Get Started</h3>
-            <p class="text-gray-700 mb-6">
-                Ready to explore a strategic partnership with Melek Global Consult? Contact our team today to discuss collaboration opportunities designed for your success.
-            </p>
-            <a href="contact.php" class="inline-block bg-blue-500 text-white py-3 px-6 rounded hover:bg-blue-600 transition">
-                Contact Us Today
-            </a>
+         <!-- Agent Registration Form -->
+        <section class="bg-white p-8 rounded shadow">
+            <h2 class="text-3xl font-bold mb-6 text-center">Become Our Agent</h2>
+            <form action="submit_cooperation.php" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- What Are You -->
+                    <div>
+                        <label class="block text-gray-700 mb-2">What Are You <span class="text-red-500">*</span></label>
+                        <select name="agent_type" required class="w-full p-3 border rounded">
+                            <option value="">Select an option</option>
+                            <option value="Individual">Individual</option>
+                            <option value="Agency">Agency</option>
+                            <option value="Educational Institution">Educational Institution</option>
+                        </select>
+                    </div>
+                    <!-- Name Of Institution / Representative -->
+                    <div>
+                        <label class="block text-gray-700 mb-2">Name (Institution or Representative) <span class="text-red-500">*</span></label>
+                        <input type="text" name="name" required class="w-full p-3 border rounded" placeholder="Enter your name or institution name" />
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Telephone/Mobile Number -->
+                    <div>
+                        <label class="block text-gray-700 mb-2">Telephone/Mobile Number <span class="text-red-500">*</span></label>
+                        <input type="tel" name="phone" required class="w-full p-3 border rounded" placeholder="Enter your phone number" />
+                    </div>
+                    <!-- Whatsapp/WeChat/Skype ID -->
+                    <div>
+                        <label class="block text-gray-700 mb-2">Whatsapp/WeChat/Skype ID <span class="text-red-500">*</span></label>
+                        <input type="text" name="contact_id" required class="w-full p-3 border rounded" placeholder="Enter your messaging ID" />
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Country, State, City Of Residence -->
+                    <div>
+                        <label class="block text-gray-700 mb-2">Country, State, City Of Residence <span class="text-red-500">*</span></label>
+                        <input type="text" name="residence" required class="w-full p-3 border rounded" placeholder="E.g. Ghana, Greater Accra, Accra" />
+                    </div>
+                    <!-- Location -->
+                    <div>
+                        <label class="block text-gray-700 mb-2">Location <span class="text-red-500">*</span></label>
+                        <input type="text" name="location" required class="w-full p-3 border rounded" placeholder="Enter your location" />
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Business Registration Number -->
+                    <div>
+                        <label class="block text-gray-700 mb-2">Business Registration Number <span class="text-red-500">*</span></label>
+                        <input type="text" name="business_reg" required class="w-full p-3 border rounded" placeholder="Enter registration number" />
+                    </div>
+                    <!-- Proof Of Accreditation -->
+                    <div>
+                        <label class="block text-gray-700 mb-2">Proof Of Accreditation <span class="text-red-500">*</span></label>
+                        <input type="file" name="accreditation" required class="w-full p-3 border rounded" />
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Website -->
+                    <div>
+                        <label class="block text-gray-700 mb-2">Website</label>
+                        <input type="url" name="website" class="w-full p-3 border rounded" placeholder="https://yourwebsite.com" />
+                    </div>
+                    <!-- Employment Status -->
+                    <div>
+                        <label class="block text-gray-700 mb-2">Employment Status <span class="text-red-500">*</span></label>
+                        <select name="employment_status" required class="w-full p-3 border rounded">
+                            <option value="">Select an option</option>
+                            <option value="Employed">Employed</option>
+                            <option value="Self-Employed">Self-Employed</option>
+                            <option value="Unemployed">Unemployed</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="bg-blue-500 text-white py-3 px-8 rounded hover:bg-blue-600 transition">Submit</button>
+                </div>
+            </form>
         </section>
 
-        <!-- Inquiry Form -->
-        <section class="bg-gray-50 p-8 rounded shadow">
-            <h3 class="text-3xl font-semibold mb-4 text-center">Inquiry Form</h3>
-            <form action="submit_inquiry.php" method="POST" class="max-w-2xl mx-auto space-y-4">
+        <!-- Newsletter Subscription -->
+        <section class="bg-gray-50 p-8 rounded shadow text-center">
+            <h2 class="text-3xl font-bold mb-4">Subscribe To Our Newsletter</h2>
+            <form action="subscribe.php" method="POST" class="max-w-md mx-auto space-y-4">
                 <div>
-                    <label for="name" class="block text-gray-700">Name</label>
-                    <input type="text" id="name" name="name" required class="w-full p-3 border rounded">
-                </div>
-                <div>
-                    <label for="email" class="block text-gray-700">Email</label>
-                    <input type="email" id="email" name="email" required class="w-full p-3 border rounded">
+                    <input type="text" name="subscriber_name" placeholder="Your Name *" required class="w-full p-3 border rounded" />
                 </div>
                 <div>
-                    <label for="subject" class="block text-gray-700">Subject</label>
-                    <input type="text" id="subject" name="subject" required class="w-full p-3 border rounded">
+                    <input type="email" name="subscriber_email" placeholder="Email Address *" required class="w-full p-3 border rounded" />
                 </div>
-                <div>
-                    <label for="message" class="block text-gray-700">Message</label>
-                    <textarea id="message" name="message" rows="5" required class="w-full p-3 border rounded"></textarea>
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="bg-blue-500 text-white py-3 px-6 rounded hover:bg-blue-600 transition">
-                        Submit Inquiry
-                    </button>
-                </div>
+                <button type="submit" class="bg-blue-500 text-white py-3 px-6 rounded hover:bg-blue-600 transition">Submit</button>
             </form>
         </section>
     </main>

@@ -15,6 +15,7 @@
                 <a href="/services/" class="text-blue-600 hover:text-blue-800 font-semibold">Services</a>
                 <a href="/about/" class="text-blue-600 hover:text-blue-800 font-semibold">About</a>
                 <a href="/portfolio/" class="text-blue-600 hover:text-blue-800 font-semibold">Portfolio</a>
+                <a href="/gallery/" class="text-blue-600 hover:text-blue-800 font-semibold">Gallery</a>
                 <a href="/contact/" class="text-blue-600 hover:text-blue-800 font-semibold">Contact</a>
                 <a href="/cooperate/" class="bg-blue-600 text-white px-7 py-2 rounded-full hover:bg-blue-700 transition whitespace-nowrap">Cooperate With Us</a>
             </div>
