@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
             submitButton.disabled = true;
 
             // Make API call to login endpoint
-            const response = await fetch('../../../api/student/login.php', {
+            const response = await fetch('../../api/student/login.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     showConfirmButton: false
                 }).then(() => {
                     // Redirect to dashboard
-                    window.location.href = '../dashboard/';
+                    window.location.href = './dashboard/';
                 });
             } else {
                 // Error message from API

@@ -18,7 +18,7 @@ if (isset($_SESSION['student_id'])) {
     <link href="https://cdn.tailwindcss.com" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="../../../imports/tailwind/tailwind.min.css">
+    <link rel="stylesheet" href="../../imports/tailwind/tailwind.min.css">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
@@ -31,7 +31,7 @@ if (isset($_SESSION['student_id'])) {
         }
 
         body {
-            background-image: url('../dashboard/images/13643.jpg');
+            background-image: url('./dashboard/images/13643.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -175,7 +175,7 @@ if (isset($_SESSION['student_id'])) {
                             <input type="checkbox" id='remember' class="mr-2 rounded border-gray-600 text-blue-500 focus:ring-blue-500 bg-transparent">
                             Remember me
                         </label>
-                        <a href="../password-reset/" class="text-blue-400 hover:text-blue-300">Forgot?</a>
+                        <a href="./password-reset/" class="text-blue-400 hover:text-blue-300">Forgot?</a>
                     </div>
 
                     <button type="submit"
@@ -186,7 +186,7 @@ if (isset($_SESSION['student_id'])) {
 
                     <div class="text-center text-sm">
                         <span class="text-gray-400">New student?</span>
-                        <a href="../signup/" class="text-blue-400 hover:text-blue-300 ml-1">Create Account</a>
+                        <a href="./signup/" class="text-blue-400 hover:text-blue-300 ml-1">Create Account</a>
                     </div>
                 </form>
 
