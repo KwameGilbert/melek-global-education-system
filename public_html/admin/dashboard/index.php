@@ -27,6 +27,8 @@ if (isset($_SESSION['admin_id'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href='/imports/tailwind/tailwind.min.css'>
 
+
+
     <style>
         /* Custom scrollbar */
         ::-webkit-scrollbar {
@@ -119,13 +121,13 @@ if (isset($_SESSION['admin_id'])) {
             </div>
         </main>
     </div>
-    
-    <script src="./scripts/schools.min.js"></script>
-    <script src="./scripts/settings.min.js"></script>
-    <script src="./scripts/security.min.js"></script>
-    <script src="/imports/html2pdf/html2pdf.bundle.min.js"></script>
-    <script src="./scripts/view-applicant.min.js"></script>
-    <script src="./scripts/index.min.js"></script>
+
+    <script src="./scripts/index.js"></script>
+    <script src="./scripts/schools.js"></script>
+    <script src="./scripts/settings.js"></script>
+    <script src="./scripts/security.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="./scripts/view-applicant.js"></script>
     <script>
         // Toggle sidebar visibility
         function toggleSidebar() {
@@ -148,10 +150,48 @@ if (isset($_SESSION['admin_id'])) {
         }
 
         // On page load, check localStorage and load the appropriate page
-        window.onload = function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const activePage = localStorage.getItem('activePage') || 'dashboard.html';
             loadPage(activePage);
-        };
+        });
+
+        async function logout() {
+            try {
+                const response = await fetch('../../../api/logout/logout.php', {
+                    method: 'GET'
+                });
+
+                if (response.ok) {
+                    // Redirect to login page
+                    Swal.fire({
+                        title: "Success",
+                        text: "Logout successful",
+                        icon: "success",
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                    })
+                    window.location.href = '../';
+                } else {
+                    // Show error message
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Failed to log out. Please try again.",
+                        icon: "error",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "OK"
+                    });
+                }
+            } catch (error) {
+                console.log(error);
+                Swal.fire({
+                    title: "Error!",
+                    text: "An unexpected error occurred. Please try again.",
+                    icon: "error",
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "OK"
+                });
+            }
+        }
     </script>
 
 </body>

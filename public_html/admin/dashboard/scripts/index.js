@@ -10,7 +10,6 @@ document.querySelectorAll("a[data-page]").forEach((link) => {
 
   function loadAdminDashboard() {
     console.log("Admin Dashboard Loaded");
-
     // Show loading state
     const loadingToast = Swal.mixin({
       toast: true,
@@ -254,6 +253,7 @@ document.querySelectorAll("a[data-page]").forEach((link) => {
     });
   }
 
+
   // Function to be run when the view of an applicant is clicked
   function viewApplicant(applicantId) {
     console.log("Loading applicant:", applicantId);
@@ -312,41 +312,4 @@ document.querySelectorAll("a[data-page]").forEach((link) => {
     }
   }
 
-  async function logout() {
-    try {
-      const response = await fetch('../../../api/logout/logout.php', {
-        method: 'GET'
-      });
-
-      if (response.ok) {
-        // Redirect to login page
-        Swal.fire({
-          title: "Success",
-          text: "Logout successful",
-          icon: "success",
-          showConfirmButton: false,
-          allowOutsideClick: false,
-        })
-        window.location.href = '../login/';
-      } else {
-        // Show error message
-        Swal.fire({
-          title: "Error!",
-          text: "Failed to log out. Please try again.",
-          icon: "error",
-          confirmButtonColor: "#3085d6",
-          confirmButtonText: "OK"
-        });
-      }
-    } catch (error) {
-      console.log(error);
-      Swal.fire({
-        title: "Error!",
-        text: "An unexpected error occurred. Please try again.",
-        icon: "error",
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "OK"
-      });
-    }
-  }
 });

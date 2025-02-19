@@ -6,7 +6,7 @@ if (!isset($_SESSION['student_id'])) {
     exit();
 }
 
-require_once __DIR__ . '/../../../../config/database.php';
+require_once __DIR__ . '/../../../config/database.php';
 $db = new Database();
 $conn = $db->getConnection();
 $stmt = $conn->prepare("SELECT * FROM application_details WHERE application_id = ?");
