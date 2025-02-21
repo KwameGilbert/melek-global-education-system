@@ -160,6 +160,23 @@
 
         // Load gallery data once the document is ready
         document.addEventListener('DOMContentLoaded', loadGallery);
+
+        
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Safe Feather Icons initialization
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    } else {
+        console.warn('Feather Icons library not loaded');
+    }
+});
+
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenu.classList.toggle('hidden');
+}
+
     </script>
 
     <!-- Footer -->

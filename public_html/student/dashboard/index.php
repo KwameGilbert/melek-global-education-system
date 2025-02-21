@@ -12,7 +12,7 @@ session_start();
 if (isset($_SESSION['student_id'])) {
 } else {
     // Redirect to login if session is not set
-    header('Location: ' . __DIR__ . '/../login/');
+    header('Location: ' . __DIR__ . '/../');
     exit();
 }
 ?>

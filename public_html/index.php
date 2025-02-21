@@ -113,7 +113,8 @@
     </a>
 
     <?php require_once __DIR__ . '/components/footer.php'; ?>
-
+    
+   
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const mobileSlider = document.querySelector('.mobile-scroll');
@@ -179,9 +180,6 @@
                 }
             });
         });
-
-
-
 
 
 

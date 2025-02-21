@@ -24,8 +24,8 @@
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-12 max-w-7xl">
-        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Our Services</h2>   
-    <!-- Services Grid -->
+        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Our Services</h2>
+        <!-- Services Grid -->
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Study Abroad Card -->
             <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow p-6 border border-gray-100">
@@ -110,6 +110,23 @@
     </main>
 
     <?php require_once __DIR__ . '/../components/footer.php'; ?>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Safe Feather Icons initialization
+            if (typeof feather !== 'undefined') {
+                feather.replace();
+            } else {
+                console.warn('Feather Icons library not loaded');
+            }
+        });
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        }
+    </script>
 </body>
 
 </html>

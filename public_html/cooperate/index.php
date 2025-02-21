@@ -7,7 +7,7 @@
     <title>Cooperate With Us - Melek Global Consult</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -24,7 +24,7 @@
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-12 space-y-16">
-       
+
 
         <!-- Why Be Our Agent -->
         <section class="bg-white p-8 rounded shadow">
@@ -101,22 +101,20 @@
             </div>
         </section>
 
-         <!-- Agent Registration Form -->
+        <!-- Agent Registration Form -->
         <section class="bg-white p-8 rounded shadow">
             <h2 class="text-3xl font-bold mb-6 text-center text-blue-600">Become Our Agent</h2>
             <form action="submit_cooperation.php" method="POST" enctype="multipart/form-data" class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- What Are You -->
                     <div>
                         <label class="block text-gray-700 mb-2">What Are You <span class="text-red-500">*</span></label>
-                        <select name="agent_type" required class="w-full p-3 border rounded">
+                        <select name="agent_type" id="agent_type" required class="w-full p-3 border rounded" onchange="toggleFields()">
                             <option value="">Select an option</option>
                             <option value="Individual">Individual</option>
                             <option value="Agency">Agency</option>
                             <option value="Educational Institution">Educational Institution</option>
                         </select>
                     </div>
-                    <!-- Name Of Institution / Representative -->
                     <div>
                         <label class="block text-gray-700 mb-2">Name (Institution or Representative) <span class="text-red-500">*</span></label>
                         <input type="text" name="name" required class="w-full p-3 border rounded" placeholder="Enter your name or institution name" />
@@ -124,12 +122,10 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Telephone/Mobile Number -->
                     <div>
                         <label class="block text-gray-700 mb-2">Telephone/Mobile Number <span class="text-red-500">*</span></label>
                         <input type="tel" name="phone" required class="w-full p-3 border rounded" placeholder="Enter your phone number" />
                     </div>
-                    <!-- Whatsapp/WeChat/Skype ID -->
                     <div>
                         <label class="block text-gray-700 mb-2">Whatsapp/WeChat/Skype ID <span class="text-red-500">*</span></label>
                         <input type="text" name="contact_id" required class="w-full p-3 border rounded" placeholder="Enter your messaging ID" />
@@ -137,38 +133,42 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Country, State, City Of Residence -->
                     <div>
                         <label class="block text-gray-700 mb-2">Country, State, City Of Residence <span class="text-red-500">*</span></label>
                         <input type="text" name="residence" required class="w-full p-3 border rounded" placeholder="E.g. Ghana, Greater Accra, Accra" />
                     </div>
-                    <!-- Location -->
                     <div>
                         <label class="block text-gray-700 mb-2">Location <span class="text-red-500">*</span></label>
                         <input type="text" name="location" required class="w-full p-3 border rounded" placeholder="Enter your location" />
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Business Registration Number -->
+                <div id="business_fields" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-gray-700 mb-2">Business Registration Number <span class="text-red-500">*</span></label>
-                        <input type="text" name="business_reg" required class="w-full p-3 border rounded" placeholder="Enter registration number" />
+                        <input type="text" name="business_reg" class="w-full p-3 border rounded" placeholder="Enter registration number" />
                     </div>
-                    <!-- Proof Of Accreditation -->
                     <div>
                         <label class="block text-gray-700 mb-2">Proof Of Accreditation <span class="text-red-500">*</span></label>
-                        <input type="file" name="accreditation" required class="w-full p-3 border rounded" />
+                        <input type="file" name="accreditation" class="w-full p-3 border rounded" />
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Website -->
+                <div id="individual_fields" class="grid grid-cols-1 md:grid-cols-2 gap-6 hidden">
+                    <div>
+                        <label class="block text-gray-700 mb-2">Identity Card <span class="text-red-500">*</span></label>
+                        <input type="file" name="identity_card" class="w-full p-3 border rounded" />
+                    </div>
+                </div>
+
+                <div id="website_field" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-gray-700 mb-2">Website</label>
                         <input type="url" name="website" class="w-full p-3 border rounded" placeholder="https://yourwebsite.com" />
                     </div>
-                    <!-- Employment Status -->
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-gray-700 mb-2">Employment Status <span class="text-red-500">*</span></label>
                         <select name="employment_status" required class="w-full p-3 border rounded">
@@ -185,6 +185,26 @@
                 </div>
             </form>
         </section>
+
+        <script>
+            function toggleFields() {
+                const agentType = document.getElementById("agent_type").value;
+                const businessFields = document.getElementById("business_fields");
+                const websiteField = document.getElementById("website_field");
+                const individualFields = document.getElementById("individual_fields");
+
+                if (agentType === "Individual") {
+                    businessFields.classList.add("hidden");
+                    websiteField.classList.add("hidden");
+                    individualFields.classList.remove("hidden");
+                } else {
+                    businessFields.classList.remove("hidden");
+                    websiteField.classList.remove("hidden");
+                    individualFields.classList.add("hidden");
+                }
+            }
+        </script>
+
 
         <!-- Newsletter Subscription -->
         <section class="bg-gray-50 p-8 rounded shadow text-center">
@@ -203,6 +223,23 @@
 
     <!-- Footer -->
     <?php require_once __DIR__ . '/../components/footer.php'; ?>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Safe Feather Icons initialization
+            if (typeof feather !== 'undefined') {
+                feather.replace();
+            } else {
+                console.warn('Feather Icons library not loaded');
+            }
+        });
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        }
+    </script>
 </body>
 
 </html>

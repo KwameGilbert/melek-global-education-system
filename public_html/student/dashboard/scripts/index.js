@@ -40,7 +40,7 @@ function loadDashboard() {
     });
 
 
-    fetch('../../../api/student/application/application.php')
+    fetch('../../api/student/application/application.php')
         .then(response => response.json())
         .then(data => {
             // Populate application and payment status
@@ -53,7 +53,7 @@ function loadDashboard() {
         });
 
 
-    fetch('../../../api/student/notice/notices.php')
+    fetch('../../api/student/notice/notices.php')
         .then(response => response.json())
         .then(data => {
             // Populate notices with date and time
@@ -166,7 +166,7 @@ loadingToast.fire({
     // Fetch notices from JSON
     async function loadNotices() {
         try {
-            const response = await fetch('../../../api/student/notice/notices.php');
+            const response = await fetch('../../api/student/notice/notices.php');
             const notices = await response.json();
             // Display notices
             displayNotices(notices);
@@ -265,7 +265,7 @@ function loadPage(page) {
 
 async function logout() {
     try {
-        const response = await fetch('../../../api/logout/logout.php', {
+        const response = await fetch('../../api/logout/logout.php', {
             method: 'GET'
         });
 
@@ -278,7 +278,7 @@ async function logout() {
                 showConfirmButton: false,
                 allowOutsideClick: false,
             })
-            window.location.href = '../login/index.php';
+            window.location.href = '../';
         } else {
             // Show error message
             Swal.fire({
