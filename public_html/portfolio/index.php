@@ -168,8 +168,10 @@
             const mobileMenu = document.getElementById('mobileMenu');
             mobileMenu.classList.toggle('hidden');
         }
-        
+
     </script>
+    
+  <?php require_once __DIR__ . '/components/whatsapp.php';?>
 
     <!-- Footer -->
     <?php require_once __DIR__ . '/../components/footer.php'; ?>

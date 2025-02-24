@@ -10,6 +10,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+<style>
+
+</style>
 
 <body>
     <?php require_once __DIR__ . '/../components/nav.php'; ?>
@@ -24,7 +27,7 @@
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-12 max-w-7xl">
-        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Our Services</h2>
+        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center text-blue-600">Our Services</h2>
         <!-- Services Grid -->
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Study Abroad Card -->
@@ -108,6 +111,8 @@
             </div>
         </div>
     </main>
+
+    <?php require_once __DIR__ . '/components/whatsapp.php'; ?>
 
     <?php require_once __DIR__ . '/../components/footer.php'; ?>
 

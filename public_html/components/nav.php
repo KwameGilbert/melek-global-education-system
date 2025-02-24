@@ -10,11 +10,11 @@
                 <i class="fas fa-bars text-blue-600" id="menu_hamburger"></i>
             </button>
         </div>
-        
+
         <div id="mobileMenu" class="hidden md:block w-full md:w-auto">
             <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 items-center justify-center md:justify-end">
                 <a href="<?php echo 'http://' . $_SERVER['HTTP_HOST']; ?>" class="text-blue-600 hover:text-blue-800 font-semibold">Home</a>
-                <a href="/student/" class="text-blue-600 hover:text-blue-800 font-semibold whitespace-nowrap">Apply Now</a>
+                <a href="/student/" class="bg-yellow-400 text-blue-800 px-4 py-1 rounded-lg font-bold animate-pulse hover:bg-yellow-500 transition whitespace-nowrap">Apply Now ➔</a>
                 <a href="/services/" class="text-blue-600 hover:text-blue-800 font-semibold">Services</a>
                 <a href="/about/" class="text-blue-600 hover:text-blue-800 font-semibold">About</a>
                 <a href="/portfolio/" class="text-blue-600 hover:text-blue-800 font-semibold">Portfolio</a>
